@@ -251,22 +251,17 @@
       const cached = lsGet(key);
       if(cached && await testImage(cached, 2500)) return cached;
 
-      // 1) обережно тягнемо og:image (1–2 проби через проксі)
       const og = await fetchOgImageViaProxy(ibbPageUrl);
       if(og){ lsSet(key, og); return og; }
 
-      // 2) припущення по форматах (інколи збігається)
       for(const ext of ["webp","jpg","jpeg","png"]){
         const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
         if(await testImage(guess)){ lsSet(key, guess); return guess; }
       }
 
-      // 3) крайні проксі (можуть дати зжатий прев'ю — все одно краще, ніж пусто)
       for(const u of [weserv(ibbPageUrl), staticallyCdn(ibbPageUrl), wpcom(ibbPageUrl)]){
         if(await testImage(u)){ lsSet(key, u); return u; }
       }
-
-      // 4) невдача — залишимо null (слайд збереже плейсхолдер і повторить спробу пізніше)
       return null;
     }
 
@@ -290,14 +285,24 @@
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
     })();
 
-    /* ================== ГАЛЕРЕЯ ================== */
-    const ibbLinks = [
-      "https://ibb.co/mC6tPhyp","https://ibb.co/pjfk24r5","https://ibb.co/N2JyQJ4K",
-      "https://ibb.co/4nwV4ZTr","https://ibb.co/N21d2zKz","https://ibb.co/hRh6v8P9",
-      "https://ibb.co/nqdZJ9N3","https://ibb.co/DfTSTscH","https://ibb.co/4wYj5C1Q",
-      "https://ibb.co/xqL9yq3T","https://ibb.co/0yMLq7hW","https://ibb.co/5gqdrNbV",
-      "https://ibb.co/1YRhzJRM","https://ibb.co/kgXK9tMS","https://ibb.co/tMyL5fSc",
-      "https://ibb.co/Rpb4ZSCG"
+    /* ================== ГАЛЕРЕЯ (прямі посилання) ================== */
+    const ibbItems = [
+      {page:"https://ibb.co/mC6tPhyp", src:"https://i.ibb.co/d0G6HkpZ/vodospad-shypit-3.jpg", alt:"vodospad-shypit-3"},
+      {page:"https://ibb.co/pjfk24r5", src:"https://i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp", alt:"verkhovynalife-benjola-hoidalka-2-1"},
+      {page:"https://ibb.co/N2JyQJ4K", src:"https://i.ibb.co/HTbH1bJq/verkhovynalife-benjola-hoidalka-2-3.jpg", alt:"verkhovynalife-benjola-hoidalka-2-3"},
+      {page:"https://ibb.co/4nwV4ZTr", src:"https://i.ibb.co/MxyCPDV0/image.jpg", alt:"image"},
+      {page:"https://ibb.co/N21d2zKz", src:"https://i.ibb.co/pjWBjpdp/synevyr-pereval-2.jpg", alt:"synevyr-pereval-2"},
+      {page:"https://ibb.co/hRh6v8P9", src:"https://i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg", alt:"karpaty-1"},
+      {page:"https://ibb.co/nqdZJ9N3", src:"https://i.ibb.co/BHWdMb54/image.jpg", alt:"image-2"},
+      {page:"https://ibb.co/DfTSTscH", src:"https://i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg", alt:"yoga-forest"},
+      {page:"https://ibb.co/4wYj5C1Q", src:"https://i.ibb.co/sp6FMcWB/yoga-1.jpg", alt:"yoga-1"},
+      {page:"https://ibb.co/xqL9yq3T", src:"https://i.ibb.co/0y24kyQb/1200px-Lake-Synevyr.jpg", alt:"Lake Synevyr"},
+      {page:"https://ibb.co/0yMLq7hW", src:"https://i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg", alt:"Synevyr-2"},
+      {page:"https://ibb.co/5gqdrNbV", src:"https://i.ibb.co/8LFJrW1V/photo-2025-08-23-23-23-21.jpg", alt:"photo-21"},
+      {page:"https://ibb.co/1YRhzJRM", src:"https://i.ibb.co/7xr8kNrQ/photo-2025-08-23-23-23-20-2.jpg", alt:"photo-20-2"},
+      {page:"https://ibb.co/kgXK9tMS", src:"https://i.ibb.co/gMJyPx6R/photo-2025-08-23-23-23-22.jpg", alt:"photo-22"},
+      {page:"https://ibb.co/tMyL5fSc", src:"https://i.ibb.co/kgYmFnp0/photo-2025-08-23-23-23-20.jpg", alt:"photo-20"},
+      {page:"https://ibb.co/Rpb4ZSCG", src:"https://i.ibb.co/kgB6kyhV/1508689396-1508686392-ozero-sinevir-3.jpg", alt:"Synevyr-3"}
     ];
 
     const slidesEl = document.getElementById("slides");
@@ -305,11 +310,12 @@
     const loader = document.getElementById("galleryLoader");
     const showLoader = (v)=> loader.style.display = v ? "block" : "none";
 
-    // Готуємо слайди з плейсхолдерами
-    ibbLinks.forEach((pageUrl,i)=>{
+    // Слайды с плейсхолдерами
+    ibbItems.forEach((item,i)=>{
       const slide = document.createElement("div");
       slide.className="slide";
-      slide.dataset.page = pageUrl;
+      slide.dataset.page = item.page;
+      if(item.src) slide.dataset.src = item.src;
 
       const ph = document.createElement("div"); ph.className="ph"; slide.appendChild(ph);
 
@@ -317,24 +323,36 @@
       const sWebp = document.createElement("source"); sWebp.type="image/webp"; pic.appendChild(sWebp);
 
       const img = document.createElement("img");
-      img.alt = `Фото ${i+1}`; img.loading = i===0 ? "eager" : "lazy";
+      img.alt = item.alt || `Фото ${i+1}`;
+      img.loading = i===0 ? "eager" : "lazy";
       img.decoding="async"; img.fetchPriority = i===0 ? "high" : "auto";
       img.referrerPolicy="no-referrer"; img.crossOrigin="anonymous"; img.style.opacity="0";
+
       img.addEventListener('load', ()=>{ ph.remove(); img.style.opacity="1"; if(currentIndex===i) showLoader(false); });
-      img.addEventListener('error', ()=>{ showLoader(false); /* залишимо плейсхолдер — повторимо пізніше */ });
+      img.addEventListener('error', ()=>{
+        // если прямой src вдруг не открылся — пробуем через прокси
+        const direct = slide.dataset.src;
+        if(direct && !img.dataset.fallback){
+          img.dataset.fallback = "1";
+          img.src = weserv(direct,2);
+          img.srcset = `${weserv(direct,1)} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
+        }
+        showLoader(false);
+      });
 
       pic.appendChild(img); slide.appendChild(pic); slidesEl.appendChild(slide);
 
       const dot = document.createElement("span"); dot.className="dot"; dotsEl.appendChild(dot);
     });
 
-    // Кеш розв’язань + черга з обмеженою паралельністю
-    const resolvedMap = new Map(); // pageUrl -> directImgUrl|null
+    // (опционально) Фолбек-розв'язка для тех, у кого нет прямого src
+    const resolvedMap = new Map();
     let activeResolvers = 0;
     const maxParallel = 2;
     const queue = [];
 
-    async function resolveQueued(pageUrl, attempt=1){
+    async function resolveQueued(pageUrl){
+      if(!pageUrl) return null;
       if(resolvedMap.has(pageUrl)) return resolvedMap.get(pageUrl);
       if(activeResolvers >= maxParallel){
         await new Promise(res=>queue.push(res));
@@ -353,29 +371,33 @@
     async function injectImageFor(index){
       const slide = slidesEl.children[index]; if(!slide) return;
       const img = slide.querySelector("img");
-      if(img && img.src) return; // уже є
+      if(img && img.src) return;
+
       showLoader(true);
 
-      const page = slide.dataset.page;
-      let direct = resolvedMap.get(page) || null;
-
-      // якщо ще не відомо — розв'язуємо із повторами
-      if(!direct){
-        for(let k=0;k<3 && !direct;k++){
-          direct = await resolveQueued(page, k+1);
-          if(!direct) await sleep(500 + k*600);
-        }
-      }
-
+      const direct = slide.dataset.src;
       if(direct){
         const sWebp = slide.querySelector("source[type='image/webp']");
         sWebp.srcset = `${weserv(direct,1)} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
         sWebp.sizes = "(max-width: 980px) 100vw, 980px";
+
         img.src = direct;
         img.srcset = `${direct} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
         img.sizes = "(max-width: 980px) 100vw, 980px";
+        return;
+      }
+
+      // если вдруг у элемента нет прямого src — фолбек: пытаемся получить по странице
+      const page = slide.dataset.page;
+      const resolved = await resolveQueued(page);
+      if(resolved){
+        const sWebp = slide.querySelector("source[type='image/webp']");
+        sWebp.srcset = `${weserv(resolved,1)} 1x, ${weserv(resolved,2)} 2x, ${weserv(resolved,3)} 3x`;
+        sWebp.sizes = "(max-width: 980px) 100vw, 980px";
+        img.src = resolved;
+        img.srcset = `${resolved} 1x, ${weserv(resolved,2)} 2x, ${weserv(resolved,3)} 3x`;
+        img.sizes = "(max-width: 980px) 100vw, 980px";
       }else{
-        // якщо не вдалося — залишимо плейсхолдер і спробуємо пізніше (наступна навігація)
         showLoader(false);
       }
     }
@@ -390,7 +412,6 @@
         slidesEl.style.transform = `translateX(-${currentIndex*100}%)`;
         dots.forEach((d,di)=>d.classList.toggle('active', di===currentIndex));
         await injectImageFor(currentIndex);
-        // наперед підвантажимо сусідні
         injectImageFor((currentIndex+1)%total);
         injectImageFor((currentIndex+2)%total);
       };
@@ -398,16 +419,14 @@
       document.getElementById('prev').addEventListener('click', ()=>goTo(currentIndex-1));
       document.getElementById('next').addEventListener('click', ()=>goTo(currentIndex+1));
 
-      // Старт
       goTo(0).then(()=>{
         injectImageFor(1);
-        // Тихенька послідовна пре-розв'язка всіх сторінок (щоб далі миттєво показувались)
+        // тихое «препрогрузить» следующие, чтобы листалось мгновенно
         (async ()=>{
-          for(const url of ibbLinks){
-            if(!resolvedMap.has(url)){
-              await resolveQueued(url);
-              await sleep(250);
-            }
+          for(const item of ibbItems){
+            if(item.src) continue; // у нас уже прямой src
+            await resolveQueued(item.page);
+            await sleep(250);
           }
         })();
       });
