@@ -15,14 +15,8 @@
   <!-- performance hints -->
   <link rel="preconnect" href="https://i.ibb.co" crossorigin />
   <link rel="dns-prefetch" href="//i.ibb.co" />
-  <link rel="preconnect" href="https://images.weserv.nl" crossorigin />
-  <link rel="dns-prefetch" href="//images.weserv.nl" />
-  <link rel="preconnect" href="https://cdn.statically.io" crossorigin />
-  <link rel="dns-prefetch" href="//cdn.statically.io" />
   <link rel="preconnect" href="https://i0.wp.com" crossorigin />
   <link rel="dns-prefetch" href="//i0.wp.com" />
-  <link rel="preconnect" href="https://r.jina.ai" crossorigin />
-  <link rel="dns-prefetch" href="//r.jina.ai" />
 
   <style>
     :root{
@@ -35,8 +29,10 @@
     }
     *{box-sizing:border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility}
     html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0; color:var(--text); font-family:Arial,Helvetica,sans-serif; line-height:1.6;
+      /* темніше + маленький градієнт */
       background:
         radial-gradient(720px 480px at 22% -8%, #d7c8ff30 0%, transparent 60%),
         radial-gradient(680px 440px at 108% 24%, #d2c1ff26 0%, transparent 65%),
@@ -51,7 +47,6 @@
       filter:blur(42px); z-index:-2; animation:float 42s linear infinite alternate; opacity:.85;
     }
     @keyframes float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-3%,2%,0) scale(1.05)}}
-
     #sparkles{position:fixed; inset:0; z-index:-1; pointer-events:none;}
 
     .wrap{max-width:980px;margin:0 auto;padding:22px}
@@ -60,48 +55,33 @@
     h1{margin:14px auto 8px;font-size:clamp(28px,4.5vw,44px);line-height:1.18;font-weight:800;letter-spacing:.3px;text-align:center;text-shadow:0 2px 24px #0006;text-wrap:balance;max-width:900px}
     .sub{margin:0 auto 18px;font-size:clamp(14px,2.6vw,18px);color:var(--muted);max-width:900px;text-align:center;text-wrap:pretty}
 
-    /* ======= ГАЛЕРЕЯ ======= */
-    .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#221a41;margin:0 auto}
-    .viewport{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden!important;background:#221a41}
-    .slides{display:flex;width:100%;height:100%;transform:translateX(0);transition:transform .5s ease;will-change:transform;user-select:none;touch-action:pan-y;overflow:hidden!important}
-    .slide{flex:0 0 100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .slide picture,.slide img{width:100%;height:100%;object-fit:cover;object-position:center}
-    .slide img{-webkit-user-drag:none;user-select:none;pointer-events:none;contain:paint;transform:translateZ(0)}
-    .viewport::-webkit-scrollbar,.slides::-webkit-scrollbar,.slide::-webkit-scrollbar{width:0;height:0}
-
-    .ph{position:absolute;inset:0;background:
-      radial-gradient(60% 80% at 50% 20%, #32265c, transparent 70%),
-      linear-gradient(180deg,#2c2154,#221a41);animation:ph 1.4s ease-in-out infinite alternate}
-    @keyframes ph{0%{opacity:.55}100%{opacity:.85}}
-
-    .loader{position:absolute;top:50%;left:50%;width:20px;height:20px;border-radius:50%;
-      border:3px solid rgba(255,255,255,.32);border-top-color:#fff;transform:translate(-50%,-50%);
-      pointer-events:none;z-index:2;display:none;animation:spin .8s linear infinite;box-shadow:0 0 0 6px rgba(0,0,0,.12)}
-    @keyframes spin{0%{transform:translate(-50%,-50%) rotate(0)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
-
-    .navBtn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(28,18,60,.55);border:1px solid #ffffff2a;backdrop-filter:blur(6px);cursor:pointer;opacity:.95;transition:transform .15s ease,filter .2s ease}
-    .navBtn:hover{transform:translateY(-50%) scale(1.06)}
-    .navPrev{left:10px}.navNext{right:10px}
-    .dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center}
-    .dot{width:8px;height:8px;border-radius:50%;background:#ffffff60;box-shadow:0 0 0 2px #0003 inset}
-    .dot.active{background:#fff}
-
-    /* ======= КАРТКИ ======= */
+    /* Карточки тексту */
     .card{background:linear-gradient(180deg,#6a54a099,#54428f99);border:1px solid var(--border);border-radius:var(--radius);padding:22px clamp(16px,5vw,28px);margin:20px auto;backdrop-filter:blur(8px);box-shadow:var(--shadow);text-align:center}
     .card h2{margin:0 0 12px;font-size:clamp(22px,3.6vw,30px);font-weight:800;letter-spacing:.2px;text-align:center;text-wrap:balance}
-    .card p,ul.clean{max-width:880px;margin:10px auto;text-align:justify;text-wrap:pretty;word-break:normal;overflow-wrap:normal;hyphens:none}
-    .grid2{display:grid;gap:16px}
-    @media(min-width:820px){.grid2{grid-template-columns:1.2fr .8fr}}
+    .card p,ul.clean{max-width:880px;margin:10px auto;text-align:justify;text-wrap:pretty;hyphens:none}
     ul.clean{padding:0;list-style:disc inside}
     ul.clean li{margin:10px 0}
     .pill{display:inline-block;margin:6px 6px 0 0;padding:6px 10px;font-size:14px;border-radius:999px;border:1px solid var(--border);color:#f7f2ff;background:#ffffff22}
 
-    .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center}
-    .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
+    /* Блоки з фото (без скролу) */
+    .imgBlock{margin:20px auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#221a41}
+    .imgFull img{display:block;width:100%;height:auto}
+    .imgRow{display:grid;gap:10px}
+    @media(min-width:740px){.imgRow{grid-template-columns:1fr 1fr}}
+    .imgRow figure,.imgFull figure{margin:0}
+    .imgRow img,.imgFull img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;aspect-ratio:16/9}
+
+    /* Галерея-сітка */
+    .gallery{display:grid;gap:10px;margin-top:10px}
+    .gallery a{display:block;border-radius:14px;overflow:hidden;background:#1f1841;border:1px solid #ffffff1f}
+    .gallery img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;display:block;transition:transform .25s ease}
+    .gallery a:hover img{transform:scale(1.02)}
+
     .btn{appearance:none;border:0;cursor:pointer;padding:14px 20px;border-radius:14px;font-weight:800;letter-spacing:.3px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;color:#221a41;background:linear-gradient(180deg,#efe3ff,#c9aef7);box-shadow:0 10px 24px #0005,inset 0 1px 0 #fff7;transition:transform .12s ease,filter .2s ease}
     .btn:hover{transform:translateY(-1px);filter:saturate(1.04)}
     .btn:active{transform:translateY(0)}
-    .note{color:var(--muted);font-size:14px;text-align:center}
+    .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center}
+    .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
 
     .reveal{opacity:0;transform:translateY(14px);transition:all .8s ease}
     .reveal.show{opacity:1;transform:none}
@@ -125,19 +105,15 @@
       <p class="sub">медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла»</p>
     </header>
 
-    <!-- ======= ГАЛЕРЕЯ ======= -->
-    <section class="carousel reveal" id="gallery" aria-label="Галерея світлин">
-      <div class="viewport">
-        <div class="slides" id="slides"></div>
-        <div class="loader" id="galleryLoader" aria-hidden="true"></div>
-      </div>
-      <button class="navBtn navPrev" id="prev" aria-label="Попереднє фото" type="button">‹</button>
-      <button class="navBtn navNext" id="next" aria-label="Наступне фото" type="button">›</button>
-      <div class="dots" id="dots" aria-hidden="true"></div>
+    <!-- HERO фото -->
+    <section class="imgBlock imgFull reveal">
+      <figure>
+        <img src="https://i0.wp.com/i.ibb.co/0y24kyQb/1200px-Lake-Synevyr.jpg" alt="Озеро Синевир" referrerpolicy="no-referrer" loading="eager" decoding="async" fetchpriority="high">
+      </figure>
     </section>
 
     <!-- ======= ПРО РЕТРИТ ======= -->
-    <section class="card reveal">
+    <section class="card reveal" id="about">
       <h2>Про ретрит</h2>
       <p>Ці дні — про <b>тишу всередині</b>, м’яке сповільнення та повернення до себе. Ми створюємо безпечний простір, де можна нарешті видихнути, відчути тіло, помітити справжні потреби й дбайливо дати їм місце.</p>
       <p>Практики підібрані так, щоб зняти напругу, відновити енергію й повернути <b>ясність</b>. Ви зможете прожити емоції, які потребують уваги, і побачити нові рішення — без тиску, з повагою до власного темпу.</p>
@@ -148,6 +124,12 @@
         <span class="pill">МАК-сесії</span>
         <span class="pill">Трансформаційна гра «Ліла»</span>
       </div>
+    </section>
+
+    <!-- Фото між блоками -->
+    <section class="imgBlock imgRow reveal">
+      <figure><img src="https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp" alt="Гойдалка в Карпатах" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg" alt="Йога серед лісу" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
     <!-- ======= ЩО НА ТЕБЕ ЧЕКАЄ ======= -->
@@ -162,10 +144,22 @@
       </ul>
     </section>
 
+    <!-- Фото між блоками -->
+    <section class="imgBlock imgRow reveal">
+      <figure><img src="https://i0.wp.com/i.ibb.co/d0G6HkpZ/vodospad-shypit-3.jpg" alt="Водоспад Шипіт" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/pjWBjpdp/synevyr-pereval-2.jpg" alt="Карпатський перевал" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+    </section>
+
     <!-- ======= Як минає день ======= -->
     <section class="card reveal">
       <h2>Як минає день</h2>
       <p>Ранок — тиша, дихання й йога. День — природа, SPA або подорож Карпатами. Вечір — м’які інтеграційні практики, тепле коло, час для себе.</p>
+    </section>
+
+    <!-- Фото між блоками -->
+    <section class="imgBlock imgRow reveal">
+      <figure><img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Практики йоги" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg" alt="Пейзажі Карпат" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
     <!-- ======= ЩО ВХОДИТЬ ======= -->
@@ -182,10 +176,22 @@
       </ul>
     </section>
 
+    <!-- Фото між блоками -->
+    <section class="imgBlock imgRow reveal">
+      <figure><img src="https://i0.wp.com/i.ibb.co/8LFJrW1V/photo-2025-08-23-23-23-21.jpg" alt="Командні моменти" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/gMJyPx6R/photo-2025-08-23-23-23-22.jpg" alt="Гори і небо" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+    </section>
+
     <!-- ======= ПІСЛЯ РЕТРИТУ ======= -->
     <section class="card reveal">
       <h2>Що відчуєш після</h2>
       <p>Більше легкості й внутрішнього спокою. Ближчий контакт із тілом і почуттями. Розуміння, куди рухатися далі — без зайвого шуму, з опорою на себе.</p>
+    </section>
+
+    <!-- Фото між блоками -->
+    <section class="imgBlock imgRow reveal">
+      <figure><img src="https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-озеро-sinevir-2.jpg" alt="Синевир — вид 2" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.src='https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg'"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/kgB6kyhV/1508689396-1508686392-ozero-sinevir-3.jpg" alt="Синевир — вид 3" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
     <!-- ======= CTA ======= -->
@@ -194,6 +200,62 @@
       <p class="price">Ціна: <b>15 000 гривень</b> — усе перелічене вище входить у вартість</p>
       <div class="cta">
         <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram">💫 Забронювати</a>
+        <a class="btn" href="#gallery">🖼️ Фотогалерея</a>
+      </div>
+    </section>
+
+    <!-- ======= ГАЛЕРЕЯ (повна) ======= -->
+    <section class="card reveal" id="gallery" aria-label="Фотогалерея">
+      <h2>Фотогалерея</h2>
+      <div class="gallery">
+        <a href="https://ibb.co/mC6tPhyp" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/d0G6HkpZ/vodospad-shypit-3.jpg" alt="Водоспад Шипіт" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/pjfk24r5" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp" alt="Гойдалка" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/N2JyQJ4K" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/HTbH1bJq/verkhovynalife-benjola-hoidalka-2-3.jpg" alt="Гойдалка 2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/4nwV4ZTr" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/MxyCPDV0/image.jpg" alt="Карпатський краєвид" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/N21d2zKz" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/pjWBjpdp/synevyr-pereval-2.jpg" alt="Перевал" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/hRh6v8P9" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg" alt="Пейзаж 1" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/nqdZJ9N3" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/BHWdMb54/image.jpg" alt="Пейзаж 2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/DfTSTscH" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg" alt="Йога в лісі" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/4wYj5C1Q" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Йога 2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/xqL9yq3T" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/0y24kyQb/1200px-Lake-Synevyr.jpg" alt="Синевир" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/0yMLq7hW" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg" alt="Синевир 2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/5gqdrNbV" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/8LFJrW1V/photo-2025-08-23-23-23-21.jpg" alt="Фото 21" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/1YRhzJRM" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/7xr8kNrQ/photo-2025-08-23-23-23-20-2.jpg" alt="Фото 20-2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/kgXK9tMS" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/gMJyPx6R/photo-2025-08-23-23-23-22.jpg" alt="Фото 22" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/tMyL5fSc" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/kgYmFnp0/photo-2025-08-23-23-23-20.jpg" alt="Фото 20" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
+        <a href="https://ibb.co/Rpb4ZSCG" target="_blank" rel="noopener">
+          <img src="https://i0.wp.com/i.ibb.co/kgB6kyhV/1508689396-1508686392-ozero-sinevir-3.jpg" alt="Синевир 3" referrerpolicy="no-referrer" loading="lazy" decoding="async">
+        </a>
       </div>
     </section>
 
@@ -201,69 +263,30 @@
   </div>
 
   <script>
-    /* ================== ICON + MANIFEST ================== */
+    /* ====== ICON + MANIFEST (safe) ====== */
     const ibbIconPage = "https://ibb.co/WNkz2hXP";
 
-    /* ---------- helpers ---------- */
-    const LS_TTL_MS = 30*24*60*60*1000;
-    const now = () => Date.now();
-    const sleep = (ms)=>new Promise(r=>setTimeout(r,ms));
-
-    // Надёжные прокси
-    const weserv = (url, dpr=2) =>
-      `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=${dpr}&il`;
-    const wpcom = (url) => `https://i0.wp.com/${url.replace(/^https?:\/\//,'')}`;
-
-    function lsGet(key){ try{const raw=localStorage.getItem(key); if(!raw) return null; const {v,t}=JSON.parse(raw); if(now()-t>LS_TTL_MS){localStorage.removeItem(key);return null;} return v;}catch(e){return null} }
-    function lsSet(key,v){ try{localStorage.setItem(key,JSON.stringify({v,t:now()}));}catch(e){} }
-
-    async function fetchOgImageViaProxy(ibbPageUrl){
+    async function resolveIbbDirect(ibbPageUrl){
       const naked = ibbPageUrl.replace(/^https?:\/\//,'');
-      const probes = [
-        `https://r.jina.ai/https://${naked}`,
-        `https://r.jina.ai/http://${naked}`
-      ];
-      for(const probe of probes){
-        try{
-          const txt = await fetch(probe, {cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject());
-          const m1 = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
-          if(m1) return m1[0];
-          const m2 = txt.match(/property=["']og:image["']\s+content=["']([^"']+)["']/i);
-          if(m2) return m2[1];
-        }catch(e){}
-      }
-      return null;
+      const probe = `https://r.jina.ai/https://${naked}`;
+      try{
+        const txt = await fetch(probe).then(r=>r.ok?r.text():Promise.reject());
+        const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
+        return m ? m[0] : ibbPageUrl;
+      }catch{ return ibbPageUrl; }
     }
 
-    async function resolveIbb(ibbPageUrl){
-      const id = ibbPageUrl.split("/").pop().replace(/\?.*/, '');
-      const key = "ibb:best:"+id;
-      const cached = lsGet(key);
-      if(cached) return cached;
-
-      const og = await fetchOgImageViaProxy(ibbPageUrl);
-      if(og){ lsSet(key, og); return og; }
-
-      for(const ext of ["webp","jpg","jpeg","png"]){
-        const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
-        try{ const r = await fetch(guess, {method:'HEAD'}); if(r.ok){ lsSet(key, guess); return guess; } }catch(e){}
-      }
-      lsSet(key, ibbPageUrl);
-      return ibbPageUrl;
-    }
-
-    /* ================== PWA ICON (fixed start_url) ================== */
     (async ()=>{
-      const bestIcon = await resolveIbb(ibbIconPage);
+      const bestIcon = await resolveIbbDirect(ibbIconPage);
       document.getElementById("favicon").href = bestIcon;
       document.getElementById("appleicon").href = bestIcon;
-
-      const startAbs = new URL(location.pathname, location.href).toString(); // абсолютный URL
       const manifest = {
         name:"Жіночий ретрит — Душа без масок",
         short_name:"Ретрит",
-        start_url:startAbs, display:"standalone",
-        background_color:"#8069be", theme_color:"#8069be",
+        start_url:".",
+        display:"standalone",
+        background_color:"#8069be",
+        theme_color:"#8069be",
         icons:[
           {src:bestIcon,sizes:"192x192",type:"image/png",purpose:"any maskable"},
           {src:bestIcon,sizes:"512x512",type:"image/png",purpose:"any maskable"}
@@ -273,118 +296,13 @@
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
     })();
 
-    /* ================== ГАЛЕРЕЯ (твои прямые ссылки + прокси) ================== */
-    const items = [
-      {page:"https://ibb.co/mC6tPhyp", src:"https://i.ibb.co/d0G6HkpZ/vodospad-shypit-3.jpg", alt:"vodospad-shypit-3"},
-      {page:"https://ibb.co/pjfk24r5", src:"https://i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp", alt:"verkhovynalife-benjola-hoidalka-2-1"},
-      {page:"https://ibb.co/N2JyQJ4K", src:"https://i.ibb.co/HTbH1bJq/verkhovynalife-benjola-hoidalka-2-3.jpg", alt:"verkhovynalife-benjola-hoidalka-2-3"},
-      {page:"https://ibb.co/4nwV4ZTr", src:"https://i.ibb.co/MxyCPDV0/image.jpg", alt:"image"},
-      {page:"https://ibb.co/N21d2zKz", src:"https://i.ibb.co/pjWBjpdp/synevyr-pereval-2.jpg", alt:"synevyr-pereval-2"},
-      {page:"https://ibb.co/hRh6v8P9", src:"https://i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg", alt:"karpaty-1"},
-      {page:"https://ibb.co/nqdZJ9N3", src:"https://i.ibb.co/BHWdMb54/image.jpg", alt:"image-2"},
-      {page:"https://ibb.co/DfTSTscH", src:"https://i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg", alt:"yoga-forest"},
-      {page:"https://ibb.co/4wYj5C1Q", src:"https://i.ibb.co/sp6FMcWB/yoga-1.jpg", alt:"yoga-1"},
-      {page:"https://ibb.co/xqL9yq3T", src:"https://i.ibb.co/0y24kyQb/1200px-Lake-Synevyr.jpg", alt:"Lake Synevyr"},
-      {page:"https://ibb.co/0yMLq7hW", src:"https://i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg", alt:"Synevyr-2"},
-      {page:"https://ibb.co/5gqdrNbV", src:"https://i.ibb.co/8LFJrW1V/photo-2025-08-23-23-23-21.jpg", alt:"photo-21"},
-      {page:"https://ibb.co/1YRhzJRM", src:"https://i.ibb.co/7xr8kNrQ/photo-2025-08-23-23-23-20-2.jpg", alt:"photo-20-2"},
-      {page:"https://ibb.co/kgXK9tMS", src:"https://i.ibb.co/gMJyPx6R/photo-2025-08-23-23-23-22.jpg", alt:"photo-22"},
-      {page:"https://ibb.co/tMyL5fSc", src:"https://i.ibb.co/kgYmFnp0/photo-2025-08-23-23-23-20.jpg", alt:"photo-20"},
-      {page:"https://ibb.co/Rpb4ZSCG", src:"https://i.ibb.co/kgB6kyhV/1508689396-1508686392-ozero-sinevir-3.jpg", alt:"Synevyr-3"}
-    ];
-
-    const slidesEl = document.getElementById("slides");
-    const dotsEl = document.getElementById("dots");
-    const loader = document.getElementById("galleryLoader");
-    const showLoader = (v)=> loader.style.display = v ? "block" : "none";
-
-    // Слайды з плейсхолдерами
-    items.forEach((it,i)=>{
-      const slide = document.createElement("div");
-      slide.className="slide";
-      slide.dataset.page = it.page;
-      slide.dataset.src = it.src;
-
-      const ph = document.createElement("div"); ph.className="ph"; slide.appendChild(ph);
-
-      const pic = document.createElement("picture");
-      // 1) webp через weserv (ретина)
-      const sWebp = document.createElement("source");
-      sWebp.type="image/webp";
-      sWebp.srcset = `${weserv(it.src,1)} 1x, ${weserv(it.src,2)} 2x, ${weserv(it.src,3)} 3x`;
-      sWebp.sizes = "(max-width: 980px) 100vw, 980px";
-      pic.appendChild(sWebp);
-
-      // 2) универсальный источник через i0.wp.com
-      const sAny = document.createElement("source");
-      sAny.srcset = `${wpcom(it.src)} 1x`;
-      sAny.sizes = "(max-width: 980px) 100vw, 980px";
-      pic.appendChild(sAny);
-
-      // 3) <img> — ставим i0.wp.com; при ошибке — прямой i.ibb.co
-      const img = document.createElement("img");
-      img.alt = it.alt || `Фото ${i+1}`;
-      img.loading = i===0 ? "eager" : "lazy";
-      img.decoding="async"; img.fetchPriority = i===0 ? "high" : "auto";
-      img.referrerPolicy="no-referrer";
-      img.style.opacity="0";
-
-      img.addEventListener('load', ()=>{ ph.remove(); img.style.opacity="1"; if(currentIndex===i) showLoader(false); });
-      img.addEventListener('error', async ()=>{
-        // если i0.wp.com не дал — пробуем прямой, затем webp-прокси
-        if(!img.dataset.triedDirect){
-          img.dataset.triedDirect = "1";
-          img.src = it.src;
-          return;
-        }
-        if(!img.dataset.triedWeserv){
-          img.dataset.triedWeserv = "1";
-          img.src = weserv(it.src,2);
-          return;
-        }
-        showLoader(false); // всё равно уберём спиннер
-      });
-
-      img.src = wpcom(it.src); // первичный источник
-      pic.appendChild(img); slide.appendChild(pic); slidesEl.appendChild(slide);
-
-      const dot = document.createElement("span"); dot.className="dot"; dotsEl.appendChild(dot);
-    });
-
-    async function injectImageFor(index){
-      const slide = slidesEl.children[index]; if(!slide) return;
-      const img = slide.querySelector("img");
-      if(img && img.src) return; // уже вставлено
-      showLoader(true);
-    }
-
-    let currentIndex = 0;
-    function initCarousel(){
-      const dots = Array.from(document.querySelectorAll('.dot'));
-      const total = slidesEl.children.length;
-
-      const goTo = async(i)=>{
-        currentIndex = (i+total)%total;
-        slidesEl.style.transform = `translateX(-${currentIndex*100}%)`;
-        dots.forEach((d,di)=>d.classList.toggle('active', di===currentIndex));
-        await injectImageFor(currentIndex);
-        showLoader(false);
-      };
-
-      document.getElementById('prev').addEventListener('click', ()=>goTo(currentIndex-1));
-      document.getElementById('next').addEventListener('click', ()=>goTo(currentIndex+1));
-
-      goTo(0);
-    }
-    initCarousel();
-
-    /* ================== REVEAL ================== */
+    /* ====== REVEAL ====== */
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
     },{threshold:0.14});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    /* ================== SPARKLES ================== */
+    /* ====== SPARKLES ====== */
     const canvas = document.getElementById('sparkles'); const ctx = canvas.getContext('2d');
     let W=0,H=0,stars=[];
     function resize(){ const dpr=Math.min(window.devicePixelRatio||1,2); W=canvas.width=Math.floor(innerWidth*dpr); H=canvas.height=Math.floor(innerHeight*dpr); canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px'; ctx.setTransform(1,0,0,1,0,0);}
