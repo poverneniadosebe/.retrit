@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Жіночий ретрит «Повернення до себе» • Карпати 11.09–15.09.2025</title>
-  <meta name="theme-color" content="#8a71c4" />
+  <meta name="theme-color" content="#8069be" />
   <meta name="description" content="Жіночий ретрит у Карпатах про м’яке повернення до себе: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Дбайлива атмосфера, сповільнення, безпека й підтримка. Квитки, трансфер, проживання — у вартості." />
 
   <!-- Favicon & PWA manifest (ставятся скриптом) -->
@@ -25,142 +25,92 @@
   <link rel="dns-prefetch" href="//r.jina.ai" />
 
   <style>
-    /* ======= RESET & THEME ======= */
     :root{
       /* темнее и мягче фиолетовый */
-      --bg-1:#8a71c4; --bg-2:#7a62b6; --bg-3:#9a85cf;
+      --bg-1:#8069be; --bg-2:#715aad; --bg-3:#9179c9;
       --glass: rgba(255,255,255,.08);
-      --border: #ffffff24;
-      --text:#f5f0ff; --muted:#e9e0ffcc; --accent:#efe3ff;
-      --shadow: 0 18px 40px rgba(0,0,0,.30);
-      --radius: 18px;
+      --border:#ffffff26;
+      --text:#f8f5ff; --muted:#e7deffcc;
+      --shadow:0 18px 40px rgba(0,0,0,.30);
+      --radius:18px;
     }
     *{box-sizing:border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility}
     html,body{height:100%}
     body{
-      margin:0; color:var(--text);
-      font-family: Arial, Helvetica, sans-serif; line-height:1.6;
-      /* маленький градиент + тёмная подложка */
+      margin:0; color:var(--text); font-family:Arial,Helvetica,sans-serif; line-height:1.6;
+      /* небольшой (маленький) градиент + тёмная подложка */
       background:
-        radial-gradient(800px 520px at 20% -10%, #dac7ff2b 0%, transparent 60%),
-        radial-gradient(700px 480px at 110% 25%, #d5c3ff26 0%, transparent 65%),
+        radial-gradient(720px 480px at 22% -8%, #d7c8ff30 0%, transparent 60%),
+        radial-gradient(680px 440px at 108% 24%, #d2c1ff26 0%, transparent 65%),
         linear-gradient(150deg,var(--bg-1),var(--bg-2) 52%, var(--bg-3) 100%);
       overflow-x:hidden;
     }
     body::before{
       content:""; position:fixed; inset:-20%;
       background:
-        radial-gradient(56% 36% at 72% 22%, #efe6ff22 0%, transparent 60%),
-        radial-gradient(50% 34% at 22% 82%, #f6eeff18 0%, transparent 60%);
-      filter: blur(42px); z-index:-2; animation: float 42s linear infinite alternate;
-      opacity:.85;
+        radial-gradient(56% 36% at 72% 22%, #efe6ff20 0%, transparent 60%),
+        radial-gradient(50% 34% at 22% 82%, #f6eeff16 0%, transparent 60%);
+      filter:blur(42px); z-index:-2; animation:float 42s linear infinite alternate; opacity:.85;
     }
     @keyframes float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-3%,2%,0) scale(1.05)}}
 
-    /* полотно блискіток */
-    #sparkles{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
+    #sparkles{position:fixed; inset:0; z-index:-1; pointer-events:none;}
 
     .wrap{max-width:980px;margin:0 auto;padding:22px}
     header{text-align:center;padding:28px 0 16px}
-    .badge{
-      display:inline-block;padding:6px 12px;border-radius:999px;background:var(--glass);
-      border:1px solid var(--border); color:var(--muted); font-weight:700; letter-spacing:.08em;
-    }
-    h1{
-      margin:14px auto 8px; font-size:clamp(28px,4.5vw,44px); line-height:1.18;
-      font-weight:800; letter-spacing:.3px; text-align:center; text-shadow:0 2px 24px #0006; text-wrap:balance;
-      max-width: 900px;
-    }
-    .sub{
-      margin:0 auto 18px; font-size:clamp(14px,2.6vw,18px); color:var(--muted); max-width:900px; text-align:center; text-wrap:pretty;
-    }
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--glass);border:1px solid var(--border);color:var(--muted);font-weight:700;letter-spacing:.08em}
+    h1{margin:14px auto 8px;font-size:clamp(28px,4.5vw,44px);line-height:1.18;font-weight:800;letter-spacing:.3px;text-align:center;text-shadow:0 2px 24px #0006;text-wrap:balance;max-width:900px}
+    .sub{margin:0 auto 18px;font-size:clamp(14px,2.6vw,18px);color:var(--muted);max-width:900px;text-align:center;text-wrap:pretty}
 
     /* ======= ГАЛЕРЕЯ ======= */
-    .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#241a44;margin:0 auto}
-    .viewport{position:relative;width:100%; aspect-ratio:16/9; overflow:hidden !important; background:#241a44}
-    .slides{
-      display:flex; width:100%; height:100%; transform:translateX(0);
-      transition: transform .5s ease; will-change: transform; user-select:none; touch-action: pan-y;
-      overflow:hidden !important;
-    }
-    .slide{flex:0 0 100%; height:100%; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden}
-    .slide picture, .slide img{width:100%; height:100%; object-fit:cover; object-position:center}
-    .slide img{
-      image-rendering:auto; -webkit-optimize-contrast:auto; pointer-events:none;
-      contain: paint; transform: translateZ(0);
-    }
-    .viewport::-webkit-scrollbar, .slides::-webkit-scrollbar, .slide::-webkit-scrollbar{width:0;height:0}
+    .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#221a41;margin:0 auto}
+    .viewport{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden!important;background:#221a41}
+    .slides{display:flex;width:100%;height:100%;transform:translateX(0);transition:transform .5s ease;will-change:transform;user-select:none;touch-action:pan-y;overflow:hidden!important}
+    .slide{flex:0 0 100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .slide picture,.slide img{width:100%;height:100%;object-fit:cover;object-position:center}
+    .slide img{image-rendering:auto;-webkit-optimize-contrast:auto;pointer-events:none;contain:paint;transform:translateZ(0)}
+    .viewport::-webkit-scrollbar,.slides::-webkit-scrollbar,.slide::-webkit-scrollbar{width:0;height:0}
 
-    /* placeholder фон кадра до загрузки */
-    .ph{
-      position:absolute; inset:0; background:
-        radial-gradient(60% 80% at 50% 20%, #312458, transparent 70%),
-        linear-gradient(180deg, #2b1f53, #241a44);
-      animation: ph 1.4s ease-in-out infinite alternate;
-    }
-    @keyframes ph{0%{opacity:.55}100%{opacity:.8}}
+    /* placeholder до загрузки */
+    .ph{position:absolute;inset:0;background:
+      radial-gradient(60% 80% at 50% 20%, #32265c, transparent 70%),
+      linear-gradient(180deg,#2c2154,#221a41);animation:ph 1.4s ease-in-out infinite alternate}
+    @keyframes ph{0%{opacity:.55}100%{opacity:.85}}
 
-    /* loader по центру вьюпорта */
-    .loader{
-      position:absolute; inset:auto; top:50%; left:50%;
-      width:22px; height:22px; border-radius:50%;
-      border:3px solid rgba(255,255,255,.32); border-top-color:#fff;
-      transform:translate(-50%,-50%); pointer-events:none; z-index:2; display:none;
-      animation: spin .8s linear infinite; box-shadow: 0 0 0 6px rgba(0,0,0,.12);
-    }
-    @keyframes spin{ 0%{transform:translate(-50%,-50%) rotate(0)} 100%{transform:translate(-50%,-50%) rotate(360deg)} }
+    /* компактный лоадер по центру */
+    .loader{position:absolute;top:50%;left:50%;width:20px;height:20px;border-radius:50%;
+      border:3px solid rgba(255,255,255,.32);border-top-color:#fff;transform:translate(-50%,-50%);
+      pointer-events:none;z-index:2;display:none;animation:spin .8s linear infinite;box-shadow:0 0 0 6px rgba(0,0,0,.12)}
+    @keyframes spin{0%{transform:translate(-50%,-50%) rotate(0)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
 
-    .navBtn{
-      position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%;
-      display:grid; place-items:center; color:#fff; background:rgba(28,18,60,.55);
-      border:1px solid #ffffff2a; backdrop-filter: blur(6px); cursor:pointer; opacity:.95;
-      transition:transform .15s ease, filter .2s ease;
-    }
+    .navBtn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(28,18,60,.55);border:1px solid #ffffff2a;backdrop-filter:blur(6px);cursor:pointer;opacity:.95;transition:transform .15s ease,filter .2s ease}
     .navBtn:hover{transform:translateY(-50%) scale(1.06)}
-    .navPrev{left:10px} .navNext{right:10px}
-    .dots{position:absolute; left:0; right:0; bottom:10px; display:flex; gap:8px; justify-content:center}
-    .dot{width:8px;height:8px;border-radius:50%; background:#ffffff60; box-shadow:0 0 0 2px #0003 inset}
+    .navPrev{left:10px}.navNext{right:10px}
+    .dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center}
+    .dot{width:8px;height:8px;border-radius:50%;background:#ffffff60;box-shadow:0 0 0 2px #0003 inset}
     .dot.active{background:#fff}
 
     /* ======= КАРТКИ ======= */
-    .card{
-      background:linear-gradient(180deg, #6f57a099, #59459199);
-      border:1px solid var(--border); border-radius:var(--radius);
-      padding:22px clamp(16px, 5vw, 28px); margin:20px auto; backdrop-filter: blur(8px);
-      box-shadow:var(--shadow);
-      text-align:center;
-    }
-    .card h2{margin:0 0 12px; font-size:clamp(22px,3.6vw,30px); font-weight:800; letter-spacing:.2px; text-align:center; text-wrap:balance}
-    .card p,
-    ul.clean{max-width:880px;margin:10px auto; text-align:justify; text-wrap:pretty; word-break:normal; overflow-wrap:normal; hyphens:none}
-    .grid2{display:grid; gap:16px}
-    @media(min-width:820px){ .grid2{grid-template-columns:1.2fr .8fr} }
+    .card{background:linear-gradient(180deg,#6a54a099,#54428f99);border:1px solid var(--border);border-radius:var(--radius);padding:22px clamp(16px,5vw,28px);margin:20px auto;backdrop-filter:blur(8px);box-shadow:var(--shadow);text-align:center}
+    .card h2{margin:0 0 12px;font-size:clamp(22px,3.6vw,30px);font-weight:800;letter-spacing:.2px;text-align:center;text-wrap:balance}
+    .card p,ul.clean{max-width:880px;margin:10px auto;text-align:justify;text-wrap:pretty;word-break:normal;overflow-wrap:normal;hyphens:none}
+    .grid2{display:grid;gap:16px}
+    @media(min-width:820px){.grid2{grid-template-columns:1.2fr .8fr}}
+    ul.clean{padding:0;list-style:disc inside}
+    ul.clean li{margin:10px 0}
+    .pill{display:inline-block;margin:6px 6px 0 0;padding:6px 10px;font-size:14px;border-radius:999px;border:1px solid var(--border);color:#f7f2ff;background:#ffffff22}
 
-    ul.clean{padding:0; list-style:disc inside}
-    ul.clean li{margin:10px 0; word-break:normal; overflow-wrap:normal; hyphens:none}
-
-    .pill{display:inline-block; margin:6px 6px 0 0; padding:6px 10px; font-size:14px; border-radius:999px;
-      border:1px solid var(--border); color:#f7f2ff; background:#ffffff22}
-
-    /* ======= CTA ======= */
-    .price{font-size: clamp(22px, 4.4vw, 34px); margin:0 0 12px; font-weight:800; text-align:center}
-    .cta{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center}
-    .btn{
-      appearance:none; border:0; cursor:pointer; padding:14px 20px; border-radius:14px;
-      font-weight:800; letter-spacing:.3px; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
-      color:#241a44; background:linear-gradient(180deg,#efe3ff,#c9aef7); box-shadow:0 10px 24px #0005, inset 0 1px 0 #fff7;
-      transition: transform .12s ease, filter .2s ease;
-    }
-    .btn:hover{transform:translateY(-1px); filter:saturate(1.04)}
+    .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center}
+    .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
+    .btn{appearance:none;border:0;cursor:pointer;padding:14px 20px;border-radius:14px;font-weight:800;letter-spacing:.3px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;color:#221a41;background:linear-gradient(180deg,#efe3ff,#c9aef7);box-shadow:0 10px 24px #0005,inset 0 1px 0 #fff7;transition:transform .12s ease,filter .2s ease}
+    .btn:hover{transform:translateY(-1px);filter:saturate(1.04)}
     .btn:active{transform:translateY(0)}
-    .btnGhost{color:#f0eaff; background:transparent; border:1px solid #ffffff3a; box-shadow:none; padding:12px 16px}
-    .note{color:var(--muted); font-size:14px; text-align:center}
+    .note{color:var(--muted);font-size:14px;text-align:center}
 
-    /* REVEAL */
-    .reveal{opacity:0; transform:translateY(14px); transition: all .8s ease}
-    .reveal.show{opacity:1; transform:none}
+    .reveal{opacity:0;transform:translateY(14px);transition:all .8s ease}
+    .reveal.show{opacity:1;transform:none}
 
-    footer{padding:24px 0 40px; text-align:center; color:#e7dcffcc; font-size:14px}
+    footer{padding:24px 0 40px;text-align:center;color:#e7dcffcc;font-size:14px}
     a{color:#fff}
     @media (prefers-reduced-motion: reduce){
       body::before{animation:none}
@@ -170,7 +120,6 @@
   </style>
 </head>
 <body>
-  <!-- повільні блискітки -->
   <canvas id="sparkles"></canvas>
 
   <div class="wrap">
@@ -213,7 +162,7 @@
         <li><b>Гра «Ліла»</b> — м’який спосіб побачити себе збоку, отримати підказки й інсайти для рішень.</li>
         <li><b>Стояння на цвяхах</b> — зустріч зі страхом і вихід у силу через усвідомлене дихання.</li>
         <li><b>Ранкова йога</b> — легкість, баланс, м’яка сила й контакт із собою.</li>
-        <li><b>МАК-сесії</б> — відповіді з підсвідомого, ясність наступних кроків.</li>
+        <li><b>МАК-сесії</b> — відповіді з підсвідомого, ясність наступних кроків.</li>
       </ul>
     </section>
 
@@ -260,112 +209,87 @@
     const ibbIconPage = "https://ibb.co/WNkz2hXP";
 
     /* ---------- helpers ---------- */
-    const LS_TTL_MS = 30*24*60*60*1000; // 30 днів
+    const LS_TTL_MS = 30*24*60*60*1000;
     const now = () => Date.now();
-    function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+    const weserv = (url, dpr=2) => `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=${dpr}&il`;
+    const staticallyCdn = (url) => { try{const u=new URL(url); return `https://cdn.statically.io/img/${u.hostname}${u.pathname}?f=webp`;}catch(e){return url;} };
+    const wpcom = (url) => `https://i0.wp.com/${url.replace(/^https?:\/\//,'')}`;
 
-    async function fetchWithBackoff(url, {retries=4, base=900}={}){
-      for(let i=0;i<=retries;i++){
-        try{
-          const res = await fetch(url, {cache:'no-store'});
-          if(res.status===429){ await sleep(base*(i+1)); continue; }
-          if(!res.ok){ await sleep(250); continue; }
-          return await res.text();
-        }catch(e){ await sleep(base*(i+1)); }
-      }
-      throw new Error("fetch-failed");
-    }
+    function lsGet(key){ try{const raw=localStorage.getItem(key); if(!raw) return null; const {v,t}=JSON.parse(raw); if(now()-t>LS_TTL_MS){localStorage.removeItem(key);return null;} return v;}catch(e){return null} }
+    function lsSet(key,v){ try{localStorage.setItem(key,JSON.stringify({v,t:now()}));}catch(e){} }
 
     function testImage(src, timeout=5000){
       return new Promise((resolve)=>{
         const im = new Image();
-        let done = false;
-        const timer = setTimeout(()=>{ if(!done){ done=true; resolve(false);} }, timeout);
-        im.onload = ()=>{ if(!done){ done=true; clearTimeout(timer); resolve(true);} };
-        im.onerror = ()=>{ if(!done){ done=true; clearTimeout(timer); resolve(false);} };
-        im.referrerPolicy = "no-referrer";
-        im.src = src + (src.includes("?")?"&":"?")+"v="+Math.floor(Math.random()*1e6);
+        let done=false; const to=setTimeout(()=>{if(!done){done=true;resolve(false)}},timeout);
+        im.onload=()=>{if(!done){done=true;clearTimeout(to);resolve(true)}};
+        im.onerror=()=>{if(!done){done=true;clearTimeout(to);resolve(false)}};
+        im.referrerPolicy="no-referrer";
+        im.src=src+(src.includes("?")?"&":"?")+"v="+Math.random().toString(36).slice(2);
       });
     }
-    const weserv = (url, dpr=2) => `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=${dpr}&il`;
-    const staticallyCdn = (url) => {
-      try{
-        const u = new URL(url);
-        return `https://cdn.statically.io/img/${u.hostname}${u.pathname}?f=webp`;
-      }catch(e){ return url; }
-    };
-    const wpcom = (url) => `https://i0.wp.com/${url.replace(/^https?:\/\//,'')}`;
 
-    function lsGet(key){
+    async function fetchOgImageViaProxy(ibbPageUrl){
+      // одна попытка через r.jina.ai (без шквала запросов)
+      const naked = ibbPageUrl.replace(/^https?:\/\//,'');
+      const probe = `https://r.jina.ai/https://${naked}`;
       try{
-        const raw = localStorage.getItem(key);
-        if(!raw) return null;
-        const {v, t} = JSON.parse(raw);
-        if(now()-t > LS_TTL_MS){ localStorage.removeItem(key); return null; }
-        return v;
-      }catch(e){ return null; }
-    }
-    function lsSet(key, value){
-      try{ localStorage.setItem(key, JSON.stringify({v:value, t:now()})); }catch(e){}
+        const txt = await fetch(probe, {cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject());
+        const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
+        if(m && await testImage(m[0])) return m[0];
+        const og = txt.match(/property="og:image"\s+content="([^"]+)"/i);
+        if(og && await testImage(og[1])) return og[1];
+      }catch(e){}
+      return null;
     }
 
-    // on-demand resolver для одной ibb-страницы
-    async function resolveIbbPage(ibbPageUrl){
+    async function resolveIbb(ibbPageUrl){
       const id = ibbPageUrl.split("/").pop().replace(/\?.*/,'');
       const key = "ibb:best:"+id;
-
-      // 1) кеш
       const cached = lsGet(key);
       if(cached && await testImage(cached, 1800)) return cached;
 
-      // 2) аккратно читаем og:image у самой страницы (по одному запросу)
-      const naked = ibbPageUrl.replace(/^https?:\/\//,'');
-      for(const probe of [`https://r.jina.ai/http/${naked}`, `https://r.jina.ai/https/${naked}`]){
-        try{
-          const txt = await fetchWithBackoff(probe, {retries:4, base:1000});
-          const og = txt.match(/property="og:image"\s+content="([^"]+)"/i);
-          if(og && await testImage(og[1])){ lsSet(key, og[1]); return og[1]; }
-          const tw = txt.match(/name="twitter:image"\s+content="([^"]+)"/i);
-          if(tw && await testImage(tw[1])){ lsSet(key, tw[1]); return tw[1]; }
-          const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
-          if(m && await testImage(m[0])){ lsSet(key, m[0]); return m[0]; }
-        }catch(e){}
+      // 1) пробуем аккуратно получить og:image (1 запрос)
+      const og = await fetchOgImageViaProxy(ibbPageUrl);
+      if(og){ lsSet(key, og); return og; }
+
+      // 2) догадки по формату
+      for(const ext of ["webp","jpg","jpeg","png"]){
+        const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
+        if(await testImage(guess)){ lsSet(key, guess); return guess; }
       }
 
-      // 3) крайние прокси-варианты
-      for(const via of [weserv(ibbPageUrl), staticallyCdn(ibbPageUrl), wpcom(ibbPageUrl)]){
-        if(await testImage(via)){ lsSet(key, via); return via; }
+      // 3) крайние прокси (возьмут превью, но это лучше, чем пусто)
+      for(const u of [weserv(ibbPageUrl), staticallyCdn(ibbPageUrl), wpcom(ibbPageUrl)]){
+        if(await testImage(u)){ lsSet(key, u); return u; }
       }
 
-      // 4) возвращаем саму страницу (дальше отработают onerror-фоллбеки)
+      // 4) вернём страницу — отрисуем плейсхолдер
       lsSet(key, ibbPageUrl);
       return ibbPageUrl;
     }
 
-    /* ================== ICON ================== */
     (async ()=>{
-      const bestIcon = await resolveIbbPage(ibbIconPage);
+      // иконка
+      const bestIcon = await resolveIbb(ibbIconPage);
       document.getElementById("favicon").href = bestIcon;
       document.getElementById("appleicon").href = bestIcon;
 
       const manifest = {
-        name: "Жіночий ретрит — Душа без масок",
-        short_name: "Ретрит",
-        start_url: ".",
-        display: "standalone",
-        background_color: "#8a71c4",
-        theme_color: "#8a71c4",
-        icons: [
-          { src: bestIcon, sizes: "192x192", type: "image/png", purpose: "any maskable" },
-          { src: bestIcon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+        name:"Жіночий ретрит — Душа без масок",
+        short_name:"Ретрит",
+        start_url:".", display:"standalone",
+        background_color:"#8069be", theme_color:"#8069be",
+        icons:[
+          {src:bestIcon,sizes:"192x192",type:"image/png",purpose:"any maskable"},
+          {src:bestIcon,sizes:"512x512",type:"image/png",purpose:"any maskable"}
         ]
       };
-      const blob = new Blob([JSON.stringify(manifest)], {type:"application/manifest+json"});
-      const url = URL.createObjectURL(blob);
-      document.getElementById("manifestLink").href = url;
+      const blob=new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"});
+      document.getElementById("manifestLink").href = URL.createObjectURL(blob);
     })();
 
-    /* ================== ГАЛЕРЕЯ: on-demand resolve ================== */
+    /* ================== ГАЛЕРЕЯ (on-demand) ================== */
     const ibbLinks = [
       "https://ibb.co/mC6tPhyp","https://ibb.co/pjfk24r5","https://ibb.co/N2JyQJ4K",
       "https://ibb.co/4nwV4ZTr","https://ibb.co/N21d2zKz","https://ibb.co/hRh6v8P9",
@@ -378,132 +302,82 @@
     const slidesEl = document.getElementById("slides");
     const dotsEl = document.getElementById("dots");
     const loader = document.getElementById("galleryLoader");
-    function showLoader(v){ loader.style.display = v ? 'block' : 'none'; }
+    const showLoader = (v)=> loader.style.display = v ? "block" : "none";
 
-    function makeFallbacks(base){
-      const arr = [base, weserv(base,2), staticallyCdn(base), wpcom(base), weserv(base,3)];
-      return [...new Set(arr)];
-    }
-
-    // создаём слайды сразу (с плейсхолдерами), а реальные картинки подставляем по требованию
-    ibbLinks.forEach((pageUrl, i)=>{
+    // создаём слайды с плейсхолдерами — реальные изображения подставляем по требованию
+    ibbLinks.forEach((pageUrl,i)=>{
       const slide = document.createElement("div");
-      slide.className = "slide";
+      slide.className="slide";
+      slide.dataset.page = pageUrl;
 
-      // placeholder
-      const ph = document.createElement("div");
-      ph.className = "ph";
-      slide.appendChild(ph);
+      const ph = document.createElement("div"); ph.className="ph"; slide.appendChild(ph);
 
       const pic = document.createElement("picture");
-      const sWebp = document.createElement("source");
-      sWebp.type = "image/webp";
+      const sWebp = document.createElement("source"); sWebp.type="image/webp"; pic.appendChild(sWebp);
+
       const img = document.createElement("img");
-      img.alt = `Фото ${i+1}`;
-      img.loading = i===0 ? "eager" : "lazy";
-      img.decoding = "async";
-      img.fetchPriority = i===0 ? "high" : "auto";
-      img.referrerPolicy = "no-referrer";
-      img.crossOrigin = "anonymous";
-      img.style.opacity = "0";
-      img.addEventListener('load', ()=>{ ph.remove(); img.style.opacity = "1"; if(currentIndex===i) showLoader(false); });
-      img.onerror = ()=>{
-        // финальный фоллбек — пробуем прокси-варианты
-        const fbs = makeFallbacks(pageUrl);
-        (async function tryFb(k=0){
-          if(k>=fbs.length){ ph.style.opacity=.9; showLoader(false); return; }
-          const u = fbs[k];
-          if(await testImage(u)){ img.src = u; img.srcset = `${u} 1x, ${weserv(u,2)} 2x`; return; }
-          tryFb(k+1);
-        })();
-      };
+      img.alt = `Фото ${i+1}`; img.loading = i===0 ? "eager" : "lazy";
+      img.decoding="async"; img.fetchPriority = i===0 ? "high" : "auto";
+      img.referrerPolicy="no-referrer"; img.crossOrigin="anonymous"; img.style.opacity="0";
+      img.addEventListener('load', ()=>{ ph.remove(); img.style.opacity="1"; if(currentIndex===i) showLoader(false); });
+      img.addEventListener('error', ()=>{ /* останется плейсхолдер */ showLoader(false); });
 
-      pic.appendChild(sWebp); pic.appendChild(img);
-      slide.appendChild(pic);
-      slidesEl.appendChild(slide);
+      pic.appendChild(img); slide.appendChild(pic); slidesEl.appendChild(slide);
 
-      const dot = document.createElement("span"); dot.className = "dot"; dotsEl.appendChild(dot);
-
-      // сохраним ibb-страницу в dataset — загрузим, когда понадобится
-      slide.dataset.page = pageUrl;
+      const dot = document.createElement("span"); dot.className="dot"; dotsEl.appendChild(dot);
     });
 
-    let currentIndex = 0;
-    async function ensureSlideLoaded(idx){
-      const slide = slidesEl.children[idx];
-      if(!slide) return;
+    async function injectImageFor(index){
+      const slide = slidesEl.children[index]; if(!slide) return;
       const img = slide.querySelector("img");
-      if(img && img.src) return; // уже загружено
-
-      const pageUrl = slide.dataset.page;
+      if(img && img.src) return; // уже есть
       showLoader(true);
-      const direct = await resolveIbbPage(pageUrl);
-      // подставляем источники
+
+      const page = slide.dataset.page;
+      const direct = await resolveIbb(page);
+
+      // если это не полноценная картинка (не прошла testImage), останется плейсхолдер
       const sWebp = slide.querySelector("source[type='image/webp']");
       sWebp.srcset = `${weserv(direct,1)} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
       sWebp.sizes = "(max-width: 980px) 100vw, 980px";
-
       img.src = direct;
       img.srcset = `${direct} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
       img.sizes = "(max-width: 980px) 100vw, 980px";
     }
 
+    let currentIndex = 0;
     function initCarousel(){
       const dots = Array.from(document.querySelectorAll('.dot'));
       const total = slidesEl.children.length;
 
-      const goTo = async (i)=>{
+      const goTo = async(i)=>{
         currentIndex = (i+total)%total;
         slidesEl.style.transform = `translateX(-${currentIndex*100}%)`;
         dots.forEach((d,di)=>d.classList.toggle('active', di===currentIndex));
-        await ensureSlideLoaded(currentIndex);
-        // прелоадим соседний кадр
-        ensureSlideLoaded((currentIndex+1)%total);
+        await injectImageFor(currentIndex);
+        // подгрузим соседний
+        injectImageFor((currentIndex+1)%total);
       };
 
       document.getElementById('prev').addEventListener('click', ()=>goTo(currentIndex-1));
       document.getElementById('next').addEventListener('click', ()=>goTo(currentIndex+1));
 
-      // старт: грузим 0-й, затем 1-й
-      goTo(0).then(()=>ensureSlideLoaded(1));
+      goTo(0).then(()=>injectImageFor(1));
     }
-
     initCarousel();
 
-    /* ================== SPARKLES (повільні блискітки) ================== */
-    const canvas = document.getElementById('sparkles');
-    const ctx = canvas.getContext('2d');
-    let W=0,H=0, stars=[];
-    function resize(){
-      const dpr = Math.min(window.devicePixelRatio||1, 2);
-      W = canvas.width = Math.floor(innerWidth*dpr);
-      H = canvas.height = Math.floor(innerHeight*dpr);
-      canvas.style.width = innerWidth+'px';
-      canvas.style.height = innerHeight+'px';
-      ctx.setTransform(1,0,0,1,0,0);
-    }
-    function makeStars(n=84){
-      stars = new Array(n).fill(0).map(()=>({
-        x: Math.random()*W, y: Math.random()*H,
-        r: Math.random()*1.6+0.6,
-        a: Math.random()*0.5+0.2,
-        sp: (Math.random()*0.6+0.3) * 0.004,
-        t: Math.random()*Math.PI*2
-      }));
-    }
-    function step(){
-      ctx.clearRect(0,0,W,H);
-      for(const s of stars){
-        s.t += s.sp;
-        const alpha = s.a*(0.55+0.45*Math.sin(s.t));
-        const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r*4);
-        g.addColorStop(0, `rgba(255,255,255,${alpha})`);
-        g.addColorStop(1, `rgba(255,255,255,0)`);
-        ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r*4, 0, Math.PI*2); ctx.fill();
-      }
-      requestAnimationFrame(step);
-    }
+    /* ================== REVEAL ================== */
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    },{threshold:0.14});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    /* ================== SPARKLES ================== */
+    const canvas = document.getElementById('sparkles'); const ctx = canvas.getContext('2d');
+    let W=0,H=0,stars=[];
+    function resize(){ const dpr=Math.min(window.devicePixelRatio||1,2); W=canvas.width=Math.floor(innerWidth*dpr); H=canvas.height=Math.floor(innerHeight*dpr); canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px'; ctx.setTransform(1,0,0,1,0,0);}
+    function makeStars(n=84){ stars=new Array(n).fill(0).map(()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+0.6,a:Math.random()*0.5+0.2,sp:(Math.random()*0.6+0.3)*0.004,t:Math.random()*Math.PI*2}));}
+    function step(){ ctx.clearRect(0,0,W,H); for(const s of stars){ s.t+=s.sp; const a=s.a*(0.55+0.45*Math.sin(s.t)); const g=ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*4); g.addColorStop(0,`rgba(255,255,255,${a})`); g.addColorStop(1,`rgba(255,255,255,0)`); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(s.x,s.y,s.r*4,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(step); }
     resize(); makeStars(84); requestAnimationFrame(step);
     addEventListener('resize', ()=>{resize(); makeStars(stars.length);});
   </script>
