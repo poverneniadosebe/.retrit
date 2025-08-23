@@ -32,7 +32,6 @@
     html{scroll-behavior:smooth}
     body{
       margin:0; color:var(--text); font-family:Arial,Helvetica,sans-serif; line-height:1.6;
-      /* темніше + маленький градієнт */
       background:
         radial-gradient(720px 480px at 22% -8%, #d7c8ff30 0%, transparent 60%),
         radial-gradient(680px 440px at 108% 24%, #d2c1ff26 0%, transparent 65%),
@@ -70,12 +69,6 @@
     @media(min-width:740px){.imgRow{grid-template-columns:1fr 1fr}}
     .imgRow figure,.imgFull figure{margin:0}
     .imgRow img,.imgFull img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;aspect-ratio:16/9}
-
-    /* Галерея-сітка */
-    .gallery{display:grid;gap:10px;margin-top:10px}
-    .gallery a{display:block;border-radius:14px;overflow:hidden;background:#1f1841;border:1px solid #ffffff1f}
-    .gallery img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;display:block;transition:transform .25s ease}
-    .gallery a:hover img{transform:scale(1.02)}
 
     .btn{appearance:none;border:0;cursor:pointer;padding:14px 20px;border-radius:14px;font-weight:800;letter-spacing:.3px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;color:#221a41;background:linear-gradient(180deg,#efe3ff,#c9aef7);box-shadow:0 10px 24px #0005,inset 0 1px 0 #fff7;transition:transform .12s ease,filter .2s ease}
     .btn:hover{transform:translateY(-1px);filter:saturate(1.04)}
@@ -126,9 +119,9 @@
       </div>
     </section>
 
-    <!-- Фото між блоками -->
+    <!-- Фото між блоками (ПОСЛЕ ЗАМЕНЫ: здесь теперь была 6-я картинка) -->
     <section class="imgBlock imgRow reveal">
-      <figure><img src="https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp" alt="Гойдалка в Карпатах" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Практики йоги" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg" alt="Йога серед лісу" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
@@ -156,9 +149,9 @@
       <p>Ранок — тиша, дихання й йога. День — природа, SPA або подорож Карпатами. Вечір — м’які інтеграційні практики, тепле коло, час для себе.</p>
     </section>
 
-    <!-- Фото між блоками -->
+    <!-- Фото між блоками (ПОСЛЕ ЗАМЕНЫ: здесь теперь была 2-я картинка) -->
     <section class="imgBlock imgRow reveal">
-      <figure><img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Практики йоги" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp" alt="Гойдалка в Карпатах" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg" alt="Пейзажі Карпат" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
@@ -200,62 +193,7 @@
       <p class="price">Ціна: <b>15 000 гривень</b> — усе перелічене вище входить у вартість</p>
       <div class="cta">
         <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram">💫 Забронювати</a>
-        <a class="btn" href="#gallery">🖼️ Фотогалерея</a>
-      </div>
-    </section>
-
-    <!-- ======= ГАЛЕРЕЯ (повна) ======= -->
-    <section class="card reveal" id="gallery" aria-label="Фотогалерея">
-      <h2>Фотогалерея</h2>
-      <div class="gallery">
-        <a href="https://ibb.co/mC6tPhyp" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/d0G6HkpZ/vodospad-shypit-3.jpg" alt="Водоспад Шипіт" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/pjfk24r5" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp" alt="Гойдалка" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/N2JyQJ4K" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/HTbH1bJq/verkhovynalife-benjola-hoidalka-2-3.jpg" alt="Гойдалка 2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/4nwV4ZTr" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/MxyCPDV0/image.jpg" alt="Карпатський краєвид" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/N21d2zKz" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/pjWBjpdp/synevyr-pereval-2.jpg" alt="Перевал" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/hRh6v8P9" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg" alt="Пейзаж 1" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/nqdZJ9N3" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/BHWdMb54/image.jpg" alt="Пейзаж 2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/DfTSTscH" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg" alt="Йога в лісі" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/4wYj5C1Q" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Йога 2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/xqL9yq3T" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/0y24kyQb/1200px-Lake-Synevyr.jpg" alt="Синевир" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/0yMLq7hW" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg" alt="Синевир 2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/5gqdrNbV" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/8LFJrW1V/photo-2025-08-23-23-23-21.jpg" alt="Фото 21" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/1YRhzJRM" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/7xr8kNrQ/photo-2025-08-23-23-23-20-2.jpg" alt="Фото 20-2" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/kgXK9tMS" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/gMJyPx6R/photo-2025-08-23-23-23-22.jpg" alt="Фото 22" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/tMyL5fSc" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/kgYmFnp0/photo-2025-08-23-23-23-20.jpg" alt="Фото 20" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
-        <a href="https://ibb.co/Rpb4ZSCG" target="_blank" rel="noopener">
-          <img src="https://i0.wp.com/i.ibb.co/kgB6kyhV/1508689396-1508686392-ozero-sinevir-3.jpg" alt="Синевир 3" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-        </a>
+        <!-- Кнопка фотогалереї видалена за проханням -->
       </div>
     </section>
 
