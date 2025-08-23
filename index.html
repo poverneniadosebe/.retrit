@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#8069be" />
   <meta name="description" content="Жіночий ретрит у Карпатах про м’яке повернення до себе: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Дбайлива атмосфера, сповільнення, безпека й підтримка. Квитки, трансфер, проживання — у вартості." />
 
-  <!-- Favicon & PWA manifest (ставятся скриптом) -->
+  <!-- Favicon & PWA manifest (ставляться скриптом) -->
   <link id="favicon" rel="icon" href="">
   <link id="appleicon" rel="apple-touch-icon" href="">
   <link id="manifestLink" rel="manifest" href="">
@@ -66,7 +66,7 @@
     .slides{display:flex;width:100%;height:100%;transform:translateX(0);transition:transform .5s ease;will-change:transform;user-select:none;touch-action:pan-y;overflow:hidden!important}
     .slide{flex:0 0 100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
     .slide picture,.slide img{width:100%;height:100%;object-fit:cover;object-position:center}
-    .slide img{image-rendering:auto;-webkit-user-drag:none;user-select:none;pointer-events:none;contain:paint;transform:translateZ(0)}
+    .slide img{-webkit-user-drag:none;user-select:none;pointer-events:none;contain:paint;transform:translateZ(0)}
     .viewport::-webkit-scrollbar,.slides::-webkit-scrollbar,.slide::-webkit-scrollbar{width:0;height:0}
 
     .ph{position:absolute;inset:0;background:
@@ -208,24 +208,14 @@
     const LS_TTL_MS = 30*24*60*60*1000;
     const now = () => Date.now();
     const sleep = (ms)=>new Promise(r=>setTimeout(r,ms));
-    const weserv = (url, dpr=2) => `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=${dpr}&il`;
-    const staticallyCdn = (url) => { try{const u=new URL(url); return `https://cdn.statically.io/img/${u.hostname}${u.pathname}?f=webp`;}catch(e){return url;} };
+
+    // Надёжные прокси
+    const weserv = (url, dpr=2) =>
+      `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=${dpr}&il`;
     const wpcom = (url) => `https://i0.wp.com/${url.replace(/^https?:\/\//,'')}`;
 
     function lsGet(key){ try{const raw=localStorage.getItem(key); if(!raw) return null; const {v,t}=JSON.parse(raw); if(now()-t>LS_TTL_MS){localStorage.removeItem(key);return null;} return v;}catch(e){return null} }
     function lsSet(key,v){ try{localStorage.setItem(key,JSON.stringify({v,t:now()}));}catch(e){} }
-
-    function testImage(src, timeout=7000){
-      return new Promise((resolve)=>{
-        const im = new Image();
-        let done=false; const to=setTimeout(()=>{if(!done){done=true;resolve(false)}},timeout);
-        im.onload=()=>{if(!done){done=true;clearTimeout(to);resolve(true)}};
-        im.onerror=()=>{if(!done){done=true;clearTimeout(to);resolve(false)}};
-        im.referrerPolicy="no-referrer";
-        im.decoding="async";
-        im.src=src+(src.includes("?")?"&":"?")+"v="+Math.random().toString(36).slice(2);
-      });
-    }
 
     async function fetchOgImageViaProxy(ibbPageUrl){
       const naked = ibbPageUrl.replace(/^https?:\/\//,'');
@@ -235,11 +225,11 @@
       ];
       for(const probe of probes){
         try{
-          const txt = await fetch(probe, {cache:'no-store', redirect:'follow'}).then(r=>r.ok?r.text():Promise.reject());
-          const directMatch = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
-          if(directMatch && await testImage(directMatch[0])) return directMatch[0];
-          const og = txt.match(/property=["']og:image["']\s+content=["']([^"']+)["']/i);
-          if(og && await testImage(og[1])) return og[1];
+          const txt = await fetch(probe, {cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject());
+          const m1 = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
+          if(m1) return m1[0];
+          const m2 = txt.match(/property=["']og:image["']\s+content=["']([^"']+)["']/i);
+          if(m2) return m2[1];
         }catch(e){}
       }
       return null;
@@ -249,32 +239,30 @@
       const id = ibbPageUrl.split("/").pop().replace(/\?.*/, '');
       const key = "ibb:best:"+id;
       const cached = lsGet(key);
-      if(cached && await testImage(cached, 2500)) return cached;
+      if(cached) return cached;
 
       const og = await fetchOgImageViaProxy(ibbPageUrl);
       if(og){ lsSet(key, og); return og; }
 
       for(const ext of ["webp","jpg","jpeg","png"]){
         const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
-        if(await testImage(guess)){ lsSet(key, guess); return guess; }
+        try{ const r = await fetch(guess, {method:'HEAD'}); if(r.ok){ lsSet(key, guess); return guess; } }catch(e){}
       }
-
-      for(const u of [weserv(ibbPageUrl), staticallyCdn(ibbPageUrl), wpcom(ibbPageUrl)]){
-        if(await testImage(u)){ lsSet(key, u); return u; }
-      }
-      return null;
+      lsSet(key, ibbPageUrl);
+      return ibbPageUrl;
     }
 
-    /* ================== PWA ICON ================== */
+    /* ================== PWA ICON (fixed start_url) ================== */
     (async ()=>{
-      const bestIcon = await resolveIbb(ibbIconPage) || "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...";
+      const bestIcon = await resolveIbb(ibbIconPage);
       document.getElementById("favicon").href = bestIcon;
       document.getElementById("appleicon").href = bestIcon;
 
+      const startAbs = new URL(location.pathname, location.href).toString(); // абсолютный URL
       const manifest = {
         name:"Жіночий ретрит — Душа без масок",
         short_name:"Ретрит",
-        start_url:".", display:"standalone",
+        start_url:startAbs, display:"standalone",
         background_color:"#8069be", theme_color:"#8069be",
         icons:[
           {src:bestIcon,sizes:"192x192",type:"image/png",purpose:"any maskable"},
@@ -285,8 +273,8 @@
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
     })();
 
-    /* ================== ГАЛЕРЕЯ (прямі посилання) ================== */
-    const ibbItems = [
+    /* ================== ГАЛЕРЕЯ (твои прямые ссылки + прокси) ================== */
+    const items = [
       {page:"https://ibb.co/mC6tPhyp", src:"https://i.ibb.co/d0G6HkpZ/vodospad-shypit-3.jpg", alt:"vodospad-shypit-3"},
       {page:"https://ibb.co/pjfk24r5", src:"https://i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp", alt:"verkhovynalife-benjola-hoidalka-2-1"},
       {page:"https://ibb.co/N2JyQJ4K", src:"https://i.ibb.co/HTbH1bJq/verkhovynalife-benjola-hoidalka-2-3.jpg", alt:"verkhovynalife-benjola-hoidalka-2-3"},
@@ -310,96 +298,64 @@
     const loader = document.getElementById("galleryLoader");
     const showLoader = (v)=> loader.style.display = v ? "block" : "none";
 
-    // Слайды с плейсхолдерами
-    ibbItems.forEach((item,i)=>{
+    // Слайды з плейсхолдерами
+    items.forEach((it,i)=>{
       const slide = document.createElement("div");
       slide.className="slide";
-      slide.dataset.page = item.page;
-      if(item.src) slide.dataset.src = item.src;
+      slide.dataset.page = it.page;
+      slide.dataset.src = it.src;
 
       const ph = document.createElement("div"); ph.className="ph"; slide.appendChild(ph);
 
       const pic = document.createElement("picture");
-      const sWebp = document.createElement("source"); sWebp.type="image/webp"; pic.appendChild(sWebp);
+      // 1) webp через weserv (ретина)
+      const sWebp = document.createElement("source");
+      sWebp.type="image/webp";
+      sWebp.srcset = `${weserv(it.src,1)} 1x, ${weserv(it.src,2)} 2x, ${weserv(it.src,3)} 3x`;
+      sWebp.sizes = "(max-width: 980px) 100vw, 980px";
+      pic.appendChild(sWebp);
 
+      // 2) универсальный источник через i0.wp.com
+      const sAny = document.createElement("source");
+      sAny.srcset = `${wpcom(it.src)} 1x`;
+      sAny.sizes = "(max-width: 980px) 100vw, 980px";
+      pic.appendChild(sAny);
+
+      // 3) <img> — ставим i0.wp.com; при ошибке — прямой i.ibb.co
       const img = document.createElement("img");
-      img.alt = item.alt || `Фото ${i+1}`;
+      img.alt = it.alt || `Фото ${i+1}`;
       img.loading = i===0 ? "eager" : "lazy";
       img.decoding="async"; img.fetchPriority = i===0 ? "high" : "auto";
-      img.referrerPolicy="no-referrer"; img.crossOrigin="anonymous"; img.style.opacity="0";
+      img.referrerPolicy="no-referrer";
+      img.style.opacity="0";
 
       img.addEventListener('load', ()=>{ ph.remove(); img.style.opacity="1"; if(currentIndex===i) showLoader(false); });
-      img.addEventListener('error', ()=>{
-        // если прямой src вдруг не открылся — пробуем через прокси
-        const direct = slide.dataset.src;
-        if(direct && !img.dataset.fallback){
-          img.dataset.fallback = "1";
-          img.src = weserv(direct,2);
-          img.srcset = `${weserv(direct,1)} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
+      img.addEventListener('error', async ()=>{
+        // если i0.wp.com не дал — пробуем прямой, затем webp-прокси
+        if(!img.dataset.triedDirect){
+          img.dataset.triedDirect = "1";
+          img.src = it.src;
+          return;
         }
-        showLoader(false);
+        if(!img.dataset.triedWeserv){
+          img.dataset.triedWeserv = "1";
+          img.src = weserv(it.src,2);
+          return;
+        }
+        showLoader(false); // всё равно уберём спиннер
       });
 
+      img.src = wpcom(it.src); // первичный источник
       pic.appendChild(img); slide.appendChild(pic); slidesEl.appendChild(slide);
 
       const dot = document.createElement("span"); dot.className="dot"; dotsEl.appendChild(dot);
     });
 
-    // (опционально) Фолбек-розв'язка для тех, у кого нет прямого src
-    const resolvedMap = new Map();
-    let activeResolvers = 0;
-    const maxParallel = 2;
-    const queue = [];
-
-    async function resolveQueued(pageUrl){
-      if(!pageUrl) return null;
-      if(resolvedMap.has(pageUrl)) return resolvedMap.get(pageUrl);
-      if(activeResolvers >= maxParallel){
-        await new Promise(res=>queue.push(res));
-      }
-      activeResolvers++;
-      try{
-        const direct = await resolveIbb(pageUrl);
-        resolvedMap.set(pageUrl, direct);
-        return direct;
-      }finally{
-        activeResolvers--;
-        const next = queue.shift(); if(next) next();
-      }
-    }
-
     async function injectImageFor(index){
       const slide = slidesEl.children[index]; if(!slide) return;
       const img = slide.querySelector("img");
-      if(img && img.src) return;
-
+      if(img && img.src) return; // уже вставлено
       showLoader(true);
-
-      const direct = slide.dataset.src;
-      if(direct){
-        const sWebp = slide.querySelector("source[type='image/webp']");
-        sWebp.srcset = `${weserv(direct,1)} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
-        sWebp.sizes = "(max-width: 980px) 100vw, 980px";
-
-        img.src = direct;
-        img.srcset = `${direct} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
-        img.sizes = "(max-width: 980px) 100vw, 980px";
-        return;
-      }
-
-      // если вдруг у элемента нет прямого src — фолбек: пытаемся получить по странице
-      const page = slide.dataset.page;
-      const resolved = await resolveQueued(page);
-      if(resolved){
-        const sWebp = slide.querySelector("source[type='image/webp']");
-        sWebp.srcset = `${weserv(resolved,1)} 1x, ${weserv(resolved,2)} 2x, ${weserv(resolved,3)} 3x`;
-        sWebp.sizes = "(max-width: 980px) 100vw, 980px";
-        img.src = resolved;
-        img.srcset = `${resolved} 1x, ${weserv(resolved,2)} 2x, ${weserv(resolved,3)} 3x`;
-        img.sizes = "(max-width: 980px) 100vw, 980px";
-      }else{
-        showLoader(false);
-      }
     }
 
     let currentIndex = 0;
@@ -412,24 +368,13 @@
         slidesEl.style.transform = `translateX(-${currentIndex*100}%)`;
         dots.forEach((d,di)=>d.classList.toggle('active', di===currentIndex));
         await injectImageFor(currentIndex);
-        injectImageFor((currentIndex+1)%total);
-        injectImageFor((currentIndex+2)%total);
+        showLoader(false);
       };
 
       document.getElementById('prev').addEventListener('click', ()=>goTo(currentIndex-1));
       document.getElementById('next').addEventListener('click', ()=>goTo(currentIndex+1));
 
-      goTo(0).then(()=>{
-        injectImageFor(1);
-        // тихое «препрогрузить» следующие, чтобы листалось мгновенно
-        (async ()=>{
-          for(const item of ibbItems){
-            if(item.src) continue; // у нас уже прямой src
-            await resolveQueued(item.page);
-            await sleep(250);
-          }
-        })();
-      });
+      goTo(0);
     }
     initCarousel();
 
