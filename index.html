@@ -4,22 +4,35 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Жіночий ретрит «Повернення до себе» • Карпати 11.09–15.09.2025</title>
-  <meta name="theme-color" content="#1b1f6e" />
+  <meta name="theme-color" content="#a88bd6" />
   <meta name="description" content="Жіночий ретрит у Карпатах про м’яке повернення до себе: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Дбайлива атмосфера, сповільнення, безпека й підтримка. Квитки, трансфер, проживання — у вартості." />
 
-  <!-- Favicon & PWA manifest встановлюються нижче скриптом (працює і з локального файла) -->
+  <!-- Favicon & PWA manifest (ставятся скриптом) -->
   <link id="favicon" rel="icon" href="">
   <link id="appleicon" rel="apple-touch-icon" href="">
   <link id="manifestLink" rel="manifest" href="">
 
+  <!-- performance hints -->
+  <link rel="preconnect" href="https://i.ibb.co" crossorigin />
+  <link rel="dns-prefetch" href="//i.ibb.co" />
+  <link rel="preconnect" href="https://images.weserv.nl" crossorigin />
+  <link rel="dns-prefetch" href="//images.weserv.nl" />
+  <link rel="preconnect" href="https://cdn.statically.io" crossorigin />
+  <link rel="dns-prefetch" href="//cdn.statically.io" />
+  <link rel="preconnect" href="https://i0.wp.com" crossorigin />
+  <link rel="dns-prefetch" href="//i0.wp.com" />
+  <link rel="preconnect" href="https://r.jina.ai" crossorigin />
+  <link rel="dns-prefetch" href="//r.jina.ai" />
+
   <style>
     /* ======= RESET & THEME ======= */
     :root{
-      --bg-1:#0e1244; --bg-2:#0a0e36; --bg-3:#1a2177;
+      /* нежно-фиолетовый стек */
+      --bg-1:#b38de6; --bg-2:#a67bdc; --bg-3:#c3a2ef;
       --glass: rgba(255,255,255,.08);
-      --border: #ffffff1f;
-      --text:#eef1ff; --muted:#cfd5ffcc; --accent:#9db2ff;
-      --shadow: 0 18px 40px rgba(0,0,0,.35);
+      --border: #ffffff24;
+      --text:#f3eeff; --muted:#e3d9ffcc; --accent:#efe3ff;
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
       --radius: 18px;
     }
     *{box-sizing:border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility}
@@ -28,15 +41,16 @@
       margin:0; color:var(--text);
       font-family: Arial, Helvetica, sans-serif; line-height:1.6;
       background:
-        radial-gradient(1200px 800px at 15% -10%, #2b359b55 0%, transparent 60%),
-        radial-gradient(1000px 700px at 120% 20%, #1b247a55 0%, transparent 65%),
+        radial-gradient(1200px 800px at 18% -10%, #d3b4ff55 0%, transparent 60%),
+        radial-gradient(1000px 700px at 120% 20%, #be9cff55 0%, transparent 65%),
         linear-gradient(140deg,var(--bg-1),var(--bg-2) 50%, var(--bg-3) 100%);
       overflow-x:hidden;
     }
     body::before{
       content:""; position:fixed; inset:-20%;
-      background: radial-gradient(60% 40% at 70% 20%, #6c7bff33 0%, transparent 60%),
-                  radial-gradient(55% 38% at 20% 80%, #9fb2ff22 0%, transparent 60%);
+      background:
+        radial-gradient(60% 40% at 70% 20%, #e7d6ff33 0%, transparent 60%),
+        radial-gradient(55% 38% at 20% 80%, #f0e6ff22 0%, transparent 60%);
       filter: blur(42px); z-index:-2; animation: float 42s linear infinite alternate;
     }
     @keyframes float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-4%,2%,0) scale(1.06)}}
@@ -59,9 +73,9 @@
       margin:0 auto 18px; font-size:clamp(14px,2.6vw,18px); color:var(--muted); max-width:900px; text-align:center; text-wrap:pretty;
     }
 
-    /* ======= ГАЛЕРЕЯ: без скролів, hi-res ======= */
-    .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#0b0e2d;margin:0 auto}
-    .viewport{width:100%; aspect-ratio:16/9; overflow:hidden !important; background:#0b0e2d}
+    /* ======= ГАЛЕРЕЯ ======= */
+    .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#2b1f53;margin:0 auto}
+    .viewport{position:relative;width:100%; aspect-ratio:16/9; overflow:hidden !important; background:#2b1f53}
     .slides{
       display:flex; width:100%; height:100%; transform:translateX(0);
       transition: transform .5s ease; will-change: transform; user-select:none; touch-action: pan-y;
@@ -71,15 +85,27 @@
     .slide picture, .slide img{width:100%; height:100%; object-fit:cover; object-position:center}
     .slide img{
       image-rendering:auto; -webkit-optimize-contrast:auto; pointer-events:none;
-      /* Для чітких фото на Retina */
       contain: paint; transform: translateZ(0);
     }
-    /* Прибрати будь-які системні скролбари всередині */
     .viewport::-webkit-scrollbar, .slides::-webkit-scrollbar, .slide::-webkit-scrollbar{width:0;height:0}
+
+    /* loader по центру вьюпорта */
+    .loader{
+      position:absolute; inset:auto; top:50%; left:50%;
+      width:28px; height:28px; border-radius:50%;
+      border:3px solid rgba(255,255,255,.35); border-top-color:#fff;
+      transform:translate(-50%,-50%); pointer-events:none; z-index:2; display:none;
+      animation: spin .8s linear infinite;
+      box-shadow: 0 0 0 6px rgba(0,0,0,.12);
+    }
+    @keyframes spin{
+      0%{ transform:translate(-50%,-50%) rotate(0deg) }
+      100%{ transform:translate(-50%,-50%) rotate(360deg) }
+    }
 
     .navBtn{
       position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%;
-      display:grid; place-items:center; color:#fff; background:rgba(10,12,40,.55);
+      display:grid; place-items:center; color:#fff; background:rgba(33,20,74,.55);
       border:1px solid #ffffff2a; backdrop-filter: blur(6px); cursor:pointer; opacity:.95;
       transition:transform .15s ease, filter .2s ease;
     }
@@ -91,22 +117,23 @@
 
     /* ======= КАРТКИ ======= */
     .card{
-      background:linear-gradient(180deg, #141a46bb, #0f133d99);
+      background:linear-gradient(180deg, #7f61ba99, #5f4aa899);
       border:1px solid var(--border); border-radius:var(--radius);
       padding:22px clamp(16px, 5vw, 28px); margin:20px auto; backdrop-filter: blur(8px);
       box-shadow:var(--shadow);
       text-align:center;
     }
     .card h2{margin:0 0 12px; font-size:clamp(22px,3.6vw,30px); font-weight:800; letter-spacing:.2px; text-align:center; text-wrap:balance}
-    .card p{max-width:880px;margin:10px auto; text-align:center; text-wrap:pretty; word-break:normal; overflow-wrap:normal; hyphens:none}
+    .card p,
+    ul.clean{max-width:880px;margin:10px auto; text-align:justify; text-wrap:pretty; word-break:normal; overflow-wrap:normal; hyphens:none}
     .grid2{display:grid; gap:16px}
     @media(min-width:820px){ .grid2{grid-template-columns:1.2fr .8fr} }
 
-    ul.clean{margin:8px auto 0; padding:0; max-width:880px; list-style:disc inside; text-align:center}
+    ul.clean{padding:0; list-style:disc inside}
     ul.clean li{margin:10px 0; word-break:normal; overflow-wrap:normal; hyphens:none}
 
     .pill{display:inline-block; margin:6px 6px 0 0; padding:6px 10px; font-size:14px; border-radius:999px;
-      border:1px solid var(--border); color:#e8ebff; background:#ffffff12}
+      border:1px solid var(--border); color:#f7f2ff; background:#ffffff20}
 
     /* ======= CTA ======= */
     .price{font-size: clamp(22px, 4.4vw, 34px); margin:0 0 12px; font-weight:800; text-align:center}
@@ -114,21 +141,20 @@
     .btn{
       appearance:none; border:0; cursor:pointer; padding:14px 20px; border-radius:14px;
       font-weight:800; letter-spacing:.3px; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
-      color:#0c0f2d; background:linear-gradient(180deg,#cfe0ff,#97adff); box-shadow:0 10px 24px #0005, inset 0 1px 0 #fff7;
+      color:#2d1d55; background:linear-gradient(180deg,#efe3ff,#c9aef7); box-shadow:0 10px 24px #0005, inset 0 1px 0 #fff7;
       transition: transform .12s ease, filter .2s ease;
     }
     .btn:hover{transform:translateY(-1px); filter:saturate(1.04)}
     .btn:active{transform:translateY(0)}
-    .btnGhost{color:#e5e8ff; background:transparent; border:1px solid #ffffff3a; box-shadow:none; padding:12px 16px}
+    .btnGhost{color:#f0eaff; background:transparent; border:1px solid #ffffff3a; box-shadow:none; padding:12px 16px}
     .note{color:var(--muted); font-size:14px; text-align:center}
 
     /* REVEAL */
     .reveal{opacity:0; transform:translateY(14px); transition: all .8s ease}
     .reveal.show{opacity:1; transform:none}
 
-    footer{padding:24px 0 40px; text-align:center; color:#cfd5ff9e; font-size:14px}
-    a{color:#bfcaff}
-
+    footer{padding:24px 0 40px; text-align:center; color:#e7dcffcc; font-size:14px}
+    a{color:#fff}
     @media (prefers-reduced-motion: reduce){
       body::before{animation:none}
       #sparkles{display:none}
@@ -151,13 +177,14 @@
     <section class="carousel reveal" id="gallery" aria-label="Галерея світлин">
       <div class="viewport">
         <div class="slides" id="slides"></div>
+        <div class="loader" id="galleryLoader" aria-hidden="true"></div>
       </div>
       <button class="navBtn navPrev" id="prev" aria-label="Попереднє фото" type="button">‹</button>
       <button class="navBtn navNext" id="next" aria-label="Наступне фото" type="button">›</button>
       <div class="dots" id="dots" aria-hidden="true"></div>
     </section>
 
-    <!-- ======= ПРО РЕТРИТ (розширено) ======= -->
+    <!-- ======= ПРО РЕТРИТ ======= -->
     <section class="card reveal">
       <h2>Про ретрит</h2>
       <p>Ці дні — про <b>тишу всередині</b>, м’яке сповільнення та повернення до себе. Ми створюємо безпечний простір, де можна нарешті видихнути, відчути тіло, помітити справжні потреби й дбайливо дати їм місце.</p>
@@ -197,7 +224,7 @@
         <li><b>Трансфер</b> з Воловця до Пилипця й назад.</li>
         <li><b>Проживання</b> у затишному готелі в Пилипці.</li>
         <li><b>SPA-день</b> для відновлення (сауна/басейн/релакс-зона).</li>
-        <li><b>Джипінг</b> Карпатами та <b>подорож до озера Синевир</b>.</li>
+        <li><b>Джипінг</b> Карпатами та <b>подорож до озера Синевир</б>.</li>
         <li><b>Підйом на гору Гемба</b></li>
         <li><b>Щоденні практики</b>: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, «Ліла».</li>
       </ul>
@@ -209,18 +236,12 @@
       <p>Більше легкості й внутрішнього спокою. Ближчий контакт із тілом і почуттями. Розуміння, куди рухатися далі — без зайвого шуму, з опорою на себе.</p>
     </section>
 
-    <!-- ======= Безпека і турбота ======= -->
-    <section class="card reveal">
-      <h2>Безпека і турбота</h2>
-      <p>Ми працюємо обережно, без насильницьких практик і «проривів за будь-яку ціну». Кожна учасниця може взяти паузу, сказати «стоп» і обрати рівень глибини, що комфортний саме зараз.</p>
-    </section>
-
     <!-- ======= CTA ======= -->
     <section class="card reveal" id="buy">
       <h2>Бронювання</h2>
       <p class="price">Ціна: <b>15 000 гривень</b> — усе перелічене вище входить у вартість</p>
       <div class="cta">
-        <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram">💫 Забронювати </a>
+        <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram">💫 Забронювати</a>
       </div>
     </section>
 
@@ -228,23 +249,34 @@
   </div>
 
   <script>
-    /* ================== ICON + MANIFEST (витяг справжнього файлу з ibb.co) ================== */
-    const ibbIconPage = "https://ibb.co/WNkz2hXP"; // ваше посилання на сторінку з іконкою
+    /* ================== ICON + MANIFEST ================== */
+    const ibbIconPage = "https://ibb.co/WNkz2hXP";
 
-    // Допоміжні — тестування зображення та проксі CDN
-    function testImage(src){
-      return new Promise(res=>{
+    // helpers
+    const LS_TTL_MS = 3*24*60*60*1000; // 3 дні
+    const now = () => Date.now();
+
+    function testImage(src, timeout=4000){
+      return new Promise((resolve)=>{
         const im = new Image();
-        im.onload = ()=>res(true);
-        im.onerror = ()=>res(false);
+        let done = false;
+        const timer = setTimeout(()=>{ if(!done){ done=true; resolve(false);} }, timeout);
+        im.onload = ()=>{ if(!done){ done=true; clearTimeout(timer); resolve(true);} };
+        im.onerror = ()=>{ if(!done){ done=true; clearTimeout(timer); resolve(false);} };
         im.referrerPolicy = "no-referrer";
-        im.src = src + (src.includes("?")?"&":"?")+"v="+Date.now();
+        im.src = src + (src.includes("?")?"&":"?")+"v="+Math.floor(Math.random()*1e6);
       });
     }
-    const weserv = (url, extra="") => `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=2&il${extra}`;
+    const weserv = (url, dpr=2) => `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=${dpr}&il`;
+    const staticallyCdn = (url) => {
+      try{
+        const u = new URL(url);
+        return `https://cdn.statically.io/img/${u.hostname}${u.pathname}?f=webp`;
+      }catch(e){ return url; }
+    };
+    const wpcom = (url) => `https://i0.wp.com/${url.replace(/^https?:\/\//,'')}`;
 
-    // Читаємо HTML ibb.co через відкритий рідер із CORS (r.jina.ai) і дістаємо прямий i.ibb.co/....(jpg|png|webp)
-    async function directFromIbbPage(url){
+    async function extractDirectFromIbb(url){
       const naked = url.replace(/^https?:\/\//,'');
       const probes = [
         `https://r.jina.ai/http://${naked}`,
@@ -252,27 +284,62 @@
       ];
       for(const probe of probes){
         try{
-          const txt = await fetch(probe).then(r=>r.text());
+          const txt = await fetch(probe, {cache:'no-store'}).then(r=>r.text());
+          const og = txt.match(/property="og:image"\s+content="([^"]+)"/i);
+          if(og && await testImage(og[1])) return og[1];
+          const tw = txt.match(/name="twitter:image"\s+content="([^"]+)"/i);
+          if(tw && await testImage(tw[1])) return tw[1];
           const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
           if(m && await testImage(m[0])) return m[0];
-          // інколи той самий лінк через CDN дає чіткіше
-          if(m){
-            const via = weserv(m[0]);
-            if(await testImage(via)) return via;
-          }
         }catch(e){}
       }
       return null;
     }
+    function ibbId(ibbPageUrl){ return ibbPageUrl.split("/").pop().replace(/\?.*/,''); }
+
+    function lsGet(key){
+      try{
+        const raw = localStorage.getItem(key);
+        if(!raw) return null;
+        const {v, t} = JSON.parse(raw);
+        if(now()-t > LS_TTL_MS){ localStorage.removeItem(key); return null; }
+        return v;
+      }catch(e){ return null; }
+    }
+    function lsSet(key, value){
+      try{ localStorage.setItem(key, JSON.stringify({v:value, t:now()})); }catch(e){}
+    }
+
+    async function resolveIbbOnce(ibbPageUrl){
+      const direct = await extractDirectFromIbb(ibbPageUrl);
+      if(direct) return direct;
+
+      const id = ibbId(ibbPageUrl);
+      for(const ext of ["webp","jpg","jpeg","png"]){
+        const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
+        if(await testImage(guess)) return guess;
+      }
+      const via1 = weserv(ibbPageUrl);
+      if(await testImage(via1)) return via1;
+      const via2 = staticallyCdn(ibbPageUrl);
+      if(await testImage(via2)) return via2;
+      const via3 = wpcom(ibbPageUrl);
+      if(await testImage(via3)) return via3;
+
+      return ibbPageUrl;
+    }
+    async function resolveIbb(ibbPageUrl){
+      const key = "ibb:best:"+ibbId(ibbPageUrl);
+      const cached = lsGet(key);
+      if(cached && await testImage(cached, 1800)) return cached;
+      const best = await resolveIbbOnce(ibbPageUrl);
+      lsSet(key, best);
+      return best;
+    }
 
     async function getBestIcon(){
-      // 1) прямий файл із ibb-сторінки
-      const direct = await directFromIbbPage(ibbIconPage);
-      if(direct) return direct;
-      // 2) запасні варіанти (якщо сторінка закрита) — лишаємо оригінальний URL через CDN
-      const fallback = weserv(ibbIconPage);
-      if(await testImage(fallback)) return fallback;
-      return ibbIconPage;
+      const best = await resolveIbb(ibbIconPage);
+      return best;
     }
 
     (async ()=>{
@@ -285,8 +352,8 @@
         short_name: "Ретрит",
         start_url: ".",
         display: "standalone",
-        background_color: "#0e1244",
-        theme_color: "#1b1f6e",
+        background_color: "#a88bd6",
+        theme_color: "#a88bd6",
         icons: [
           { src: bestIcon, sizes: "192x192", type: "image/png", purpose: "any maskable" },
           { src: bestIcon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
@@ -297,7 +364,7 @@
       document.getElementById("manifestLink").href = url;
     })();
 
-    /* ================== ГАЛЕРЕЯ: hi-quality зображення з ibb.co ================== */
+    /* ================== ГАЛЕРЕЯ: стабильная загрузка + лоадер ================== */
     const ibbLinks = [
       "https://ibb.co/mC6tPhyp","https://ibb.co/pjfk24r5","https://ibb.co/N2JyQJ4K",
       "https://ibb.co/4nwV4ZTr","https://ibb.co/N21d2zKz","https://ibb.co/hRh6v8P9",
@@ -309,51 +376,59 @@
 
     const slidesEl = document.getElementById("slides");
     const dotsEl = document.getElementById("dots");
+    const loader = document.getElementById("galleryLoader");
 
-    async function findDirectImage(ibbPageUrl){
-      // 1) читаємо сторінку і дістаємо прямий i.ibb.co/*
-      const direct = await directFromIbbPage(ibbPageUrl);
-      if(direct) return direct;
+    function showLoader(v){ loader.style.display = v ? 'block' : 'none'; }
 
-      // 2) якщо не вдалося — пробуємо стандартні розширення через CDN без зміни розміру
-      for(const ext of ["webp","jpg","jpeg","png"]){
-        // інколи ідентифікатор сторінки збігається з ім’ям файлу — спробуємо
-        const id = ibbPageUrl.split("/").pop();
-        const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
-        if(await testImage(guess)) return guess;
-        const via = weserv(guess);
-        if(await testImage(via)) return via;
-      }
-
-      // 3) крайній випадок — саму сторінку через CDN (часто повертає прев’ю кращої якості, ніж вбудовані)
-      const pageVia = weserv(ibbPageUrl);
-      if(await testImage(pageVia)) return pageVia;
-
-      return ibbPageUrl;
+    function makeFallbacks(base){
+      const arr = [base, weserv(base,2), staticallyCdn(base), wpcom(base), weserv(base,3)];
+      return [...new Set(arr)];
     }
 
-    function buildSlides(srcs){
-      srcs.forEach((src,i)=>{
+    function buildSlidesFromResolved(resolved){
+      resolved.forEach((src,i)=>{
         const slide = document.createElement("div");
         slide.className = "slide";
 
         const pic = document.createElement("picture");
 
-        // альтернативний формат webp (якщо є)
         const sWebp = document.createElement("source");
         sWebp.type = "image/webp";
-        sWebp.srcset = `${src} 1x, ${src} 2x`;
+        sWebp.srcset = `${weserv(src,1)} 1x, ${weserv(src,2)} 2x, ${weserv(src,3)} 3x`;
         sWebp.sizes = "(max-width: 980px) 100vw, 980px";
 
         const img = document.createElement("img");
         img.alt = `Фото ${i+1}`;
-        img.loading = i===0 ? "eager" : "lazy";
+        img.loading = i<=1 ? "eager" : "lazy";
         img.decoding = "async";
-        img.fetchPriority = i===0 ? "high" : "auto";
+        img.fetchPriority = i<=1 ? "high" : "auto";
         img.referrerPolicy = "no-referrer";
+        img.crossOrigin = "anonymous";
         img.src = src;
-        img.srcset = `${src} 1x, ${src} 2x, ${src} 3x`;
+        img.srcset = `${src} 1x, ${weserv(src,2)} 2x, ${weserv(src,3)} 3x`;
         img.sizes = "(max-width: 980px) 100vw, 980px";
+
+        img.dataset.loaded = "false";
+        const fallbacks = makeFallbacks(src);
+        img.dataset.fallbacks = JSON.stringify(fallbacks.slice(1));
+        img.addEventListener('load', ()=>{ img.dataset.loaded="true"; if(currentIndex===i) showLoader(false); });
+        img.onerror = ()=>{
+          try{
+            const rest = JSON.parse(img.dataset.fallbacks||"[]");
+            if(rest.length){
+              const next = rest.shift();
+              img.dataset.fallbacks = JSON.stringify(rest);
+              img.srcset = `${next} 1x, ${weserv(next,2)} 2x`;
+              img.src = next;
+            }else{
+              img.style.objectFit = 'cover';
+              img.style.background = 'linear-gradient(135deg,#7f61ba,#5f4aa8)';
+              img.alt = `Фото ${i+1} тимчасово недоступне`;
+              img.dataset.loaded="true";
+              if(currentIndex===i) showLoader(false);
+            }
+          }catch(e){}
+        };
 
         pic.appendChild(sWebp); pic.appendChild(img);
         slide.appendChild(pic);
@@ -361,22 +436,47 @@
 
         const dot = document.createElement("span"); dot.className = "dot"; dotsEl.appendChild(dot);
 
-        // Прелоад наступного зображення для плавності
-        if(i===0){
+        if(i<=1){
           const link = document.createElement('link');
           link.rel = 'preload'; link.as = 'image'; link.href = src;
           document.head.appendChild(link);
+        }else if(i<=3){
+          const link2 = document.createElement('link');
+          link2.rel = 'prefetch'; link2.as = 'image'; link2.href = src;
+          document.head.appendChild(link2);
         }
       });
     }
 
-    (async ()=>{
-      const sources = [];
-      for(const l of ibbLinks){
-        sources.push(await findDirectImage(l));
+    async function resolveAll(links, maxConcurrent=4){
+      const out = new Array(links.length);
+      let i=0;
+      async function worker(){
+        while(i<links.length){
+          const idx = i++;
+          try{ out[idx] = await resolveIbb(links[idx]); }
+          catch(e){ out[idx] = links[idx]; }
+        }
       }
-      buildSlides(sources);
+      const N = Math.max(3, Math.min(maxConcurrent, 6));
+      await Promise.all(new Array(N).fill(0).map(worker));
+      return out;
+    }
+
+    let currentIndex = 0;
+
+    (async ()=>{
+      showLoader(true);
+      const sources = await resolveAll(ibbLinks, 5);
+      buildSlidesFromResolved(sources);
       initCarousel();
+      // ждём, пока загрузятся первые 2 кадра или истечёт таймаут
+      const firstImgs = [...slidesEl.querySelectorAll('img')].slice(0,2);
+      const ok = await Promise.race([
+        Promise.all(firstImgs.map(img => img.complete ? Promise.resolve() : new Promise(res => img.addEventListener('load', res, {once:true})))),
+        new Promise(res => setTimeout(res, 3000))
+      ]);
+      showLoader(false);
     })();
 
     function initCarousel(){
@@ -384,17 +484,25 @@
       const nextBtn = document.getElementById('next');
       const dots = Array.from(document.querySelectorAll('.dot'));
 
-      let index = 0, total = slidesEl.children.length, anim=false;
+      const total = slidesEl.children.length;
       const goTo = (i)=>{
-        if(anim) return;
-        anim = true;
-        index = (i+total)%total;
-        slidesEl.style.transform = `translateX(-${index*100}%)`;
-        dots.forEach((d,di)=>d.classList.toggle('active', di===index));
-        setTimeout(()=>anim=false, 520);
+        currentIndex = (i+total)%total;
+        const targetImg = slidesEl.children[currentIndex].querySelector('img');
+        if(!(targetImg && targetImg.complete)){
+          showLoader(true);
+          if(targetImg){
+            const hide = ()=>{ showLoader(false); targetImg.removeEventListener('load', hide); targetImg.removeEventListener('error', hide); };
+            targetImg.addEventListener('load', hide, {once:true});
+            targetImg.addEventListener('error', hide, {once:true});
+          }
+        }else{
+          showLoader(false);
+        }
+        slidesEl.style.transform = `translateX(-${currentIndex*100}%)`;
+        dots.forEach((d,di)=>d.classList.toggle('active', di===currentIndex));
       };
-      prevBtn.addEventListener('click', ()=>goTo(index-1));
-      nextBtn.addEventListener('click', ()=>goTo(index+1));
+      document.getElementById('prev').addEventListener('click', ()=>goTo(currentIndex-1));
+      document.getElementById('next').addEventListener('click', ()=>goTo(currentIndex+1));
       goTo(0);
 
       // свайп
@@ -403,13 +511,13 @@
       slidesEl.addEventListener('pointermove', e=>{
         if(startX!=null){
           delta = e.clientX-startX;
-          slidesEl.style.transform = `translateX(calc(${-index*100}% + ${delta}px))`;
+          slidesEl.style.transform = `translateX(calc(${-currentIndex*100}% + ${delta}px))`;
         }
       });
       const end = ()=>{
         if(startX!=null){
           const threshold = Math.min(240, slidesEl.clientWidth*0.18);
-          if(Math.abs(delta) > threshold) goTo(index + (delta<0?1:-1)); else goTo(index);
+          if(Math.abs(delta) > threshold) goTo(currentIndex + (delta<0?1:-1)); else goTo(currentIndex);
         }
         startX=null; delta=0;
       };
@@ -417,10 +525,10 @@
       slidesEl.addEventListener('pointercancel', end);
       slidesEl.addEventListener('pointerleave', end);
 
-      // блокуємо усі внутрішні прокрутки у вьюпорті (щоб не з’являлись скролли)
+      // блокируем внутренние скроллы у вьюпорта
       const viewport = document.querySelector('.viewport');
       ['wheel','touchmove'].forEach(ev=>{
-        viewport.addEventListener(ev, (e)=>{ /* дозволяємо вертикаль сторінки, але не внутрішні скролли */ }, {passive:true});
+        viewport.addEventListener(ev, ()=>{}, {passive:true});
       });
     }
 
@@ -430,7 +538,7 @@
     },{threshold:0.14});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    /* ================== SPARKLES (повільні блискітки) ================== */
+    /* ================== SPARKLES ================== */
     const canvas = document.getElementById('sparkles');
     const ctx = canvas.getContext('2d');
     let W=0,H=0, stars=[];
