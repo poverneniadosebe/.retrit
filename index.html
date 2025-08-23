@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Жіночий ретрит «Повернення до себе» • Карпати 11.09–15.09.2025</title>
-  <meta name="theme-color" content="#a88bd6" />
+  <meta name="theme-color" content="#8a71c4" />
   <meta name="description" content="Жіночий ретрит у Карпатах про м’яке повернення до себе: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Дбайлива атмосфера, сповільнення, безпека й підтримка. Квитки, трансфер, проживання — у вартості." />
 
   <!-- Favicon & PWA manifest (ставятся скриптом) -->
@@ -27,12 +27,12 @@
   <style>
     /* ======= RESET & THEME ======= */
     :root{
-      /* нежно-фиолетовый стек */
-      --bg-1:#b38de6; --bg-2:#a67bdc; --bg-3:#c3a2ef;
+      /* темнее и мягче фиолетовый */
+      --bg-1:#8a71c4; --bg-2:#7a62b6; --bg-3:#9a85cf;
       --glass: rgba(255,255,255,.08);
       --border: #ffffff24;
-      --text:#f3eeff; --muted:#e3d9ffcc; --accent:#efe3ff;
-      --shadow: 0 18px 40px rgba(0,0,0,.28);
+      --text:#f5f0ff; --muted:#e9e0ffcc; --accent:#efe3ff;
+      --shadow: 0 18px 40px rgba(0,0,0,.30);
       --radius: 18px;
     }
     *{box-sizing:border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility}
@@ -40,20 +40,22 @@
     body{
       margin:0; color:var(--text);
       font-family: Arial, Helvetica, sans-serif; line-height:1.6;
+      /* маленький градиент + тёмная подложка */
       background:
-        radial-gradient(1200px 800px at 18% -10%, #d3b4ff55 0%, transparent 60%),
-        radial-gradient(1000px 700px at 120% 20%, #be9cff55 0%, transparent 65%),
-        linear-gradient(140deg,var(--bg-1),var(--bg-2) 50%, var(--bg-3) 100%);
+        radial-gradient(800px 520px at 20% -10%, #dac7ff2b 0%, transparent 60%),
+        radial-gradient(700px 480px at 110% 25%, #d5c3ff26 0%, transparent 65%),
+        linear-gradient(150deg,var(--bg-1),var(--bg-2) 52%, var(--bg-3) 100%);
       overflow-x:hidden;
     }
     body::before{
       content:""; position:fixed; inset:-20%;
       background:
-        radial-gradient(60% 40% at 70% 20%, #e7d6ff33 0%, transparent 60%),
-        radial-gradient(55% 38% at 20% 80%, #f0e6ff22 0%, transparent 60%);
+        radial-gradient(56% 36% at 72% 22%, #efe6ff22 0%, transparent 60%),
+        radial-gradient(50% 34% at 22% 82%, #f6eeff18 0%, transparent 60%);
       filter: blur(42px); z-index:-2; animation: float 42s linear infinite alternate;
+      opacity:.85;
     }
-    @keyframes float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-4%,2%,0) scale(1.06)}}
+    @keyframes float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-3%,2%,0) scale(1.05)}}
 
     /* полотно блискіток */
     #sparkles{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
@@ -74,8 +76,8 @@
     }
 
     /* ======= ГАЛЕРЕЯ ======= */
-    .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#2b1f53;margin:0 auto}
-    .viewport{position:relative;width:100%; aspect-ratio:16/9; overflow:hidden !important; background:#2b1f53}
+    .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#241a44;margin:0 auto}
+    .viewport{position:relative;width:100%; aspect-ratio:16/9; overflow:hidden !important; background:#241a44}
     .slides{
       display:flex; width:100%; height:100%; transform:translateX(0);
       transition: transform .5s ease; will-change: transform; user-select:none; touch-action: pan-y;
@@ -89,23 +91,28 @@
     }
     .viewport::-webkit-scrollbar, .slides::-webkit-scrollbar, .slide::-webkit-scrollbar{width:0;height:0}
 
+    /* placeholder фон кадра до загрузки */
+    .ph{
+      position:absolute; inset:0; background:
+        radial-gradient(60% 80% at 50% 20%, #312458, transparent 70%),
+        linear-gradient(180deg, #2b1f53, #241a44);
+      animation: ph 1.4s ease-in-out infinite alternate;
+    }
+    @keyframes ph{0%{opacity:.55}100%{opacity:.8}}
+
     /* loader по центру вьюпорта */
     .loader{
       position:absolute; inset:auto; top:50%; left:50%;
-      width:28px; height:28px; border-radius:50%;
-      border:3px solid rgba(255,255,255,.35); border-top-color:#fff;
+      width:22px; height:22px; border-radius:50%;
+      border:3px solid rgba(255,255,255,.32); border-top-color:#fff;
       transform:translate(-50%,-50%); pointer-events:none; z-index:2; display:none;
-      animation: spin .8s linear infinite;
-      box-shadow: 0 0 0 6px rgba(0,0,0,.12);
+      animation: spin .8s linear infinite; box-shadow: 0 0 0 6px rgba(0,0,0,.12);
     }
-    @keyframes spin{
-      0%{ transform:translate(-50%,-50%) rotate(0deg) }
-      100%{ transform:translate(-50%,-50%) rotate(360deg) }
-    }
+    @keyframes spin{ 0%{transform:translate(-50%,-50%) rotate(0)} 100%{transform:translate(-50%,-50%) rotate(360deg)} }
 
     .navBtn{
       position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%;
-      display:grid; place-items:center; color:#fff; background:rgba(33,20,74,.55);
+      display:grid; place-items:center; color:#fff; background:rgba(28,18,60,.55);
       border:1px solid #ffffff2a; backdrop-filter: blur(6px); cursor:pointer; opacity:.95;
       transition:transform .15s ease, filter .2s ease;
     }
@@ -117,7 +124,7 @@
 
     /* ======= КАРТКИ ======= */
     .card{
-      background:linear-gradient(180deg, #7f61ba99, #5f4aa899);
+      background:linear-gradient(180deg, #6f57a099, #59459199);
       border:1px solid var(--border); border-radius:var(--radius);
       padding:22px clamp(16px, 5vw, 28px); margin:20px auto; backdrop-filter: blur(8px);
       box-shadow:var(--shadow);
@@ -133,7 +140,7 @@
     ul.clean li{margin:10px 0; word-break:normal; overflow-wrap:normal; hyphens:none}
 
     .pill{display:inline-block; margin:6px 6px 0 0; padding:6px 10px; font-size:14px; border-radius:999px;
-      border:1px solid var(--border); color:#f7f2ff; background:#ffffff20}
+      border:1px solid var(--border); color:#f7f2ff; background:#ffffff22}
 
     /* ======= CTA ======= */
     .price{font-size: clamp(22px, 4.4vw, 34px); margin:0 0 12px; font-weight:800; text-align:center}
@@ -141,7 +148,7 @@
     .btn{
       appearance:none; border:0; cursor:pointer; padding:14px 20px; border-radius:14px;
       font-weight:800; letter-spacing:.3px; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
-      color:#2d1d55; background:linear-gradient(180deg,#efe3ff,#c9aef7); box-shadow:0 10px 24px #0005, inset 0 1px 0 #fff7;
+      color:#241a44; background:linear-gradient(180deg,#efe3ff,#c9aef7); box-shadow:0 10px 24px #0005, inset 0 1px 0 #fff7;
       transition: transform .12s ease, filter .2s ease;
     }
     .btn:hover{transform:translateY(-1px); filter:saturate(1.04)}
@@ -206,7 +213,7 @@
         <li><b>Гра «Ліла»</b> — м’який спосіб побачити себе збоку, отримати підказки й інсайти для рішень.</li>
         <li><b>Стояння на цвяхах</b> — зустріч зі страхом і вихід у силу через усвідомлене дихання.</li>
         <li><b>Ранкова йога</b> — легкість, баланс, м’яка сила й контакт із собою.</li>
-        <li><b>МАК-сесії</b> — відповіді з підсвідомого, ясність наступних кроків.</li>
+        <li><b>МАК-сесії</б> — відповіді з підсвідомого, ясність наступних кроків.</li>
       </ul>
     </section>
 
@@ -224,7 +231,7 @@
         <li><b>Трансфер</b> з Воловця до Пилипця й назад.</li>
         <li><b>Проживання</b> у затишному готелі в Пилипці.</li>
         <li><b>SPA-день</b> для відновлення (сауна/басейн/релакс-зона).</li>
-        <li><b>Джипінг</b> Карпатами та <b>подорож до озера Синевир</б>.</li>
+        <li><b>Джипінг</b> Карпатами та <b>подорож до озера Синевир</b>.</li>
         <li><b>Підйом на гору Гемба</b></li>
         <li><b>Щоденні практики</b>: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, «Ліла».</li>
       </ul>
@@ -252,11 +259,24 @@
     /* ================== ICON + MANIFEST ================== */
     const ibbIconPage = "https://ibb.co/WNkz2hXP";
 
-    // helpers
-    const LS_TTL_MS = 3*24*60*60*1000; // 3 дні
+    /* ---------- helpers ---------- */
+    const LS_TTL_MS = 30*24*60*60*1000; // 30 днів
     const now = () => Date.now();
+    function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-    function testImage(src, timeout=4000){
+    async function fetchWithBackoff(url, {retries=4, base=900}={}){
+      for(let i=0;i<=retries;i++){
+        try{
+          const res = await fetch(url, {cache:'no-store'});
+          if(res.status===429){ await sleep(base*(i+1)); continue; }
+          if(!res.ok){ await sleep(250); continue; }
+          return await res.text();
+        }catch(e){ await sleep(base*(i+1)); }
+      }
+      throw new Error("fetch-failed");
+    }
+
+    function testImage(src, timeout=5000){
       return new Promise((resolve)=>{
         const im = new Image();
         let done = false;
@@ -276,27 +296,6 @@
     };
     const wpcom = (url) => `https://i0.wp.com/${url.replace(/^https?:\/\//,'')}`;
 
-    async function extractDirectFromIbb(url){
-      const naked = url.replace(/^https?:\/\//,'');
-      const probes = [
-        `https://r.jina.ai/http://${naked}`,
-        `https://r.jina.ai/https://${naked}`,
-      ];
-      for(const probe of probes){
-        try{
-          const txt = await fetch(probe, {cache:'no-store'}).then(r=>r.text());
-          const og = txt.match(/property="og:image"\s+content="([^"]+)"/i);
-          if(og && await testImage(og[1])) return og[1];
-          const tw = txt.match(/name="twitter:image"\s+content="([^"]+)"/i);
-          if(tw && await testImage(tw[1])) return tw[1];
-          const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
-          if(m && await testImage(m[0])) return m[0];
-        }catch(e){}
-      }
-      return null;
-    }
-    function ibbId(ibbPageUrl){ return ibbPageUrl.split("/").pop().replace(/\?.*/,''); }
-
     function lsGet(key){
       try{
         const raw = localStorage.getItem(key);
@@ -310,40 +309,42 @@
       try{ localStorage.setItem(key, JSON.stringify({v:value, t:now()})); }catch(e){}
     }
 
-    async function resolveIbbOnce(ibbPageUrl){
-      const direct = await extractDirectFromIbb(ibbPageUrl);
-      if(direct) return direct;
+    // on-demand resolver для одной ibb-страницы
+    async function resolveIbbPage(ibbPageUrl){
+      const id = ibbPageUrl.split("/").pop().replace(/\?.*/,'');
+      const key = "ibb:best:"+id;
 
-      const id = ibbId(ibbPageUrl);
-      for(const ext of ["webp","jpg","jpeg","png"]){
-        const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
-        if(await testImage(guess)) return guess;
-      }
-      const via1 = weserv(ibbPageUrl);
-      if(await testImage(via1)) return via1;
-      const via2 = staticallyCdn(ibbPageUrl);
-      if(await testImage(via2)) return via2;
-      const via3 = wpcom(ibbPageUrl);
-      if(await testImage(via3)) return via3;
-
-      return ibbPageUrl;
-    }
-    async function resolveIbb(ibbPageUrl){
-      const key = "ibb:best:"+ibbId(ibbPageUrl);
+      // 1) кеш
       const cached = lsGet(key);
       if(cached && await testImage(cached, 1800)) return cached;
-      const best = await resolveIbbOnce(ibbPageUrl);
-      lsSet(key, best);
-      return best;
+
+      // 2) аккратно читаем og:image у самой страницы (по одному запросу)
+      const naked = ibbPageUrl.replace(/^https?:\/\//,'');
+      for(const probe of [`https://r.jina.ai/http/${naked}`, `https://r.jina.ai/https/${naked}`]){
+        try{
+          const txt = await fetchWithBackoff(probe, {retries:4, base:1000});
+          const og = txt.match(/property="og:image"\s+content="([^"]+)"/i);
+          if(og && await testImage(og[1])){ lsSet(key, og[1]); return og[1]; }
+          const tw = txt.match(/name="twitter:image"\s+content="([^"]+)"/i);
+          if(tw && await testImage(tw[1])){ lsSet(key, tw[1]); return tw[1]; }
+          const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
+          if(m && await testImage(m[0])){ lsSet(key, m[0]); return m[0]; }
+        }catch(e){}
+      }
+
+      // 3) крайние прокси-варианты
+      for(const via of [weserv(ibbPageUrl), staticallyCdn(ibbPageUrl), wpcom(ibbPageUrl)]){
+        if(await testImage(via)){ lsSet(key, via); return via; }
+      }
+
+      // 4) возвращаем саму страницу (дальше отработают onerror-фоллбеки)
+      lsSet(key, ibbPageUrl);
+      return ibbPageUrl;
     }
 
-    async function getBestIcon(){
-      const best = await resolveIbb(ibbIconPage);
-      return best;
-    }
-
+    /* ================== ICON ================== */
     (async ()=>{
-      const bestIcon = await getBestIcon();
+      const bestIcon = await resolveIbbPage(ibbIconPage);
       document.getElementById("favicon").href = bestIcon;
       document.getElementById("appleicon").href = bestIcon;
 
@@ -352,8 +353,8 @@
         short_name: "Ретрит",
         start_url: ".",
         display: "standalone",
-        background_color: "#a88bd6",
-        theme_color: "#a88bd6",
+        background_color: "#8a71c4",
+        theme_color: "#8a71c4",
         icons: [
           { src: bestIcon, sizes: "192x192", type: "image/png", purpose: "any maskable" },
           { src: bestIcon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
@@ -364,7 +365,7 @@
       document.getElementById("manifestLink").href = url;
     })();
 
-    /* ================== ГАЛЕРЕЯ: стабильная загрузка + лоадер ================== */
+    /* ================== ГАЛЕРЕЯ: on-demand resolve ================== */
     const ibbLinks = [
       "https://ibb.co/mC6tPhyp","https://ibb.co/pjfk24r5","https://ibb.co/N2JyQJ4K",
       "https://ibb.co/4nwV4ZTr","https://ibb.co/N21d2zKz","https://ibb.co/hRh6v8P9",
@@ -377,7 +378,6 @@
     const slidesEl = document.getElementById("slides");
     const dotsEl = document.getElementById("dots");
     const loader = document.getElementById("galleryLoader");
-
     function showLoader(v){ loader.style.display = v ? 'block' : 'none'; }
 
     function makeFallbacks(base){
@@ -385,160 +385,92 @@
       return [...new Set(arr)];
     }
 
-    function buildSlidesFromResolved(resolved){
-      resolved.forEach((src,i)=>{
-        const slide = document.createElement("div");
-        slide.className = "slide";
+    // создаём слайды сразу (с плейсхолдерами), а реальные картинки подставляем по требованию
+    ibbLinks.forEach((pageUrl, i)=>{
+      const slide = document.createElement("div");
+      slide.className = "slide";
 
-        const pic = document.createElement("picture");
+      // placeholder
+      const ph = document.createElement("div");
+      ph.className = "ph";
+      slide.appendChild(ph);
 
-        const sWebp = document.createElement("source");
-        sWebp.type = "image/webp";
-        sWebp.srcset = `${weserv(src,1)} 1x, ${weserv(src,2)} 2x, ${weserv(src,3)} 3x`;
-        sWebp.sizes = "(max-width: 980px) 100vw, 980px";
+      const pic = document.createElement("picture");
+      const sWebp = document.createElement("source");
+      sWebp.type = "image/webp";
+      const img = document.createElement("img");
+      img.alt = `Фото ${i+1}`;
+      img.loading = i===0 ? "eager" : "lazy";
+      img.decoding = "async";
+      img.fetchPriority = i===0 ? "high" : "auto";
+      img.referrerPolicy = "no-referrer";
+      img.crossOrigin = "anonymous";
+      img.style.opacity = "0";
+      img.addEventListener('load', ()=>{ ph.remove(); img.style.opacity = "1"; if(currentIndex===i) showLoader(false); });
+      img.onerror = ()=>{
+        // финальный фоллбек — пробуем прокси-варианты
+        const fbs = makeFallbacks(pageUrl);
+        (async function tryFb(k=0){
+          if(k>=fbs.length){ ph.style.opacity=.9; showLoader(false); return; }
+          const u = fbs[k];
+          if(await testImage(u)){ img.src = u; img.srcset = `${u} 1x, ${weserv(u,2)} 2x`; return; }
+          tryFb(k+1);
+        })();
+      };
 
-        const img = document.createElement("img");
-        img.alt = `Фото ${i+1}`;
-        img.loading = i<=1 ? "eager" : "lazy";
-        img.decoding = "async";
-        img.fetchPriority = i<=1 ? "high" : "auto";
-        img.referrerPolicy = "no-referrer";
-        img.crossOrigin = "anonymous";
-        img.src = src;
-        img.srcset = `${src} 1x, ${weserv(src,2)} 2x, ${weserv(src,3)} 3x`;
-        img.sizes = "(max-width: 980px) 100vw, 980px";
+      pic.appendChild(sWebp); pic.appendChild(img);
+      slide.appendChild(pic);
+      slidesEl.appendChild(slide);
 
-        img.dataset.loaded = "false";
-        const fallbacks = makeFallbacks(src);
-        img.dataset.fallbacks = JSON.stringify(fallbacks.slice(1));
-        img.addEventListener('load', ()=>{ img.dataset.loaded="true"; if(currentIndex===i) showLoader(false); });
-        img.onerror = ()=>{
-          try{
-            const rest = JSON.parse(img.dataset.fallbacks||"[]");
-            if(rest.length){
-              const next = rest.shift();
-              img.dataset.fallbacks = JSON.stringify(rest);
-              img.srcset = `${next} 1x, ${weserv(next,2)} 2x`;
-              img.src = next;
-            }else{
-              img.style.objectFit = 'cover';
-              img.style.background = 'linear-gradient(135deg,#7f61ba,#5f4aa8)';
-              img.alt = `Фото ${i+1} тимчасово недоступне`;
-              img.dataset.loaded="true";
-              if(currentIndex===i) showLoader(false);
-            }
-          }catch(e){}
-        };
+      const dot = document.createElement("span"); dot.className = "dot"; dotsEl.appendChild(dot);
 
-        pic.appendChild(sWebp); pic.appendChild(img);
-        slide.appendChild(pic);
-        slidesEl.appendChild(slide);
-
-        const dot = document.createElement("span"); dot.className = "dot"; dotsEl.appendChild(dot);
-
-        if(i<=1){
-          const link = document.createElement('link');
-          link.rel = 'preload'; link.as = 'image'; link.href = src;
-          document.head.appendChild(link);
-        }else if(i<=3){
-          const link2 = document.createElement('link');
-          link2.rel = 'prefetch'; link2.as = 'image'; link2.href = src;
-          document.head.appendChild(link2);
-        }
-      });
-    }
-
-    async function resolveAll(links, maxConcurrent=4){
-      const out = new Array(links.length);
-      let i=0;
-      async function worker(){
-        while(i<links.length){
-          const idx = i++;
-          try{ out[idx] = await resolveIbb(links[idx]); }
-          catch(e){ out[idx] = links[idx]; }
-        }
-      }
-      const N = Math.max(3, Math.min(maxConcurrent, 6));
-      await Promise.all(new Array(N).fill(0).map(worker));
-      return out;
-    }
+      // сохраним ibb-страницу в dataset — загрузим, когда понадобится
+      slide.dataset.page = pageUrl;
+    });
 
     let currentIndex = 0;
+    async function ensureSlideLoaded(idx){
+      const slide = slidesEl.children[idx];
+      if(!slide) return;
+      const img = slide.querySelector("img");
+      if(img && img.src) return; // уже загружено
 
-    (async ()=>{
+      const pageUrl = slide.dataset.page;
       showLoader(true);
-      const sources = await resolveAll(ibbLinks, 5);
-      buildSlidesFromResolved(sources);
-      initCarousel();
-      // ждём, пока загрузятся первые 2 кадра или истечёт таймаут
-      const firstImgs = [...slidesEl.querySelectorAll('img')].slice(0,2);
-      const ok = await Promise.race([
-        Promise.all(firstImgs.map(img => img.complete ? Promise.resolve() : new Promise(res => img.addEventListener('load', res, {once:true})))),
-        new Promise(res => setTimeout(res, 3000))
-      ]);
-      showLoader(false);
-    })();
+      const direct = await resolveIbbPage(pageUrl);
+      // подставляем источники
+      const sWebp = slide.querySelector("source[type='image/webp']");
+      sWebp.srcset = `${weserv(direct,1)} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
+      sWebp.sizes = "(max-width: 980px) 100vw, 980px";
 
-    function initCarousel(){
-      const prevBtn = document.getElementById('prev');
-      const nextBtn = document.getElementById('next');
-      const dots = Array.from(document.querySelectorAll('.dot'));
-
-      const total = slidesEl.children.length;
-      const goTo = (i)=>{
-        currentIndex = (i+total)%total;
-        const targetImg = slidesEl.children[currentIndex].querySelector('img');
-        if(!(targetImg && targetImg.complete)){
-          showLoader(true);
-          if(targetImg){
-            const hide = ()=>{ showLoader(false); targetImg.removeEventListener('load', hide); targetImg.removeEventListener('error', hide); };
-            targetImg.addEventListener('load', hide, {once:true});
-            targetImg.addEventListener('error', hide, {once:true});
-          }
-        }else{
-          showLoader(false);
-        }
-        slidesEl.style.transform = `translateX(-${currentIndex*100}%)`;
-        dots.forEach((d,di)=>d.classList.toggle('active', di===currentIndex));
-      };
-      document.getElementById('prev').addEventListener('click', ()=>goTo(currentIndex-1));
-      document.getElementById('next').addEventListener('click', ()=>goTo(currentIndex+1));
-      goTo(0);
-
-      // свайп
-      let startX=null, delta=0;
-      slidesEl.addEventListener('pointerdown', e=>{startX=e.clientX; slidesEl.setPointerCapture(e.pointerId);});
-      slidesEl.addEventListener('pointermove', e=>{
-        if(startX!=null){
-          delta = e.clientX-startX;
-          slidesEl.style.transform = `translateX(calc(${-currentIndex*100}% + ${delta}px))`;
-        }
-      });
-      const end = ()=>{
-        if(startX!=null){
-          const threshold = Math.min(240, slidesEl.clientWidth*0.18);
-          if(Math.abs(delta) > threshold) goTo(currentIndex + (delta<0?1:-1)); else goTo(currentIndex);
-        }
-        startX=null; delta=0;
-      };
-      slidesEl.addEventListener('pointerup', end);
-      slidesEl.addEventListener('pointercancel', end);
-      slidesEl.addEventListener('pointerleave', end);
-
-      // блокируем внутренние скроллы у вьюпорта
-      const viewport = document.querySelector('.viewport');
-      ['wheel','touchmove'].forEach(ev=>{
-        viewport.addEventListener(ev, ()=>{}, {passive:true});
-      });
+      img.src = direct;
+      img.srcset = `${direct} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
+      img.sizes = "(max-width: 980px) 100vw, 980px";
     }
 
-    /* ================== REVEAL ================== */
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
-    },{threshold:0.14});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    function initCarousel(){
+      const dots = Array.from(document.querySelectorAll('.dot'));
+      const total = slidesEl.children.length;
 
-    /* ================== SPARKLES ================== */
+      const goTo = async (i)=>{
+        currentIndex = (i+total)%total;
+        slidesEl.style.transform = `translateX(-${currentIndex*100}%)`;
+        dots.forEach((d,di)=>d.classList.toggle('active', di===currentIndex));
+        await ensureSlideLoaded(currentIndex);
+        // прелоадим соседний кадр
+        ensureSlideLoaded((currentIndex+1)%total);
+      };
+
+      document.getElementById('prev').addEventListener('click', ()=>goTo(currentIndex-1));
+      document.getElementById('next').addEventListener('click', ()=>goTo(currentIndex+1));
+
+      // старт: грузим 0-й, затем 1-й
+      goTo(0).then(()=>ensureSlideLoaded(1));
+    }
+
+    initCarousel();
+
+    /* ================== SPARKLES (повільні блискітки) ================== */
     const canvas = document.getElementById('sparkles');
     const ctx = canvas.getContext('2d');
     let W=0,H=0, stars=[];
@@ -550,7 +482,7 @@
       canvas.style.height = innerHeight+'px';
       ctx.setTransform(1,0,0,1,0,0);
     }
-    function makeStars(n=90){
+    function makeStars(n=84){
       stars = new Array(n).fill(0).map(()=>({
         x: Math.random()*W, y: Math.random()*H,
         r: Math.random()*1.6+0.6,
@@ -572,7 +504,7 @@
       }
       requestAnimationFrame(step);
     }
-    resize(); makeStars(90); requestAnimationFrame(step);
+    resize(); makeStars(84); requestAnimationFrame(step);
     addEventListener('resize', ()=>{resize(); makeStars(stars.length);});
   </script>
 </body>
