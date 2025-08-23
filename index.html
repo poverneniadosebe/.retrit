@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Жіночий ретрит «Душа без масок — повернення до себе» • Карпати 11–15.09.2025</title>
   <meta name="theme-color" content="#1b1f6e" />
-  <meta name="description" content="3-денний жіночий ретрит у Карпатах: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Квитки, трансфер, проживання — входять у вартість." />
+  <meta name="description" content="Жіночий ретрит у Карпатах про м’яке повернення до себе: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Дбайлива атмосфера, сповільнення, безпека й підтримка. Квитки, трансфер, проживання — у вартості." />
 
-  <!-- Favicon & PWA manifest будуть встановлені нижче скриптом (працює навіть з локального файла) -->
+  <!-- Favicon & PWA manifest встановлюються нижче скриптом (працює і з локального файла) -->
   <link id="favicon" rel="icon" href="">
   <link id="appleicon" rel="apple-touch-icon" href="">
   <link id="manifestLink" rel="manifest" href="">
@@ -22,31 +22,27 @@
       --shadow: 0 18px 40px rgba(0,0,0,.35);
       --radius: 18px;
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility}
     html,body{height:100%}
     body{
       margin:0; color:var(--text);
-      font-family: Arial, Helvetica, sans-serif; line-height:1.55;
+      font-family: Arial, Helvetica, sans-serif; line-height:1.6;
       background:
         radial-gradient(1200px 800px at 15% -10%, #2b359b55 0%, transparent 60%),
         radial-gradient(1000px 700px at 120% 20%, #1b247a55 0%, transparent 65%),
         linear-gradient(140deg,var(--bg-1),var(--bg-2) 50%, var(--bg-3) 100%);
       overflow-x:hidden;
     }
-    /* м’яка хвильова підсвітка */
     body::before{
       content:""; position:fixed; inset:-20%;
       background: radial-gradient(60% 40% at 70% 20%, #6c7bff33 0%, transparent 60%),
                   radial-gradient(55% 38% at 20% 80%, #9fb2ff22 0%, transparent 60%);
-      filter: blur(42px); z-index:-2;
-      animation: float 42s linear infinite alternate;
+      filter: blur(42px); z-index:-2; animation: float 42s linear infinite alternate;
     }
     @keyframes float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-4%,2%,0) scale(1.06)}}
 
     /* полотно блискіток */
-    #sparkles{
-      position:fixed; inset:0; z-index:-1; pointer-events:none;
-    }
+    #sparkles{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
 
     .wrap{max-width:980px;margin:0 auto;padding:22px}
     header{text-align:center;padding:28px 0 16px}
@@ -56,18 +52,30 @@
     }
     h1{
       margin:14px auto 8px; font-size:clamp(28px,4.5vw,44px); line-height:1.18;
-      font-weight:800; letter-spacing:.3px; text-align:center; text-shadow:0 2px 24px #0006;
+      font-weight:800; letter-spacing:.3px; text-align:center; text-shadow:0 2px 24px #0006; text-wrap:balance;
+      max-width: 900px;
     }
-    .sub{margin:0 auto 18px; font-size:clamp(14px,2.6vw,18px); color:var(--muted); max-width:900px}
+    .sub{
+      margin:0 auto 18px; font-size:clamp(14px,2.6vw,18px); color:var(--muted); max-width:900px; text-align:center; text-wrap:pretty;
+    }
 
-    /* ======= CAROUSEL без скролбарів ======= */
+    /* ======= ГАЛЕРЕЯ: без скролів, hi-res ======= */
     .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#0b0e2d;margin:0 auto}
-    .viewport{width:100%; aspect-ratio:16/9; overflow:hidden; background:#0b0e2d}
-    .slides{display:flex; width:100%; height:100%; transform:translateX(0);
-      transition: transform .5s ease; will-change: transform;}
-    .slide{flex:0 0 100%; height:100%; position:relative; display:flex; align-items:center; justify-content:center}
+    .viewport{width:100%; aspect-ratio:16/9; overflow:hidden !important; background:#0b0e2d}
+    .slides{
+      display:flex; width:100%; height:100%; transform:translateX(0);
+      transition: transform .5s ease; will-change: transform; user-select:none; touch-action: pan-y;
+      overflow:hidden !important;
+    }
+    .slide{flex:0 0 100%; height:100%; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden}
     .slide picture, .slide img{width:100%; height:100%; object-fit:cover; object-position:center}
-    .slide img{image-rendering:auto; -webkit-optimize-contrast: auto;}
+    .slide img{
+      image-rendering:auto; -webkit-optimize-contrast:auto; pointer-events:none;
+      /* Для чітких фото на Retina */
+      contain: paint; transform: translateZ(0);
+    }
+    /* Прибрати будь-які системні скролбари всередині */
+    .viewport::-webkit-scrollbar, .slides::-webkit-scrollbar, .slide::-webkit-scrollbar{width:0;height:0}
 
     .navBtn{
       position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%;
@@ -81,18 +89,21 @@
     .dot{width:8px;height:8px;border-radius:50%; background:#ffffff60; box-shadow:0 0 0 2px #0003 inset}
     .dot.active{background:#fff}
 
-    /* ======= CARDS ======= */
+    /* ======= КАРТКИ ======= */
     .card{
       background:linear-gradient(180deg, #141a46bb, #0f133d99);
       border:1px solid var(--border); border-radius:var(--radius);
       padding:22px clamp(16px, 5vw, 28px); margin:20px auto; backdrop-filter: blur(8px);
       box-shadow:var(--shadow);
+      text-align:center;
     }
-    .card h2{margin:0 0 10px; font-size:clamp(22px,3.6vw,30px); font-weight:800; letter-spacing:.2px; text-align:center}
+    .card h2{margin:0 0 12px; font-size:clamp(22px,3.6vw,30px); font-weight:800; letter-spacing:.2px; text-align:center; text-wrap:balance}
+    .card p{max-width:880px;margin:10px auto; text-align:center; text-wrap:pretty; word-break:normal; overflow-wrap:normal; hyphens:none}
     .grid2{display:grid; gap:16px}
     @media(min-width:820px){ .grid2{grid-template-columns:1.2fr .8fr} }
-    ul.clean{margin:8px auto 0; padding:0 0 0 18px; max-width:880px}
-    ul.clean li{margin:8px 0}
+
+    ul.clean{margin:8px auto 0; padding:0; max-width:880px; list-style:disc inside; text-align:center}
+    ul.clean li{margin:10px 0; word-break:normal; overflow-wrap:normal; hyphens:none}
 
     .pill{display:inline-block; margin:6px 6px 0 0; padding:6px 10px; font-size:14px; border-radius:999px;
       border:1px solid var(--border); color:#e8ebff; background:#ffffff12}
@@ -136,23 +147,21 @@
       <p class="sub">Пилипець • м’які практики: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла»</p>
     </header>
 
-    <!-- ======= GALLERY (без скролбарів) ======= -->
+    <!-- ======= ГАЛЕРЕЯ ======= -->
     <section class="carousel reveal" id="gallery" aria-label="Галерея світлин">
       <div class="viewport">
         <div class="slides" id="slides"></div>
       </div>
-      <button class="navBtn navPrev" id="prev" aria-label="Попереднє фото">‹</button>
-      <button class="navBtn navNext" id="next" aria-label="Наступне фото">›</button>
+      <button class="navBtn navPrev" id="prev" aria-label="Попереднє фото" type="button">‹</button>
+      <button class="navBtn navNext" id="next" aria-label="Наступне фото" type="button">›</button>
       <div class="dots" id="dots" aria-hidden="true"></div>
     </section>
 
-    <!-- ======= КОРОТКО ПРО РЕТРИТ ======= -->
+    <!-- ======= ПРО РЕТРИТ (розширено) ======= -->
     <section class="card reveal">
       <h2>Про ретрит</h2>
-      <p style="text-align:center;max-width:860px;margin:0 auto">
-        Три дні для <b>перезавантаження й повернення до себе</b>: повільний ритм, тиша, природа і турбота.
-        Програма допомагає зняти напругу, відновити енергію та повернути <b>ясність і легкість</b>.
-      </p>
+      <p>Ці дні — про <b>тишу всередині</b>, м’яке сповільнення та повернення до себе. Ми створюємо безпечний простір, де можна нарешті видихнути, відчути тіло, помітити справжні потреби й дбайливо дати їм місце.</p>
+      <p>Практики підібрані так, щоб зняти напругу, відновити енергію й повернути <b>ясність</b>. Ви зможете прожити емоції, які потребують уваги, і побачити нові рішення — без тиску, з повагою до власного темпу.</p>
       <div style="text-align:center;margin-top:10px">
         <span class="pill">Медитації та дихальні практики</span>
         <span class="pill">Ранкова йога</span>
@@ -167,26 +176,44 @@
     <section class="card reveal">
       <h2>Що на тебе чекає</h2>
       <ul class="clean">
-        <li><b>Медитації та дихальні практики</b> — заспокоєння нервової системи й повернення до себе</li>
-        <li><b>Трансформаційна гра «Ліла»</b> — глибокі інсайти та підказки для рішень</li>
-        <li><b>Стояння на цвяхах</b> — зустріч зі страхом і внутрішня опора</li>
-        <li><b>Ранкова йога</b> — легкість, баланс, сила в тілі</li>
-        <li><b>МАК-сесії</b> — відповіді з підсвідомого і ясність кроків</li>
+        <li><b>Медитації та дихання</b> — заспокоєння нервової системи, відчуття опори й тепла в тілі.</li>
+        <li><b>Гра «Ліла»</b> — м’який спосіб побачити себе збоку, отримати підказки й інсайти для рішень.</li>
+        <li><b>Стояння на цвяхах</b> — зустріч зі страхом і вихід у силу через усвідомлене дихання.</li>
+        <li><b>Ранкова йога</b> — легкість, баланс, м’яка сила й контакт із собою.</li>
+        <li><b>МАК-сесії</b> — відповіді з підсвідомого, ясність наступних кроків.</li>
       </ul>
+    </section>
+
+    <!-- ======= Як минає день ======= -->
+    <section class="card reveal">
+      <h2>Як минає день</h2>
+      <p>Ранок — тиша, дихання й йога. День — природа, SPA або подорож Карпатами. Вечір — м’які інтеграційні практики, тепле коло, час для себе. Графік гнучкий — ми бережно підлаштовуємося під групу.</p>
     </section>
 
     <!-- ======= ЩО ВХОДИТЬ ======= -->
     <section class="card reveal">
       <h2>Що входить у вартість</h2>
       <ul class="clean">
-        <li><b>Квитки на поїзд</b>: виїзд з Одеси о <b>14:41</b> потягом «Одеса—Ужгород», вихід на ст. <b>Воловець</b> о <b>06:30</b></li>
-        <li><b>Трансфер</b> з Воловця до Пилипця й назад</li>
-        <li><b>Проживання</b> у готелі в Пилипці (затишні номери)</li>
-        <li><b>SPA-день</b> для відновлення (сауна/басейн/релакс-зона)</li>
-        <li><b>Джипінг</b> Карпатами та <b>подорож до озера Синевир</b></li>
-        <li><b>Підйом на гору Гемба</b> (формат підберемо під групу)</li>
-        <li><b>Щоденні практики</b>: медитації, дихання, ранкова йога, стояння на цвяхах, МАК-сесії, «Ліла», вечірні інтеграції</li>
+        <li><b>Квитки на поїзд</b>: виїзд з Одеси о <b>14:41</b> потягом «Одеса—Ужгород», вихід на ст. <b>Воловець</b> о <b>06:30</b>.</li>
+        <li><b>Трансфер</b> з Воловця до Пилипця й назад.</li>
+        <li><b>Проживання</b> у затишному готелі в Пилипці.</li>
+        <li><b>SPA-день</b> для відновлення (сауна/басейн/релакс-зона).</li>
+        <li><b>Джипінг</b> Карпатами та <b>подорож до озера Синевир</b>.</li>
+        <li><b>Підйом на гору Гемба</b> (підберемо формат під групу).</li>
+        <li><b>Щоденні практики</b>: медитації, дихання, ранкова йога, стояння на цвяхах, МАК-сесії, «Ліла», вечірні інтеграції.</li>
       </ul>
+    </section>
+
+    <!-- ======= ПІСЛЯ РЕТРИТУ ======= -->
+    <section class="card reveal">
+      <h2>Що відчуєш після</h2>
+      <p>Більше легкості й внутрішнього спокою. Ближчий контакт із тілом і почуттями. Розуміння, куди рухатися далі — без зайвого шуму, з опорою на себе.</p>
+    </section>
+
+    <!-- ======= Безпека і турбота ======= -->
+    <section class="card reveal">
+      <h2>Безпека і турбота</h2>
+      <p>Ми працюємо обережно, без насильницьких практик і «проривів за будь-яку ціну». Кожна учасниця може взяти паузу, сказати «стоп» і обрати рівень глибини, що комфортний саме зараз.</p>
     </section>
 
     <!-- ======= CTA ======= -->
@@ -197,31 +224,17 @@
         <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram">💫 Придбати в Telegram</a>
         <a class="btn btnGhost" href="#gallery">Переглянути фото</a>
       </div>
-      <p class="note">Переходимо у приватний діалог у Telegram для оформлення участі.</p>
+      <p class="note">Пишемо у приватний діалог у Telegram — відповімо на запитання та надішлемо деталі.</p>
     </section>
 
     <footer class="reveal">© 2025 «Душа без масок — повернення до себе». Карпати, Пилипець • 11–15 вересня 2025</footer>
   </div>
 
   <script>
-    /* ================== ICON + MANIFEST ================== */
-    const ibbIconPage = "https://ibb.co/WNkz2hXP"; // іконка (сторінка)
-    const iconExts = ["webp","png","jpg","jpeg"];
+    /* ================== ICON + MANIFEST (витяг справжнього файлу з ibb.co) ================== */
+    const ibbIconPage = "https://ibb.co/WNkz2hXP"; // ваше посилання на сторінку з іконкою
 
-    function ibbDirect(link, ext){
-      try{
-        const u = new URL(link);
-        if(u.hostname === "ibb.co"){
-          const id = u.pathname.replace("/","").trim();
-          return `https://i.ibb.co/${id}/${id}.${ext}`;
-        }
-      }catch(e){}
-      return link;
-    }
-    function viaCDN(url){
-      // запасний CDN, який часто віддає оригінал у високій якості
-      return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&n=-1&output=webp`;
-    }
+    // Допоміжні — тестування зображення та проксі CDN
     function testImage(src){
       return new Promise(res=>{
         const im = new Image();
@@ -231,21 +244,42 @@
         im.src = src + (src.includes("?")?"&":"?")+"v="+Date.now();
       });
     }
-    async function bestIbb(link){
-      for(const ext of iconExts){
-        const direct = ibbDirect(link, ext);
-        if(await testImage(direct)) return direct;
-        const cdn = viaCDN(direct);
-        if(await testImage(cdn)) return cdn;
+    const weserv = (url, extra="") => `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=2&il${extra}`;
+
+    // Читаємо HTML ibb.co через відкритий рідер із CORS (r.jina.ai) і дістаємо прямий i.ibb.co/....(jpg|png|webp)
+    async function directFromIbbPage(url){
+      const naked = url.replace(/^https?:\/\//,'');
+      const probes = [
+        `https://r.jina.ai/http://${naked}`,
+        `https://r.jina.ai/https://${naked}`,
+      ];
+      for(const probe of probes){
+        try{
+          const txt = await fetch(probe).then(r=>r.text());
+          const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
+          if(m && await testImage(m[0])) return m[0];
+          // інколи той самий лінк через CDN дає чіткіше
+          if(m){
+            const via = weserv(m[0]);
+            if(await testImage(via)) return via;
+          }
+        }catch(e){}
       }
-      // останній шанс — прямо через CDN на сторінку (інколи витягує)
-      const cdnFallback = viaCDN(link);
-      if(await testImage(cdnFallback)) return cdnFallback;
-      return link;
+      return null;
+    }
+
+    async function getBestIcon(){
+      // 1) прямий файл із ibb-сторінки
+      const direct = await directFromIbbPage(ibbIconPage);
+      if(direct) return direct;
+      // 2) запасні варіанти (якщо сторінка закрита) — лишаємо оригінальний URL через CDN
+      const fallback = weserv(ibbIconPage);
+      if(await testImage(fallback)) return fallback;
+      return ibbIconPage;
     }
 
     (async ()=>{
-      const bestIcon = await bestIbb(ibbIconPage);
+      const bestIcon = await getBestIcon();
       document.getElementById("favicon").href = bestIcon;
       document.getElementById("appleicon").href = bestIcon;
 
@@ -266,7 +300,7 @@
       document.getElementById("manifestLink").href = url;
     })();
 
-    /* ================== GALLERY (без скролбарів + hi-quality) ================== */
+    /* ================== ГАЛЕРЕЯ: hi-quality зображення з ibb.co ================== */
     const ibbLinks = [
       "https://ibb.co/mC6tPhyp","https://ibb.co/pjfk24r5","https://ibb.co/N2JyQJ4K",
       "https://ibb.co/4nwV4ZTr","https://ibb.co/N21d2zKz","https://ibb.co/hRh6v8P9",
@@ -279,27 +313,27 @@
     const slidesEl = document.getElementById("slides");
     const dotsEl = document.getElementById("dots");
 
-    async function resolveImage(link){
-      // спочатку прямі формати, потім через CDN, щоб отримати максимум якості
+    async function findDirectImage(ibbPageUrl){
+      // 1) читаємо сторінку і дістаємо прямий i.ibb.co/*
+      const direct = await directFromIbbPage(ibbPageUrl);
+      if(direct) return direct;
+
+      // 2) якщо не вдалося — пробуємо стандартні розширення через CDN без зміни розміру
       for(const ext of ["webp","jpg","jpeg","png"]){
-        const candidate = ibbDirect(link, ext);
-        if(await testImage(candidate)) return candidate;
-        const via = viaCDN(candidate);
+        // інколи ідентифікатор сторінки збігається з ім’ям файлу — спробуємо
+        const id = ibbPageUrl.split("/").pop();
+        const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
+        if(await testImage(guess)) return guess;
+        const via = weserv(guess);
         if(await testImage(via)) return via;
       }
-      const cdnPage = viaCDN(link);
-      if(await testImage(cdnPage)) return cdnPage;
-      return link;
-    }
 
-    (async ()=>{
-      const sources = [];
-      for(const l of ibbLinks){
-        sources.push(await resolveImage(l));
-      }
-      buildSlides(sources);
-      initCarousel();
-    })();
+      // 3) крайній випадок — саму сторінку через CDN (часто повертає прев’ю кращої якості, ніж вбудовані)
+      const pageVia = weserv(ibbPageUrl);
+      if(await testImage(pageVia)) return pageVia;
+
+      return ibbPageUrl;
+    }
 
     function buildSlides(srcs){
       srcs.forEach((src,i)=>{
@@ -307,9 +341,11 @@
         slide.className = "slide";
 
         const pic = document.createElement("picture");
+
+        // альтернативний формат webp (якщо є)
         const sWebp = document.createElement("source");
         sWebp.type = "image/webp";
-        sWebp.srcset = src.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+        sWebp.srcset = `${src} 1x, ${src} 2x`;
         sWebp.sizes = "(max-width: 980px) 100vw, 980px";
 
         const img = document.createElement("img");
@@ -319,6 +355,7 @@
         img.fetchPriority = i===0 ? "high" : "auto";
         img.referrerPolicy = "no-referrer";
         img.src = src;
+        img.srcset = `${src} 1x, ${src} 2x, ${src} 3x`;
         img.sizes = "(max-width: 980px) 100vw, 980px";
 
         pic.appendChild(sWebp); pic.appendChild(img);
@@ -326,19 +363,38 @@
         slidesEl.appendChild(slide);
 
         const dot = document.createElement("span"); dot.className = "dot"; dotsEl.appendChild(dot);
+
+        // Прелоад наступного зображення для плавності
+        if(i===0){
+          const link = document.createElement('link');
+          link.rel = 'preload'; link.as = 'image'; link.href = src;
+          document.head.appendChild(link);
+        }
       });
     }
+
+    (async ()=>{
+      const sources = [];
+      for(const l of ibbLinks){
+        sources.push(await findDirectImage(l));
+      }
+      buildSlides(sources);
+      initCarousel();
+    })();
 
     function initCarousel(){
       const prevBtn = document.getElementById('prev');
       const nextBtn = document.getElementById('next');
       const dots = Array.from(document.querySelectorAll('.dot'));
 
-      let index = 0, total = slidesEl.children.length;
+      let index = 0, total = slidesEl.children.length, anim=false;
       const goTo = (i)=>{
+        if(anim) return;
+        anim = true;
         index = (i+total)%total;
         slidesEl.style.transform = `translateX(-${index*100}%)`;
         dots.forEach((d,di)=>d.classList.toggle('active', di===index));
+        setTimeout(()=>anim=false, 520);
       };
       prevBtn.addEventListener('click', ()=>goTo(index-1));
       nextBtn.addEventListener('click', ()=>goTo(index+1));
@@ -348,17 +404,27 @@
       let startX=null, delta=0;
       slidesEl.addEventListener('pointerdown', e=>{startX=e.clientX; slidesEl.setPointerCapture(e.pointerId);});
       slidesEl.addEventListener('pointermove', e=>{
-        if(startX!=null){ delta = e.clientX-startX; slidesEl.style.transform = `translateX(calc(${-index*100}% + ${delta}px))`; }
+        if(startX!=null){
+          delta = e.clientX-startX;
+          slidesEl.style.transform = `translateX(calc(${-index*100}% + ${delta}px))`;
+        }
       });
       const end = ()=>{
         if(startX!=null){
-          if(Math.abs(delta) > slidesEl.clientWidth*0.18) goTo(index + (delta<0?1:-1)); else goTo(index);
+          const threshold = Math.min(240, slidesEl.clientWidth*0.18);
+          if(Math.abs(delta) > threshold) goTo(index + (delta<0?1:-1)); else goTo(index);
         }
         startX=null; delta=0;
       };
       slidesEl.addEventListener('pointerup', end);
       slidesEl.addEventListener('pointercancel', end);
       slidesEl.addEventListener('pointerleave', end);
+
+      // блокуємо усі внутрішні прокрутки у вьюпорті (щоб не з’являлись скролли)
+      const viewport = document.querySelector('.viewport');
+      ['wheel','touchmove'].forEach(ev=>{
+        viewport.addEventListener(ev, (e)=>{ /* дозволяємо вертикаль сторінки, але не внутрішні скролли */ }, {passive:true});
+      });
     }
 
     /* ================== REVEAL ================== */
@@ -379,16 +445,16 @@
       canvas.style.height = innerHeight+'px';
       ctx.setTransform(1,0,0,1,0,0);
     }
-    function makeStars(n=80){
+    function makeStars(n=90){
       stars = new Array(n).fill(0).map(()=>({
         x: Math.random()*W, y: Math.random()*H,
         r: Math.random()*1.6+0.6,
         a: Math.random()*0.5+0.2,
-        sp: (Math.random()*0.6+0.3) * 0.004, // повільне мерехтіння
+        sp: (Math.random()*0.6+0.3) * 0.004,
         t: Math.random()*Math.PI*2
       }));
     }
-    function step(t){
+    function step(){
       ctx.clearRect(0,0,W,H);
       for(const s of stars){
         s.t += s.sp;
