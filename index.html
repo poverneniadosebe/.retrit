@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Жіночий ретрит «Душа без масок — повернення до себе» | Карпати • 11–15.09.2025</title>
+  <meta name="theme-color" content="#1d2368" />
+  <meta name="description" content="Жіночий ретрит у Карпатах • 11–15.09.2025 • медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Усе входить у вартість." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Marcellus&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --indigo-900:#0f144f;
+      --indigo-800:#1b2672;
+      --indigo-700:#2837a0;
+      --text:#eef1ff;
+      --muted:#cfd5ffcc;
+      --card:#12153a99;
+      --accent:#8aa7ff;
+      --glass: rgba(255,255,255,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1200px 800px at 20% -10%, #2a3188 0%, transparent 60%),
+        radial-gradient(1200px 800px at 110% 20%, #16206c 0%, transparent 60%),
+        linear-gradient(130deg,var(--indigo-900),#11143b 40%,#1a1e57 70%, #222a75 100%);
+      min-height:100%;
+      overflow-x:hidden;
+      line-height:1.55;
+    }
+    /* повільна «медитативна» анімація фону */
+    body::before{
+      content:"";
+      position:fixed;inset:-20%;
+      background: radial-gradient(60% 40% at 70% 20%, #6c7bff33 0%, transparent 60%),
+                  radial-gradient(50% 35% at 20% 80%, #9fb2ff22 0%, transparent 60%);
+      filter: blur(40px);
+      animation: float 40s linear infinite alternate;
+      z-index:-1;
+    }
+    @keyframes float{
+      0%{transform:translate3d(0,0,0) scale(1)}
+      100%{transform:translate3d(-4%,2%,0) scale(1.08)}
+    }
+
+    .wrap{max-width:980px;margin-inline:auto;padding:20px}
+    header{
+      padding:28px 0 10px;
+      text-align:center;
+    }
+    .badge{
+      display:inline-block;
+      font-weight:600;
+      letter-spacing:.08em;
+      color:var(--muted);
+      border:1px solid #ffffff22;
+      background:var(--glass);
+      backdrop-filter: blur(6px);
+      padding:6px 12px;
+      border-radius:999px;
+    }
+    h1{
+      font-family:Marcellus, serif;
+      margin:14px auto 6px;
+      font-size:clamp(28px,4.5vw,46px);
+      line-height:1.15;
+      letter-spacing:.3px;
+      text-shadow:0 2px 24px #0006;
+    }
+    .sub{
+      margin:0 auto 18px;
+      font-size:clamp(14px,2.8vw,18px);
+      color:var(--muted);
+    }
+
+    /* ГАЛЕРЕЯ */
+    .carousel{
+      position:relative;
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      background:#0d1032;
+    }
+    .slides{
+      display:flex;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      scroll-behavior:smooth;
+      overscroll-behavior-x:contain;
+      -webkit-overflow-scrolling:touch;
+    }
+    .slide{
+      position:relative;
+      min-width:100%;
+      height: clamp(220px, 48vw, 460px);
+      scroll-snap-align:center;
+      display:flex;align-items:center;justify-content:center;
+      background:#0b0e2d;
+    }
+    .slide img{
+      width:100%;height:100%;
+      object-fit:cover;
+      image-rendering:auto;
+      filter:saturate(1.05) contrast(1.02);
+    }
+    .navBtn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(10,12,40,.55);
+      border:1px solid #ffffff2e;
+      backdrop-filter: blur(6px);
+      width:42px;height:42px;border-radius:50%;
+      display:grid;place-items:center;
+      cursor:pointer;color:#fff;
+      transition:transform .2s ease, opacity .2s ease;
+      opacity:.9;
+    }
+    .navBtn:hover{transform:translateY(-50%) scale(1.06)}
+    .navPrev{left:10px}
+    .navNext{right:10px}
+    .dots{
+      position:absolute; left:0; right:0; bottom:10px;
+      display:flex; gap:8px; justify-content:center; align-items:center;
+      pointer-events:none;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:#ffffff52; box-shadow:0 0 0 2px #0003 inset;
+    }
+    .dot.active{background:#fff}
+
+    /* КАРТКИ-СЕКЦІЇ */
+    .card{
+      background:linear-gradient(180deg, #141a46bb, #0f133d99);
+      border:1px solid #ffffff1a;
+      box-shadow: var(--shadow);
+      border-radius:var(--radius);
+      padding:22px clamp(16px, 5vw, 28px);
+      margin:18px auto;
+      backdrop-filter: blur(8px);
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-family:Marcellus, serif;
+      font-size:clamp(22px,3.6vw,32px);
+      letter-spacing:.2px;
+    }
+    .grid2{display:grid; gap:14px}
+    @media(min-width:820px){ .grid2{grid-template-columns:1.2fr .8fr} }
+
+    ul.clean{margin:8px 0 0; padding:0 0 0 18px}
+    ul.clean li{margin:8px 0}
+    .pill{
+      display:inline-block; margin:6px 6px 0 0;
+      padding:6px 10px; font-size:14px; border-radius:999px;
+      border:1px solid #ffffff2a; color:#e8ebff; background:#ffffff12;
+    }
+
+    /* CTA */
+    .price{
+      font-family:Marcellus, serif;
+      font-size: clamp(22px, 4.5vw, 36px);
+      margin:0 0 12px;
+    }
+    .cta{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    }
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      padding:14px 20px; border-radius:14px;
+      font-weight:700; letter-spacing:.3px;
+      color:#0c0f2d; background:linear-gradient(180deg,#c8d5ff,#90a7ff);
+      box-shadow:0 10px 24px #0005, inset 0 1px 0 #fff7;
+      transition: transform .12s ease, box-shadow .12s ease, filter .2s ease;
+      text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn:hover{transform:translateY(-1px); filter:saturate(1.03)}
+    .btn:active{transform:translateY(0)}
+    .btnGhost{
+      color:#e5e8ff; background:transparent; border:1px solid #ffffff3a;
+      box-shadow:none; padding:12px 16px;
+    }
+    .note{color:var(--muted); font-size:14px}
+
+    /* плавна поява блоків */
+    .reveal{opacity:0; transform:translateY(14px); transition: all .8s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* футер */
+    footer{padding:22px 0 40px; text-align:center; color:#cfd5ff9e; font-size:14px}
+    a{color:#bfcaff}
+    .small{font-size:13px; color:#cfd5ffb3}
+    @media (prefers-reduced-motion: reduce){
+      body::before{animation:none}
+      .slides{scroll-behavior:auto}
+      .reveal{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="reveal show">
+      <span class="badge">Карпати • 11–15.09.2025</span>
+      <h1>Жіночий ретрит «Душа без масок — повернення до себе»</h1>
+      <p class="sub">Пилипець • м’які практики відновлення: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла»</p>
+    </header>
+
+    <!-- ГАЛЕРЕЯ -->
+    <section class="carousel reveal" id="gallery">
+      <div class="slides" id="slides" aria-label="Галерея світлин" tabindex="0"></div>
+      <button class="navBtn navPrev" aria-label="Попереднє фото" id="prev">‹</button>
+      <button class="navBtn navNext" aria-label="Наступне фото" id="next">›</button>
+      <div class="dots" id="dots" aria-hidden="true"></div>
+    </section>
+
+    <!-- ОПИС -->
+    <section class="card reveal">
+      <div class="grid2">
+        <div>
+          <h2>Про ретрит</h2>
+          <p>
+            3 дні для м’якого повернення до себе: сповільнення, тиша й турбота в жіночому колі. 
+            Практики підібрані так, щоб <strong>зняти напругу, відновити енергію та дати ясність</strong> щодо наступних кроків у житті.
+          </p>
+          <div>
+            <span class="pill">Медитації та дихальні практики</span>
+            <span class="pill">Ранкова йога</span>
+            <span class="pill">Стояння на цвяхах (садху)</span>
+            <span class="pill">МАК-сесії</span>
+            <span class="pill">Трансформаційна гра «Ліла»</span>
+            <span class="pill">Вечірні інтеграції</span>
+          </div>
+        </div>
+        <div>
+          <h2>Формат і настрій</h2>
+          <ul class="clean">
+            <li>Невелика група, безпека і повага до особистих меж</li>
+            <li>М’який ритм: час для практик, прогулянок і тиші</li>
+            <li>Природа Карпат: ліси, річки, гори та чисте повітря</li>
+            <li>Фото і відео — за бажанням, без обов’язковості</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЩО ВХОДИТЬ -->
+    <section class="card reveal">
+      <h2>Що входить у вартість</h2>
+      <ul class="clean">
+        <li><strong>Квитки на поїзд</strong>: виїзд з Одеси о <strong>14:41</strong> потягом «Одеса — Ужгород», вихід на ст. <strong>Воловець</strong> о <strong>06:30</strong></li>
+        <li><strong>Трансфер</strong> з Воловця до Пилипця та назад</li>
+        <li><strong>Проживання</strong> у готелі в Пилипці (затишні номери)</li>
+        <li><strong>SPA-день</strong> для відновлення (сауна/басейн/релакс-зона)</li>
+        <li><strong>Джипінг</strong> Карпатами та <strong>подорож до озера Синевир</strong></li>
+        <li><strong>Підйом на гору Гемба</strong> (пішохідна прогулянка/канатка — за погодою)</li>
+        <li><strong>Щоденні практики</strong>: медитації, дихання, ранкова йога, стояння на цвяхах (під супровід), МАК-сесії, «Ліла», вечірні інтеграції</li>
+        <li>Супровід фасилітаторки, турбота про безпеку та індивідуальний темп</li>
+      </ul>
+      <p class="small">*Маршрут і активності можуть коригуватися відповідно до погоди та групи — з турботою про комфорт.</p>
+    </section>
+
+    <!-- ПРО ПРОГРАМИ ТА ВІДЧУТТЯ -->
+    <section class="card reveal">
+      <div class="grid2">
+        <div>
+          <h2>Практики</h2>
+          <ul class="clean">
+            <li>Медитації на заспокоєння нервової системи</li>
+            <li>Дихальні техніки й м’яке заземлення</li>
+            <li>Ранкова йога: легкість, баланс, розтягнення</li>
+            <li>Стояння на цвяхах (садху) — обережно, з підтримкою</li>
+            <li>МАК-сесії: відповіді з підсвідомого</li>
+            <li>Трансформаційна гра «Ліла»: інсайти та ясність кроків</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Що ти відчуєш</h2>
+          <ul class="clean">
+            <li>Перезавантажишся й відновиш сили</li>
+            <li>Відчуєш спокій та легкість у тілі</li>
+            <li>Пропрацюєш страхи й блоки</li>
+            <li>Відкриєш відповіді всередині себе</li>
+            <li>Наповнишся новою жіночою енергією</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="card reveal" id="buy">
+      <h2>Участь і бронювання</h2>
+      <p class="price">Ціна участі: <strong>15 гривень</strong> — <span class="small">усе, що перелічено, входить у вартість</span></p>
+      <div class="cta">
+        <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" id="buyBtn" aria-label="Придбати участь у Telegram">
+          💫 Придбати участь у Telegram
+        </a>
+        <a class="btn btnGhost" href="#gallery">Переглянути фото</a>
+      </div>
+      <p class="note">Після натискання відбудеться перехід у діалог у Telegram для оформлення участі.</p>
+    </section>
+
+    <footer class="reveal">
+      <div>© 2025 «Душа без масок — повернення до себе». Карпати, Пилипець • 11–15 вересня 2025</div>
+    </footer>
+  </div>
+
+  <script>
+    // 1) Масив із зображеннями (можна додавати/видаляти)
+    const imageUrls = [
+      "https://ibb.co/mC6tPhyp",
+      "https://ibb.co/pjfk24r5",
+      "https://ibb.co/N2JyQJ4K",
+      "https://ibb.co/4nwV4ZTr",
+      "https://ibb.co/N21d2zKz",
+      "https://ibb.co/hRh6v8P9",
+      "https://ibb.co/nqdZJ9N3",
+      "https://ibb.co/DfTSTscH",
+      "https://ibb.co/4wYj5C1Q",
+      "https://ibb.co/xqL9yq3T",
+      "https://ibb.co/0yMLq7hW",
+      "https://ibb.co/5gqdrNbV",
+      "https://ibb.co/1YRhzJRM",
+      "https://ibb.co/kgXK9tMS",
+      "https://ibb.co/tMyL5fSc",
+      "https://ibb.co/Rpb4ZSCG"
+    ];
+
+    // Якщо надані посилання з ibb.co (сторінки), спробуємо перетворити їх на прямі.
+    // Більшість зображень на i.ibb.co можуть відкриватися як i.ibb.co/<id>/<id>.jpg
+    // (якщо якесь фото не підвантажиться — заміни посилання на пряме i.ibb.co вручну).
+    function guessDirect(link){
+      try{
+        const u = new URL(link);
+        if(u.hostname === "ibb.co" && u.pathname.length > 1){
+          const id = u.pathname.replace("/","").trim();
+          return `https://i.ibb.co/${id}/${id}.jpg`;
+        }
+      }catch(e){}
+      return link;
+    }
+
+    const slidesEl = document.getElementById('slides');
+    const dotsEl = document.getElementById('dots');
+
+    // Створюємо слайди
+    imageUrls.forEach((src,i)=>{
+      const slide = document.createElement('div');
+      slide.className = 'slide';
+      const img = document.createElement('img');
+      img.alt = `Фото ${i+1}`;
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      img.src = guessDirect(src);
+      slide.appendChild(img);
+      slidesEl.appendChild(slide);
+
+      const dot = document.createElement('span');
+      dot.className = 'dot';
+      dotsEl.appendChild(dot);
+    });
+
+    // Навігація
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const dots = Array.from(document.querySelectorAll('.dot'));
+
+    let index = 0;
+    const goTo = (i)=>{
+      index = Math.max(0, Math.min(i, slidesEl.children.length-1));
+      slidesEl.scrollTo({left: slidesEl.clientWidth * index, behavior:'smooth'});
+      dots.forEach((d,di)=>d.classList.toggle('active', di===index));
+    };
+    prevBtn.addEventListener('click', ()=>goTo(index-1));
+    nextBtn.addEventListener('click', ()=>goTo(index+1));
+
+    // Виставляємо активну крапку за скролом
+    let ticking = false;
+    slidesEl.addEventListener('scroll', ()=>{
+      if(!ticking){
+        window.requestAnimationFrame(()=>{
+          const i = Math.round(slidesEl.scrollLeft / slidesEl.clientWidth);
+          if(i !== index){ index = i; dots.forEach((d,di)=>d.classList.toggle('active', di===index)); }
+          ticking=false;
+        });
+        ticking=true;
+      }
+    });
+    // Початковий стан
+    goTo(0);
+
+    // Анімація появи блоків
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    },{threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
+</body>
+</html>
