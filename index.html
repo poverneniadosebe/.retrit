@@ -26,7 +26,6 @@
 
   <style>
     :root{
-      /* темнее и мягче фиолетовый */
       --bg-1:#8069be; --bg-2:#715aad; --bg-3:#9179c9;
       --glass: rgba(255,255,255,.08);
       --border:#ffffff26;
@@ -38,7 +37,6 @@
     html,body{height:100%}
     body{
       margin:0; color:var(--text); font-family:Arial,Helvetica,sans-serif; line-height:1.6;
-      /* небольшой (маленький) градиент + тёмная подложка */
       background:
         radial-gradient(720px 480px at 22% -8%, #d7c8ff30 0%, transparent 60%),
         radial-gradient(680px 440px at 108% 24%, #d2c1ff26 0%, transparent 65%),
@@ -68,16 +66,14 @@
     .slides{display:flex;width:100%;height:100%;transform:translateX(0);transition:transform .5s ease;will-change:transform;user-select:none;touch-action:pan-y;overflow:hidden!important}
     .slide{flex:0 0 100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
     .slide picture,.slide img{width:100%;height:100%;object-fit:cover;object-position:center}
-    .slide img{image-rendering:auto;-webkit-optimize-contrast:auto;pointer-events:none;contain:paint;transform:translateZ(0)}
+    .slide img{image-rendering:auto;-webkit-user-drag:none;user-select:none;pointer-events:none;contain:paint;transform:translateZ(0)}
     .viewport::-webkit-scrollbar,.slides::-webkit-scrollbar,.slide::-webkit-scrollbar{width:0;height:0}
 
-    /* placeholder до загрузки */
     .ph{position:absolute;inset:0;background:
       radial-gradient(60% 80% at 50% 20%, #32265c, transparent 70%),
       linear-gradient(180deg,#2c2154,#221a41);animation:ph 1.4s ease-in-out infinite alternate}
     @keyframes ph{0%{opacity:.55}100%{opacity:.85}}
 
-    /* компактный лоадер по центру */
     .loader{position:absolute;top:50%;left:50%;width:20px;height:20px;border-radius:50%;
       border:3px solid rgba(255,255,255,.32);border-top-color:#fff;transform:translate(-50%,-50%);
       pointer-events:none;z-index:2;display:none;animation:spin .8s linear infinite;box-shadow:0 0 0 6px rgba(0,0,0,.12)}
@@ -211,6 +207,7 @@
     /* ---------- helpers ---------- */
     const LS_TTL_MS = 30*24*60*60*1000;
     const now = () => Date.now();
+    const sleep = (ms)=>new Promise(r=>setTimeout(r,ms));
     const weserv = (url, dpr=2) => `https://images.weserv.nl/?url=${encodeURIComponent(url)}&output=webp&dpr=${dpr}&il`;
     const staticallyCdn = (url) => { try{const u=new URL(url); return `https://cdn.statically.io/img/${u.hostname}${u.pathname}?f=webp`;}catch(e){return url;} };
     const wpcom = (url) => `https://i0.wp.com/${url.replace(/^https?:\/\//,'')}`;
@@ -218,60 +215,64 @@
     function lsGet(key){ try{const raw=localStorage.getItem(key); if(!raw) return null; const {v,t}=JSON.parse(raw); if(now()-t>LS_TTL_MS){localStorage.removeItem(key);return null;} return v;}catch(e){return null} }
     function lsSet(key,v){ try{localStorage.setItem(key,JSON.stringify({v,t:now()}));}catch(e){} }
 
-    function testImage(src, timeout=5000){
+    function testImage(src, timeout=7000){
       return new Promise((resolve)=>{
         const im = new Image();
         let done=false; const to=setTimeout(()=>{if(!done){done=true;resolve(false)}},timeout);
         im.onload=()=>{if(!done){done=true;clearTimeout(to);resolve(true)}};
         im.onerror=()=>{if(!done){done=true;clearTimeout(to);resolve(false)}};
         im.referrerPolicy="no-referrer";
+        im.decoding="async";
         im.src=src+(src.includes("?")?"&":"?")+"v="+Math.random().toString(36).slice(2);
       });
     }
 
     async function fetchOgImageViaProxy(ibbPageUrl){
-      // одна попытка через r.jina.ai (без шквала запросов)
       const naked = ibbPageUrl.replace(/^https?:\/\//,'');
-      const probe = `https://r.jina.ai/https://${naked}`;
-      try{
-        const txt = await fetch(probe, {cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject());
-        const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
-        if(m && await testImage(m[0])) return m[0];
-        const og = txt.match(/property="og:image"\s+content="([^"]+)"/i);
-        if(og && await testImage(og[1])) return og[1];
-      }catch(e){}
+      const probes = [
+        `https://r.jina.ai/https://${naked}`,
+        `https://r.jina.ai/http://${naked}`
+      ];
+      for(const probe of probes){
+        try{
+          const txt = await fetch(probe, {cache:'no-store', redirect:'follow'}).then(r=>r.ok?r.text():Promise.reject());
+          const directMatch = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
+          if(directMatch && await testImage(directMatch[0])) return directMatch[0];
+          const og = txt.match(/property=["']og:image["']\s+content=["']([^"']+)["']/i);
+          if(og && await testImage(og[1])) return og[1];
+        }catch(e){}
+      }
       return null;
     }
 
     async function resolveIbb(ibbPageUrl){
-      const id = ibbPageUrl.split("/").pop().replace(/\?.*/,'');
+      const id = ibbPageUrl.split("/").pop().replace(/\?.*/, '');
       const key = "ibb:best:"+id;
       const cached = lsGet(key);
-      if(cached && await testImage(cached, 1800)) return cached;
+      if(cached && await testImage(cached, 2500)) return cached;
 
-      // 1) пробуем аккуратно получить og:image (1 запрос)
+      // 1) обережно тягнемо og:image (1–2 проби через проксі)
       const og = await fetchOgImageViaProxy(ibbPageUrl);
       if(og){ lsSet(key, og); return og; }
 
-      // 2) догадки по формату
+      // 2) припущення по форматах (інколи збігається)
       for(const ext of ["webp","jpg","jpeg","png"]){
         const guess = `https://i.ibb.co/${id}/${id}.${ext}`;
         if(await testImage(guess)){ lsSet(key, guess); return guess; }
       }
 
-      // 3) крайние прокси (возьмут превью, но это лучше, чем пусто)
+      // 3) крайні проксі (можуть дати зжатий прев'ю — все одно краще, ніж пусто)
       for(const u of [weserv(ibbPageUrl), staticallyCdn(ibbPageUrl), wpcom(ibbPageUrl)]){
         if(await testImage(u)){ lsSet(key, u); return u; }
       }
 
-      // 4) вернём страницу — отрисуем плейсхолдер
-      lsSet(key, ibbPageUrl);
-      return ibbPageUrl;
+      // 4) невдача — залишимо null (слайд збереже плейсхолдер і повторить спробу пізніше)
+      return null;
     }
 
+    /* ================== PWA ICON ================== */
     (async ()=>{
-      // иконка
-      const bestIcon = await resolveIbb(ibbIconPage);
+      const bestIcon = await resolveIbb(ibbIconPage) || "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...";
       document.getElementById("favicon").href = bestIcon;
       document.getElementById("appleicon").href = bestIcon;
 
@@ -289,7 +290,7 @@
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
     })();
 
-    /* ================== ГАЛЕРЕЯ (on-demand) ================== */
+    /* ================== ГАЛЕРЕЯ ================== */
     const ibbLinks = [
       "https://ibb.co/mC6tPhyp","https://ibb.co/pjfk24r5","https://ibb.co/N2JyQJ4K",
       "https://ibb.co/4nwV4ZTr","https://ibb.co/N21d2zKz","https://ibb.co/hRh6v8P9",
@@ -304,7 +305,7 @@
     const loader = document.getElementById("galleryLoader");
     const showLoader = (v)=> loader.style.display = v ? "block" : "none";
 
-    // создаём слайды с плейсхолдерами — реальные изображения подставляем по требованию
+    // Готуємо слайди з плейсхолдерами
     ibbLinks.forEach((pageUrl,i)=>{
       const slide = document.createElement("div");
       slide.className="slide";
@@ -320,29 +321,63 @@
       img.decoding="async"; img.fetchPriority = i===0 ? "high" : "auto";
       img.referrerPolicy="no-referrer"; img.crossOrigin="anonymous"; img.style.opacity="0";
       img.addEventListener('load', ()=>{ ph.remove(); img.style.opacity="1"; if(currentIndex===i) showLoader(false); });
-      img.addEventListener('error', ()=>{ /* останется плейсхолдер */ showLoader(false); });
+      img.addEventListener('error', ()=>{ showLoader(false); /* залишимо плейсхолдер — повторимо пізніше */ });
 
       pic.appendChild(img); slide.appendChild(pic); slidesEl.appendChild(slide);
 
       const dot = document.createElement("span"); dot.className="dot"; dotsEl.appendChild(dot);
     });
 
+    // Кеш розв’язань + черга з обмеженою паралельністю
+    const resolvedMap = new Map(); // pageUrl -> directImgUrl|null
+    let activeResolvers = 0;
+    const maxParallel = 2;
+    const queue = [];
+
+    async function resolveQueued(pageUrl, attempt=1){
+      if(resolvedMap.has(pageUrl)) return resolvedMap.get(pageUrl);
+      if(activeResolvers >= maxParallel){
+        await new Promise(res=>queue.push(res));
+      }
+      activeResolvers++;
+      try{
+        const direct = await resolveIbb(pageUrl);
+        resolvedMap.set(pageUrl, direct);
+        return direct;
+      }finally{
+        activeResolvers--;
+        const next = queue.shift(); if(next) next();
+      }
+    }
+
     async function injectImageFor(index){
       const slide = slidesEl.children[index]; if(!slide) return;
       const img = slide.querySelector("img");
-      if(img && img.src) return; // уже есть
+      if(img && img.src) return; // уже є
       showLoader(true);
 
       const page = slide.dataset.page;
-      const direct = await resolveIbb(page);
+      let direct = resolvedMap.get(page) || null;
 
-      // если это не полноценная картинка (не прошла testImage), останется плейсхолдер
-      const sWebp = slide.querySelector("source[type='image/webp']");
-      sWebp.srcset = `${weserv(direct,1)} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
-      sWebp.sizes = "(max-width: 980px) 100vw, 980px";
-      img.src = direct;
-      img.srcset = `${direct} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
-      img.sizes = "(max-width: 980px) 100vw, 980px";
+      // якщо ще не відомо — розв'язуємо із повторами
+      if(!direct){
+        for(let k=0;k<3 && !direct;k++){
+          direct = await resolveQueued(page, k+1);
+          if(!direct) await sleep(500 + k*600);
+        }
+      }
+
+      if(direct){
+        const sWebp = slide.querySelector("source[type='image/webp']");
+        sWebp.srcset = `${weserv(direct,1)} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
+        sWebp.sizes = "(max-width: 980px) 100vw, 980px";
+        img.src = direct;
+        img.srcset = `${direct} 1x, ${weserv(direct,2)} 2x, ${weserv(direct,3)} 3x`;
+        img.sizes = "(max-width: 980px) 100vw, 980px";
+      }else{
+        // якщо не вдалося — залишимо плейсхолдер і спробуємо пізніше (наступна навігація)
+        showLoader(false);
+      }
     }
 
     let currentIndex = 0;
@@ -355,14 +390,27 @@
         slidesEl.style.transform = `translateX(-${currentIndex*100}%)`;
         dots.forEach((d,di)=>d.classList.toggle('active', di===currentIndex));
         await injectImageFor(currentIndex);
-        // подгрузим соседний
+        // наперед підвантажимо сусідні
         injectImageFor((currentIndex+1)%total);
+        injectImageFor((currentIndex+2)%total);
       };
 
       document.getElementById('prev').addEventListener('click', ()=>goTo(currentIndex-1));
       document.getElementById('next').addEventListener('click', ()=>goTo(currentIndex+1));
 
-      goTo(0).then(()=>injectImageFor(1));
+      // Старт
+      goTo(0).then(()=>{
+        injectImageFor(1);
+        // Тихенька послідовна пре-розв'язка всіх сторінок (щоб далі миттєво показувались)
+        (async ()=>{
+          for(const url of ibbLinks){
+            if(!resolvedMap.has(url)){
+              await resolveQueued(url);
+              await sleep(250);
+            }
+          }
+        })();
+      });
     }
     initCarousel();
 
