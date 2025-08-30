@@ -20,7 +20,7 @@
 
   <style>
     :root{
-      --glass: rgba(255,255,255,.78); /* чуть более прозрачный фон карточек */
+      --glass: rgba(255,255,255,.78); /* немного прозрачные карточки */
       --border:#00000018;
       --text:#121212;
       --muted:#595959;
@@ -34,17 +34,22 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6;
-      /* ФОН: прямой линк, без fixed (на iOS fixed мылит изображение) */
-      background:url("https://i.ibb.co/ds4yKcXd/30608cae1d7e3cfaced4f8b45789c6a7.webp") center center / cover no-repeat;
+      /* HD-фон: Карпати (Синевир), по всему экрану. Небольшое затемнение для контраста текста. */
+      background:
+        linear-gradient(0deg, rgba(0,0,0,.20), rgba(0,0,0,.20)),
+        url("https://i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg") center center / cover no-repeat;
       overflow-x:hidden;
+      background-attachment:scroll; /* избегаем размытия на iOS */
     }
 
-    .wrap{max-width:980px;margin:0 auto;padding:22px}
+    /* шире контент и меньше боковых отступов */
+    .wrap{max-width:1200px;margin:0 auto;padding:14px}
+    @media (max-width: 768px){ .wrap{padding:12px} }
 
     /* Заголовок: две строки, белые с лёгкой тенью */
-    header{padding:28px 0 16px;text-align:center}
+    header{padding:24px 0 12px;text-align:center}
     .title-top{
-      margin:14px auto 4px;
+      margin:10px auto 4px;
       font-size:clamp(30px,6vw,56px);
       line-height:1.08;
       font-weight:800;
@@ -52,16 +57,16 @@
       text-shadow:0 2px 14px rgba(0,0,0,.35);
       letter-spacing:.3px;
       text-wrap:balance;
-      max-width:900px;
+      max-width:1000px;
     }
     .title-sub{
-      margin:0 auto 18px;
+      margin:0 auto 12px;
       font-size:clamp(18px,3.6vw,28px);
       font-weight:800;
       color:var(--white);
       text-shadow:0 2px 12px rgba(0,0,0,.35);
       text-wrap:balance;
-      max-width:900px;
+      max-width:1000px;
     }
 
     /* Карточки (скляные) */
@@ -69,8 +74,8 @@
       background:var(--glass);
       border:1px solid var(--border);
       border-radius:var(--radius);
-      padding:22px clamp(16px,5vw,28px);
-      margin:20px auto;
+      padding:24px clamp(12px,4vw,28px);
+      margin:14px auto;
       backdrop-filter:saturate(120%) blur(6px);
       box-shadow:var(--shadow);
       text-align:center;
@@ -83,9 +88,10 @@
       text-wrap:balance
     }
 
-    /* Ровный текст по центру и по краям */
+    /* Ровный текст по ширине и аккуратная последняя строка по центру */
     .card p, ul.clean, footer{
-      max-width:880px;margin:10px auto;
+      max-width:100%;
+      margin:10px auto;
       text-align:justify;
       text-align-last:center;
       hyphens:none;
@@ -99,7 +105,7 @@
     }
 
     /* Фото-блоки */
-    .imgBlock{margin:20px auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#f5f6fb}
+    .imgBlock{margin:14px auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#f5f6fb}
     .imgFull img{display:block;width:100%;height:auto}
     .imgRow{display:grid;gap:10px}
     @media(min-width:740px){.imgRow{grid-template-columns:1fr 1fr}}
@@ -114,18 +120,13 @@
     .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center;color:#151515}
     .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
 
-    /* Полностью отключены reveal-анимации */
+    /* Анимации отключены */
     .reveal{opacity:1;transform:none;filter:none}
     .reveal.show{opacity:1;transform:none;filter:none}
 
-    /* Футер: белый текст, укороченный */
+    /* Футер: белый текст, без дат */
     footer{padding:24px 0 40px;text-align:center;color:#fff;font-size:14px;text-shadow:0 1px 0 #0004}
     a{color:var(--accent);text-underline-offset:3px}
-
-    /* На мобильных избегаем возможного размытия фоновой картинки */
-    @media (max-width: 820px){
-      body{background-attachment:scroll}
-    }
   </style>
 </head>
 <body>
@@ -133,7 +134,7 @@
     <header class="reveal">
       <div class="title-top">Повернення до себе</div>
       <div class="title-sub">Жіночий ретрит</div>
-      <!-- строку под заголовком (медитації, ранкова йога…) удалено -->
+      <!-- строку "медитації, ранкова йога..." не показываем -->
     </header>
 
     <!-- HERO фото -->
@@ -160,7 +161,7 @@
     <!-- Фото між блоками -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Практики йоги" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
-      <figure><img src="https://i0.wp.com/i.ibb.co/F4CjCNЗL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-fото-13.jpg" alt="Йога серед лісу" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg" alt="Йога серед лісу" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
     <!-- ======= ЩО НА ТЕБЕ ЧЕКАЄ ======= -->
@@ -238,7 +239,7 @@
   </div>
 
   <script>
-    /* ====== ICON + MANIFEST (без изменений) ====== */
+    /* ====== ICON + MANIFEST (как было) ====== */
     const ibbIconPage = "https://ibb.co/WNkz2hXP";
     async function resolveIbbDirect(ibbPageUrl){
       const naked = ibbPageUrl.replace(/^https?:\/\//,'');
