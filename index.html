@@ -3,41 +3,78 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light">
   <title>Лендинг • Повноекранні зображення</title>
-  <link rel="preconnect" href="https://i.ibb.co" crossorigin>
-  <link rel="dns-prefetch" href="//i.ibb.co">
-  <!-- Подгрузим первый экран заранее, чтобы не мигал -->
-  <link rel="preload" as="image" href="https://i.ibb.co/9mj36qb0/21.png" />
+
+  <!-- Предзагрузка первого экрана для моментального появления -->
+  <link rel="preload" as="image" href="https://i.ibb.co/5gX5gQzx/19.png" imagesrcset="https://i.ibb.co/5gX5gQzx/19.png 1x, https://i.ibb.co/5gX5gQzx/19.png 2x" fetchpriority="high">
+
   <style>
+    /* База */
     *{box-sizing:border-box}
     html,body{height:100%}
     html{scroll-behavior:smooth}
     body{margin:0;background:#000;overflow-x:hidden}
 
-    /* Каждый блок = высота экрана, без швов */
+    /* Экран-панель */
     .panel{
+      position:relative;
       width:100%;
-      height:100svh;          /* стабильная высота на мобильных */
+      height:100svh;          /* стабильная мобильная высота */
       min-height:100vh;
-      background:center / cover no-repeat;
       display:block;
+      isolation:isolate;      /* корректные наложения */
     }
     @supports (height:100dvh){
-      .panel{height:100dvh}   /* максимально точная высота, где поддерживается */
+      .panel{height:100dvh}   /* ещё точнее, где поддерживается */
     }
-    .panel + .panel{margin-top:0}
+
+    /* Картинка на весь экран без искажений */
+    .panel > img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover; object-position:center;
+      image-rendering:auto; /* максимально качественный ресемплинг */
+      display:block;
+    }
+
+    /* Невидимая кликабельная зона "Забронювати" на 1-м экране */
+    .hotspot{
+      position:absolute; z-index:3;
+      left:clamp(12px, 7vw, 72px);
+      bottom:clamp(24px, 22vh, 180px);
+      width:clamp(180px, 40vw, 360px);
+      height:clamp(46px, 8vw, 72px);
+      display:block;
+      background:transparent;
+      text-decoration:none;
+      /* делаем невидимой, но доступной для клавиатуры/скринридеров */
+      color:transparent;
+    }
+    .hotspot:focus-visible{
+      outline:2px dashed #fff; outline-offset:4px; /* видно при фокусе, но в обычном состоянии невидимо */
+    }
   </style>
 </head>
 <body>
 
-  <!-- 1 -->
-  <section class="panel" style="background-image:url('https://i.ibb.co/9mj36qb0/21.png');"></section>
+  <!-- Порядок: 19 -> 20 -> 21 -->
 
-  <!-- 2 -->
-  <section class="panel" style="background-image:url('https://i.ibb.co/ch1vCRpT/20.png');"></section>
+  <!-- Экран 1 (и невидимая зона "Забронювати") -->
+  <section class="panel">
+    <img src="https://i.ibb.co/5gX5gQzx/19.png" alt="Екран 1" loading="eager" decoding="async" fetchpriority="high">
+    <a class="hotspot" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Забронювати у Telegram"> </a>
+  </section>
 
-  <!-- 3 -->
-  <section class="panel" style="background-image:url('https://i.ibb.co/5gX5gQzx/19.png');"></section>
+  <!-- Экран 2 -->
+  <section class="panel">
+    <img src="https://i.ibb.co/ch1vCRpT/20.png" alt="Екран 2" loading="lazy" decoding="async">
+  </section>
+
+  <!-- Экран 3 -->
+  <section class="panel">
+    <img src="https://i.ibb.co/9mj36qb0/21.png" alt="Екран 3" loading="lazy" decoding="async">
+  </section>
 
 </body>
 </html>
