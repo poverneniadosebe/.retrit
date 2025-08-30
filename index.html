@@ -35,22 +35,21 @@
       margin:0;color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6;
       background:#fff;overflow-x:hidden;
     }
-    /* легкий м’який ореол під анімованим полотном */
+    /* м’який ореол під анімованим полотном */
     body::before{
       content:"";position:fixed;inset:-20%;
       background:
-        radial-gradient(56% 36% at 72% 22%, #6f5ef508 0%, transparent 60%),
-        radial-gradient(50% 34% at 22% 82%, #ff7aa808 0%, transparent 60%);
-      filter:blur(42px);z-index:-2;animation:float 60s linear infinite alternate;opacity:.9;
+        radial-gradient(56% 36% at 72% 22%, #8879ff12 0%, transparent 60%),
+        radial-gradient(50% 34% at 22% 82%, #ff9bba12 0%, transparent 60%);
+      filter:blur(42px);z-index:-2;animation:float 60s linear infinite alternate;opacity:.95;
     }
     @keyframes float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-3%,2%,0) scale(1.06)}}
 
-    /* полотно для медитативної анімації (переливні «потоки») */
+    /* полотно для медитативної переливної анімації */
     #sparkles{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
     .wrap{max-width:980px;margin:0 auto;padding:22px}
     header{text-align:center;padding:28px 0 16px}
-    .badge{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--glass);border:1px solid var(--border);color:var(--muted);font-weight:700;letter-spacing:.08em}
     h1{margin:14px auto 8px;font-size:clamp(28px,4.5vw,44px);line-height:1.18;font-weight:800;letter-spacing:.3px;text-align:center;text-wrap:balance;max-width:900px}
     .sub{margin:0 auto 18px;font-size:clamp(14px,2.6vw,18px);color:var(--muted);max-width:900px;text-align:center;text-wrap:pretty}
 
@@ -63,42 +62,49 @@
       margin:20px auto;
       backdrop-filter:blur(6px);
       box-shadow:var(--shadow);
-      text-align:center
+      text-align:center;
+      transition:transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s cubic-bezier(.2,.8,.2,1);
     }
-    .card h2{margin:0 0 12px;font-size:clamp(22px,3.6vw,30px);font-weight:800;letter-spacing:.2px;text-align:center;text-wrap:balance}
-    /* Щоб текст не виглядав «розривисто» — без розтягування рядків */
-    .card p, ul.clean{max-width:880px;margin:10px auto;text-align:left;text-wrap:pretty;hyphens:none;letter-spacing:normal;word-spacing:normal}
+    .card:hover{transform:translateY(-4px);box-shadow:0 24px 50px rgba(0,0,0,.10)}
+    .card h2{margin:0 0 12px;font-size:clamp(22px,3.6vw,30px);font-weight:800;letter-spacing:.2px;text-wrap:balance}
+    /* рівний текст без розривів */
+    .card p, ul.clean{max-width:880px;margin:10px auto;text-align:left;text-wrap:pretty;hyphens:none}
     ul.clean{padding:0;list-style:disc inside}
     ul.clean li{margin:10px 0}
-    .pill{display:inline-block;margin:6px 6px 0 0;padding:6px 10px;font-size:14px;border-radius:999px;border:1px solid var(--border);color:#2b2b2b;background:#00000008}
+    .pill{display:inline-block;margin:6px 6px 0 0;padding:6px 10px;font-size:14px;border-radius:999px;border:1px solid var(--border);color:#2b2b2b;background:#0000000f}
 
-    /* Блоки з фото (без скролу) */
+    /* Блоки з фото */
     .imgBlock{margin:20px auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#f5f6fb}
     .imgFull img{display:block;width:100%;height:auto}
     .imgRow{display:grid;gap:10px}
     @media(min-width:740px){.imgRow{grid-template-columns:1fr 1fr}}
     .imgRow figure,.imgFull figure{margin:0}
-    .imgRow img,.imgFull img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;aspect-ratio:16/9}
+    .imgRow img,.imgFull img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;aspect-ratio:16/9;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+    .imgBlock:hover img{transform:scale(1.02)}
 
     .btn{
       appearance:none;border:0;cursor:pointer;padding:14px 20px;border-radius:14px;font-weight:800;letter-spacing:.3px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
       color:#1a1247;background:linear-gradient(180deg,#efe9ff,#d1c2ff);
       box-shadow:0 10px 24px #0003,inset 0 1px 0 #fff7;transition:transform .12s ease,filter .2s ease
     }
-    .btn:hover{transform:translateY(-1px);filter:saturate(1.04)}
+    .btn:hover{transform:translateY(-1px);filter:saturate(1.06)}
     .btn:active{transform:translateY(0)}
     .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center;color:#151515}
     .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
 
-    .reveal{opacity:0;transform:translateY(14px);transition:all .8s ease}
-    .reveal.show{opacity:1;transform:none}
+    /* плавні красиві появи */
+    .reveal{opacity:0;transform:translateY(16px) scale(.98);filter:blur(2px)}
+    .reveal.show{opacity:1;transform:none;filter:none;transition:
+      opacity .9s cubic-bezier(.2,.8,.2,1),
+      transform .9s cubic-bezier(.2,.8,.2,1),
+      filter .9s cubic-bezier(.2,.8,.2,1)}
 
     footer{padding:24px 0 40px;text-align:center;color:#666;font-size:14px}
     a{color:var(--accent);text-underline-offset:3px}
     @media (prefers-reduced-motion: reduce){
       body::before{animation:none}
       #sparkles{display:none}
-      .reveal{transition:none}
+      .reveal,.reveal.show{transition:none;opacity:1;transform:none;filter:none}
     }
   </style>
 </head>
@@ -106,8 +112,8 @@
   <canvas id="sparkles"></canvas>
 
   <div class="wrap">
-    <header class="reveal show">
-      <span class="badge">Карпати • 11.09–15.09.2025</span>
+    <header class="reveal">
+      <!-- Плашка з датою зверху видалена -->
       <h1>Жіночий ретрит «Повернення до себе»</h1>
       <p class="sub">медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла»</p>
     </header>
@@ -133,7 +139,7 @@
       </div>
     </section>
 
-    <!-- Фото між блоками (ПОСЛЕ ЗАМЕНЫ: здесь теперь була 6-та картинка) -->
+    <!-- Фото між блоками -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Практики йоги" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg" alt="Йога серед лісу" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
@@ -163,7 +169,7 @@
       <p>Ранок — тиша, дихання й йога. День — природа, SPA або подорож Карпатами. Вечір — м’які інтеграційні практики, тепле коло, час для себе.</p>
     </section>
 
-    <!-- Фото між блоками (ПОСЛЕ ЗАМЕНЫ: здесь тепер була 2-га картинка) -->
+    <!-- Фото між блоками -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp" alt="Гойдалка в Карпатах" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg" alt="Пейзажі Карпат" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
@@ -207,7 +213,6 @@
       <p class="price">Ціна: <b>15 000 гривень</b> — усе перелічене вище входить у вартість</p>
       <div class="cta">
         <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram"> Забронювати</a>
-        <!-- Кнопка фотогалереї видалена за проханням -->
       </div>
     </section>
 
@@ -246,13 +251,16 @@
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
     })();
 
-    /* ====== REVEAL ====== */
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
-    },{threshold:0.14});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    /* ====== КРАСИВІ ПОЯВИ З НЕВЕЛИКОЮ ЗАТРИМКОЮ ====== */
+    const items=[...document.querySelectorAll('.reveal')];
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+      });
+    },{threshold:0.12});
+    items.forEach((el,i)=>{ el.style.transitionDelay = (80*i)+'ms'; io.observe(el); });
 
-    /* ====== МЕДИТАТИВНА ПЕРЕЛИВНА АНІМАЦІЯ (м'які «потоки») ====== */
+    /* ====== ЯСКРАВІША МЕДИТАТИВНА ПЕРЕЛИВНА АНІМАЦІЯ ====== */
     (function(){
       const canvas = document.getElementById('sparkles');
       const ctx = canvas.getContext('2d');
@@ -269,16 +277,16 @@
       }
 
       function makeBlobs(){
-        const n = 6;
+        const n = 7;
         blobs = [];
         for(let i=0;i<n;i++){
           blobs.push({
             x: Math.random()*W,
             y: Math.random()*H,
-            r: (Math.min(W,H)*(.18+Math.random()*0.22)),
-            hue: [258, 210, 165, 190, 280, 120][i%6], // ліловий, персик, теплий пісок, небесний, фіолет, м'яка м'ята
-            a: 0.08 + Math.random()*0.06,
-            sp: 0.12 + Math.random()*0.10,
+            r: (Math.min(W,H)*(.22+Math.random()*0.26)),
+            hue: [258, 210, 165, 190, 280, 120, 330][i%7], // ліловий, персик, теплий пісок, небесний, фіолет, м'ята, рожеве золото
+            a: 0.22 + Math.random()*0.14,   // СВІТЛІШЕ
+            sp: 0.10 + Math.random()*0.10,
             off: Math.random()*Math.PI*2
           });
         }
@@ -287,18 +295,27 @@
       function draw(t){
         if(reduce){ return; }
         ctx.clearRect(0,0,W,H);
+
+        // м’яка біла вуаль для «світіння»
+        const veil = ctx.createLinearGradient(0,0,W,H);
+        veil.addColorStop(0,'rgba(255,255,255,0.20)');
+        veil.addColorStop(1,'rgba(255,255,255,0.08)');
+        ctx.fillStyle = veil;
+        ctx.fillRect(0,0,W,H);
+
         ctx.globalCompositeOperation = 'lighter';
         for(const b of blobs){
           const k = ( (t-start)/1000 ) * b.sp;
           const x = b.x + Math.sin(k + b.off)* (W*0.06);
           const y = b.y + Math.cos(k*0.9 + b.off)* (H*0.05);
           const g = ctx.createRadialGradient(x,y,0,x,y,b.r);
-          g.addColorStop(0, `hsla(${b.hue}, 85%, 70%, ${b.a})`);
-          g.addColorStop(1, `hsla(${b.hue}, 85%, 70%, 0)`);
+          g.addColorStop(0, `hsla(${b.hue}, 90%, 70%, ${b.a})`);
+          g.addColorStop(1, `hsla(${b.hue}, 90%, 70%, 0)`);
           ctx.fillStyle = g;
           ctx.beginPath(); ctx.arc(x,y,b.r,0,Math.PI*2); ctx.fill();
         }
         ctx.globalCompositeOperation = 'source-over';
+
         requestAnimationFrame(draw);
       }
 
