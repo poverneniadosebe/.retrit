@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Жіночий ретрит «Повернення до себе»</title>
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#0f2a1f" />
   <meta name="description" content="Жіночий ретрит у Карпатах про м’яке повернення до себе: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Дбайлива атмосфера, сповільнення, безпека й підтримка. Квитки, трансфер, проживання — у вартості." />
 
   <!-- Favicon & PWA manifest (ставляться скриптом) -->
@@ -19,17 +19,18 @@
   <link rel="dns-prefetch" href="//i0.wp.com" />
 
   <style>
-    /* Палитра: «изумрудный остров» */
+    /* Палитра «изумрудный» + лесной фон */
     :root{
-      --bg:#ffffff;
-      --text:#142319;           /* глубокий зелёно-серый для текста */
-      --muted:#546e60;          /* приглушённый зелёный для подзаголовков */
-      --accent:#6DAE8C;         /* основной изумруд */
-      --accent-2:#4F8C72;       /* средний */
-      --accent-3:#3F5C57;       /* тёмный */
-      --glass: rgba(255,255,255,.84);
+      --bg1:#173a2a;         /* верх градиента */
+      --bg2:#0f2a1f;         /* низ градиента */
+      --text:#142319;
+      --muted:#cfe2d8;
+      --accent:#6DAE8C;
+      --accent-2:#4F8C72;
+      --accent-3:#2e5a4b;
+      --glass: rgba(255,255,255,.88);
       --border:#3f5c571a;
-      --shadow:0 18px 40px rgba(0,0,0,.10);
+      --shadow:0 18px 40px rgba(0,0,0,.18);
       --radius:18px;
     }
 
@@ -37,22 +38,24 @@
     html,body{height:100%}
     html{scroll-behavior:smooth}
     body{
-      margin:0; color:var(--text); background:var(--bg);
+      margin:0; color:var(--text);
       font-family:Arial,Helvetica,sans-serif; line-height:1.6; overflow-x:hidden;
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      background-attachment:fixed;
     }
 
-    /* Контент немного уже, как просили ранее */
+    /* Контент */
     .wrap{max-width:980px;margin:0 auto;padding:16px}
     @media (max-width: 768px){ .wrap{padding:12px} }
 
-    /* Заголовок */
+    /* Заголовок на тёмном фоне */
     header{padding:24px 0 12px;text-align:center}
     .title-top{
       margin:10px auto 4px;
       font-size:clamp(30px,6vw,56px);
-      line-height:1.08; font-weight:800; color:var(--accent-3);
+      line-height:1.08; font-weight:800; color:#f3fbf7;
       letter-spacing:.3px; text-wrap:balance; max-width:900px;
-      text-shadow:0 1px 0 #fff;
+      text-shadow:0 2px 14px rgba(0,0,0,.45);
     }
     .title-sub{
       margin:0 auto 12px;
@@ -70,45 +73,49 @@
       margin:0 0 12px; font-size:clamp(22px,3.6vw,30px); font-weight:800; color:var(--accent-3);
       letter-spacing:.2px; text-wrap:balance
     }
-    .imgBlock{border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); background:#f1f5f3}
+    .imgBlock{border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); background:#ecf3ef}
     .imgFull img{display:block;width:100%;height:auto}
     .imgRow{display:grid;gap:10px;margin:14px auto}
     @media(min-width:740px){.imgRow{grid-template-columns:1fr 1fr}}
     .imgRow figure,.imgFull figure{margin:0}
     .imgRow img,.imgFull img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;aspect-ratio:16/9}
 
-    /* HERO: обрезать по горизонтали — оставить верхнюю половину */
+    /* HERO как фон секции (верхняя половина кадра) */
     .hero{position:relative; height:clamp(280px,54vh,560px); overflow:hidden}
-    .hero img{
-      width:100%; height:200%;           /* показываем верхнюю половину */
-      object-fit:cover; object-position:center top; display:block;
+    .hero{
+      background-position:center top;
+      background-size:cover;
+      background-repeat:no-repeat;
+    }
+    /* затемнение для контраста кнопки */
+    .hero::after{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.20));
     }
 
-    /* Кнопка — изумрудная, внизу слева на первом фото */
+    /* Кнопка поверх hero */
     .btn{
       appearance:none; border:0; cursor:pointer; padding:14px 20px; border-radius:14px;
       font-weight:800; letter-spacing:.3px; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
       color:#0f2a1f; background:linear-gradient(180deg,#DCEFE5,#A9D6BE);
-      box-shadow:0 10px 24px #0003,inset 0 1px 0 #ffffffaa; transition:transform .12s ease,filter .2s ease
+      box-shadow:0 10px 24px #0005,inset 0 1px 0 #ffffffaa; transition:transform .12s ease,filter .2s ease
     }
     .btn:hover{transform:translateY(-1px); filter:saturate(1.05)}
-    .hero-cta{position:absolute; left:14px; bottom:14px}
+    .hero-cta{position:absolute; left:14px; bottom:14px; z-index:2}
 
     .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center;color:var(--accent-3)}
     .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
 
     /* Перечни и футер */
     ul.clean{padding:0; list-style:none; margin:10px auto; max-width:620px; text-align:left}
-    ul.clean li{
-      margin:10px 0; padding-left:26px; position:relative; color:var(--text);
-    }
+    ul.clean li{margin:10px 0; padding-left:26px; position:relative; color:var(--text)}
     ul.clean li::before{
       content:""; position:absolute; left:8px; top:0.9em; transform:translateY(-50%);
       width:10px; height:10px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 0 3px #e5efe9;
     }
 
-    footer{padding:24px 0 40px; text-align:center; color:var(--muted); font-size:14px}
-    a{color:var(--accent-2); text-underline-offset:3px}
+    footer{padding:24px 0 40px; text-align:center; color:#e1eee7; font-size:14px}
+    a{color:#cfe2d8; text-underline-offset:3px}
   </style>
 </head>
 <body>
@@ -118,11 +125,8 @@
       <div class="title-sub">Жіночий ретрит</div>
     </header>
 
-    <!-- HERO фото (верхняя половина картинки с ibb.co) + кнопка слева внизу -->
-    <section class="imgBlock hero imgFull reveal">
-      <figure>
-        <img id="heroImg" src="" alt="Карпатські краєвиди" loading="eager" decoding="async" fetchpriority="high">
-      </figure>
+    <!-- HERO как фон секции + кнопка слева внизу -->
+    <section class="imgBlock hero reveal" id="hero">
       <div class="hero-cta">
         <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram">Забронювати</a>
       </div>
@@ -133,17 +137,21 @@
       <h2>Про ретрит</h2>
       <p>Ці дні — про <b>тишу всередині</b>, м’яке сповільнення та повернення до себе. Ми разом створимо безпечний простір, де можна нарешті видихнути, відчути тіло, помітити справжні потреби й дбайливо дати їм місце.</p>
       <p>Практики підібрані так, щоб зняти напругу, відновити енергію й повернути <b>ясність</b>. Ви зможете прожити емоції, які потребують уваги, і побачити нові рішення — без тиску, з повагою до власного темпу.</p>
-      <!-- Убрали «плашки»-пилюли -->
     </section>
 
     <!-- Фото між блоками (перший ряд) -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Практики йоги" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
-      <!-- ЗАМЕНА «третьей» картинки на вашу -->
-      <figure><img src="https://i.ibb.co/7xDbwDkY/IMG-5627.jpg" alt="Йога серед лісу" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <!-- «третья» картинка заменена + fallback -->
+      <figure>
+        <img src="https://i.ibb.co/7xDbwDkY/IMG-5627.jpg"
+             alt="Йога серед лісу"
+             loading="lazy" decoding="async"
+             onerror="this.onerror=null;this.src='https://i0.wp.com/i.ibb.co/7xDbwDkY/IMG-5627.jpg'">
+      </figure>
     </section>
 
-    <!-- ======= Список практик (в столбик) ======= -->
+    <!-- ======= Список практик ======= -->
     <section class="card reveal">
       <h2>Практики ретриту</h2>
       <ul class="clean">
@@ -156,19 +164,17 @@
       </ul>
     </section>
 
-    <!-- Фото між блоками -->
+    <!-- Остальной контент — без изменений -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/d0G6HkpZ/vodospad-shypit-3.jpg" alt="Водоспад Шипіт" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/pjWBjpdp/synevyr-pereval-2.jpg" alt="Карпатський перевал" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
-    <!-- ======= Як минає день (без змін) ======= -->
     <section class="card reveal">
       <h2>Як минає день</h2>
       <p>Ранок — тиша, дихання й йога. День — природа, SPA або подорож Карпатами. Вечір — м’які інтеграційні практики, тепле коло, час для себе.</p>
     </section>
 
-    <!-- Дальше всё без изменений -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp" alt="Гойдалка в Карпатах" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg" alt="Пейзажі Карпат" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
@@ -202,7 +208,6 @@
       <figure><img src="https://i0.wp.com/i.ibb.co/kgB6kyhV/1508689396-1508686392-ozero-sinevir-3.jpg" alt="Синевир — вид 3" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
-    <!-- Нижний CTA оставил (как было) -->
     <section class="card reveal" id="buy">
       <h2>Бронювання</h2>
       <p class="price">Ціна: <b>15 000 гривень</b> — усе перелічене вище входить у вартість</p>
@@ -215,16 +220,16 @@
   </div>
 
   <script>
-    /* ====== ICON + MANIFEST + HERO (ibb.co -> прямой) ====== */
+    /* ====== ICON + MANIFEST + HERO (ibb.co -> прямая картинка) ====== */
     const ibbIconPage = "https://ibb.co/WNkz2hXP";
-    const heroPage = "https://ibb.co/20B5L4td";   // ВАША новая первая картинка (берём верхнюю половину)
+    const heroPage = "https://ibb.co/20B5L4td";   // ваша новая первая картинка (берём верх)
 
     async function resolveIbbDirect(ibbPageUrl){
       const naked = ibbPageUrl.replace(/^https?:\/\//,'');
       const probe = `https://r.jina.ai/https://${naked}`;
       try{
         const txt = await fetch(probe).then(r=>r.ok?r.text():Promise.reject());
-        const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp|png)/i);
+        const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
         return m ? m[0] : ibbPageUrl;
       }catch{ return ibbPageUrl; }
     }
@@ -239,8 +244,8 @@
         short_name:"Ретрит",
         start_url:".",
         display:"standalone",
-        background_color:"#ffffff",
-        theme_color:"#ffffff",
+        background_color:"#0f2a1f",
+        theme_color:"#0f2a1f",
         icons:[
           {src:bestIcon,sizes:"192x192",type:"image/png",purpose:"any maskable"},
           {src:bestIcon,sizes:"512x512",type:"image/png",purpose:"any maskable"}
@@ -249,11 +254,12 @@
       const blob=new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"});
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
 
-      // hero: получить прямую ссылку и показать верхнюю половину
+      // hero фоном, видим верхнюю часть
       const heroDirect = await resolveIbbDirect(heroPage);
-      const heroImg = document.getElementById('heroImg');
-      heroImg.src = heroDirect;
-      heroImg.alt = "Гори Карпат — панорама";
+      const hero = document.getElementById('hero');
+      hero.style.backgroundImage = `linear-gradient(180deg,rgba(0,0,0,.00),rgba(0,0,0,.00)), url('${heroDirect}')`;
+      hero.style.backgroundPosition = 'center top';
+      hero.style.backgroundSize = 'cover';
     })();
   </script>
 </body>
