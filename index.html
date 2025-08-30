@@ -33,19 +33,17 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6;
-      /* Фон: Карпати на всю сторінку, без анімацій */
-      background:
-        linear-gradient(0deg, rgba(255,255,255,.92), rgba(255,255,255,.92)),
-        url("https://i0.wp.com/i.ibb.co/ds4yKcXd/30608cae1d7e3cfaced4f8b45789c6a7.webp") center/cover no-repeat fixed;
+      /* ФОН: только ваша картинка, на всю высоту/ширину окна, без эффектов */
+      background:url("https://i.ibb.co/ds4yKcXd/30608cae1d7e3cfaced4f8b45789c6a7.webp") center center / cover no-repeat fixed;
       overflow-x:hidden;
     }
 
     .wrap{max-width:980px;margin:0 auto;padding:22px}
     header{text-align:center;padding:28px 0 16px}
     h1{margin:14px auto 8px;font-size:clamp(28px,4.5vw,44px);line-height:1.18;font-weight:800;letter-spacing:.3px;text-align:center;text-wrap:balance;max-width:900px}
-    .sub{margin:0 auto 18px;font-size:clamp(14px,2.6vw,18px);color:var(--muted);max-width:900px;text-align:center;text-wrap:pretty}
+    .sub{margin:0 auto 18px;font-size:clamp(14px,2.6vw,18px);color:var(--muted);max-width:900px}
 
-    /* Карточки (скляні, світлі) */
+    /* Карточки (светлые, без hover-анимаций) */
     .card{
       background:var(--glass);
       border:1px solid var(--border);
@@ -55,46 +53,43 @@
       backdrop-filter:saturate(120%) blur(6px);
       box-shadow:var(--shadow);
       text-align:center;
-      transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s cubic-bezier(.2,.8,.2,1);
     }
-    .card:hover{transform:translateY(-4px);box-shadow:0 24px 50px rgba(0,0,0,.10)}
     .card h2{margin:0 0 12px;font-size:clamp(22px,3.6vw,30px);font-weight:800;letter-spacing:.2px;text-wrap:balance}
-    .card p, ul.clean{max-width:880px;margin:10px auto;text-align:left;text-wrap:pretty;hyphens:none}
+
+    /* Ровный текст по центру и по краям */
+    .card p, ul.clean, .sub, footer{
+      max-width:880px;margin:10px auto;
+      text-align:justify;          /* выравнивание по левому и правому краю */
+      text-align-last:center;      /* последняя строка по центру */
+      hyphens:none;
+    }
     ul.clean{padding:0;list-style:disc inside}
     ul.clean li{margin:10px 0}
+
     .pill{display:inline-block;margin:6px 6px 0 0;padding:6px 10px;font-size:14px;border-radius:999px;border:1px solid var(--border);color:#2b2b2b;background:#ffffffb3}
 
-    /* Фото-блоки */
+    /* Фото-блоки (без анимаций) */
     .imgBlock{margin:20px auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#f5f6fb}
     .imgFull img{display:block;width:100%;height:auto}
     .imgRow{display:grid;gap:10px}
     @media(min-width:740px){.imgRow{grid-template-columns:1fr 1fr}}
     .imgRow figure,.imgFull figure{margin:0}
-    .imgRow img,.imgFull img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;aspect-ratio:16/9;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-    .imgBlock:hover img{transform:scale(1.02)}
+    .imgRow img,.imgFull img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;aspect-ratio:16/9}
 
     .btn{
       appearance:none;border:0;cursor:pointer;padding:14px 20px;border-radius:14px;font-weight:800;letter-spacing:.3px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
       color:#1a1247;background:linear-gradient(180deg,#efe9ff,#d1c2ff);
-      box-shadow:0 10px 24px #0003,inset 0 1px 0 #fff7;transition:transform .12s ease,filter .2s ease
+      box-shadow:0 10px 24px #0003,inset 0 1px 0 #fff7;
     }
-    .btn:hover{transform:translateY(-1px);filter:saturate(1.06)}
-    .btn:active{transform:translateY(0)}
     .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center;color:#151515}
     .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
 
-    /* Плавні появи при скролі (без різких стрибків) */
-    .reveal{opacity:0;transform:translateY(22px) scale(.98);filter:blur(2px);will-change:opacity,transform,filter}
-    .reveal.show{opacity:1;transform:none;filter:none;transition:
-      opacity .9s cubic-bezier(.2,.8,.2,1),
-      transform .9s cubic-bezier(.2,.8,.2,1),
-      filter .9s cubic-bezier(.2,.8,.2,1)}
+    /* Полностью отключаем «reveal»-анимации */
+    .reveal{opacity:1;transform:none;filter:none}
+    .reveal.show{opacity:1;transform:none;filter:none}
 
     footer{padding:24px 0 40px;text-align:center;color:#444;font-size:14px;text-shadow:0 1px 0 #fff}
     a{color:var(--accent);text-underline-offset:3px}
-    @media (prefers-reduced-motion: reduce){
-      .reveal,.reveal.show{transition:none;opacity:1;transform:none;filter:none}
-    }
   </style>
 </head>
 <body>
@@ -236,19 +231,7 @@
       const blob=new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"});
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
     })();
-
-    /* ====== ПЛАВНІ ПОЯВИ ПРИ СКРОЛІ ====== */
-    const elements=[...document.querySelectorAll('.reveal')];
-    const io=new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          e.target.classList.add('show');
-          e.target.style.transitionDelay = e.target.dataset.delay || '0ms';
-          io.unobserve(e.target);
-        }
-      });
-    },{threshold:0.12, rootMargin:"0px 0px -10% 0px"});
-    elements.forEach((el,i)=>{ el.dataset.delay = (i%5)*80 + 'ms'; io.observe(el); });
+    /* НИКАКИХ скролл- или hover-анимаций не осталось */
   </script>
 </body>
 </html>
