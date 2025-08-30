@@ -19,119 +19,96 @@
   <link rel="dns-prefetch" href="//i0.wp.com" />
 
   <style>
+    /* Палитра: «изумрудный остров» */
     :root{
-      --glass: rgba(255,255,255,.78);
-      --border:#00000018;
-      --text:#121212;
-      --muted:#595959;
+      --bg:#ffffff;
+      --text:#142319;           /* глубокий зелёно-серый для текста */
+      --muted:#546e60;          /* приглушённый зелёный для подзаголовков */
+      --accent:#6DAE8C;         /* основной изумруд */
+      --accent-2:#4F8C72;       /* средний */
+      --accent-3:#3F5C57;       /* тёмный */
+      --glass: rgba(255,255,255,.84);
+      --border:#3f5c571a;
       --shadow:0 18px 40px rgba(0,0,0,.10);
       --radius:18px;
-      --accent:#4b36a6;
-      --white:#ffffff;
     }
+
     *{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
     html,body{height:100%}
     html{scroll-behavior:smooth}
     body{
-      margin:0;color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6;
-      /* ФОН: ваша картинка от верха до низа, скроллится вместе со страницей */
-      background:
-        linear-gradient(0deg, rgba(0,0,0,.20), rgba(0,0,0,.20)),
-        url("https://i.ibb.co/gMDK1hr8/34.png") center top / cover no-repeat;
-      background-attachment:scroll;
-      overflow-x:hidden;
-      min-height:100vh; /* тянем фон до низа экрана */
+      margin:0; color:var(--text); background:var(--bg);
+      font-family:Arial,Helvetica,sans-serif; line-height:1.6; overflow-x:hidden;
     }
 
-    /* окно контента */
+    /* Контент немного уже, как просили ранее */
     .wrap{max-width:980px;margin:0 auto;padding:16px}
     @media (max-width: 768px){ .wrap{padding:12px} }
 
-    /* делаем все «окошки» (карточки и фото-блоки) немного уже */
-    .card, .imgBlock{max-width:820px;margin-left:auto;margin-right:auto}
-    @media (max-width: 900px){ .card, .imgBlock{max-width:100%} }
-
-    /* Заголовок: две строки, белые с лёгкой тенью */
+    /* Заголовок */
     header{padding:24px 0 12px;text-align:center}
     .title-top{
       margin:10px auto 4px;
       font-size:clamp(30px,6vw,56px);
-      line-height:1.08;
-      font-weight:800;
-      color:var(--white);
-      text-shadow:0 2px 14px rgba(0,0,0,.35);
-      letter-spacing:.3px;
-      text-wrap:balance;
-      max-width:900px;
+      line-height:1.08; font-weight:800; color:var(--accent-3);
+      letter-spacing:.3px; text-wrap:balance; max-width:900px;
+      text-shadow:0 1px 0 #fff;
     }
     .title-sub{
       margin:0 auto 12px;
-      font-size:clamp(18px,3.6vw,28px);
-      font-weight:800;
-      color:var(--white);
-      text-shadow:0 2px 12px rgba(0,0,0,.35);
-      text-wrap:balance;
-      max-width:900px;
+      font-size:clamp(18px,3.6vw,28px); font-weight:800; color:var(--muted);
+      text-wrap:balance; max-width:900px;
     }
 
-    /* Карточки */
+    /* Карточки/фотоблоки */
     .card{
-      background:var(--glass);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:24px clamp(12px,4vw,28px);
-      margin:14px auto;
-      backdrop-filter:saturate(120%) blur(6px);
-      box-shadow:var(--shadow);
-      text-align:center;
+      background:var(--glass); border:1px solid var(--border); border-radius:var(--radius);
+      padding:24px clamp(12px,4vw,28px); margin:14px auto; backdrop-filter:saturate(120%) blur(6px);
+      box-shadow:var(--shadow); text-align:center;
     }
     .card h2{
-      margin:0 0 12px;
-      font-size:clamp(22px,3.6vw,30px);
-      font-weight:800;
-      letter-spacing:.2px;
-      text-wrap:balance
+      margin:0 0 12px; font-size:clamp(22px,3.6vw,30px); font-weight:800; color:var(--accent-3);
+      letter-spacing:.2px; text-wrap:balance
     }
-
-    /* Ровный текст по ширине и последняя строка по центру */
-    .card p, ul.clean, footer{
-      max-width:100%;
-      margin:10px auto;
-      text-align:justify;
-      text-align-last:center;
-      hyphens:none;
-    }
-    ul.clean{padding:0;list-style:disc inside}
-    ul.clean li{margin:10px 0}
-
-    .pill{
-      display:inline-block;margin:6px 6px 0 0;padding:6px 10px;font-size:14px;
-      border-radius:999px;border:1px solid var(--border);color:#2b2b2b;background:#ffffffb3
-    }
-
-    /* Фото-блоки */
-    .imgBlock{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#f5f6fb}
+    .imgBlock{border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); background:#f1f5f3}
     .imgFull img{display:block;width:100%;height:auto}
     .imgRow{display:grid;gap:10px;margin:14px auto}
     @media(min-width:740px){.imgRow{grid-template-columns:1fr 1fr}}
     .imgRow figure,.imgFull figure{margin:0}
     .imgRow img,.imgFull img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;aspect-ratio:16/9}
 
-    .btn{
-      appearance:none;border:0;cursor:pointer;padding:14px 20px;border-radius:14px;font-weight:800;letter-spacing:.3px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
-      color:#1a1247;background:linear-gradient(180deg,#efe9ff,#d1c2ff);
-      box-shadow:0 10px 24px #0003,inset 0 1px 0 #fff7;
+    /* HERO: обрезать по горизонтали — оставить верхнюю половину */
+    .hero{position:relative; height:clamp(280px,54vh,560px); overflow:hidden}
+    .hero img{
+      width:100%; height:200%;           /* показываем верхнюю половину */
+      object-fit:cover; object-position:center top; display:block;
     }
-    .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center;color:#151515}
+
+    /* Кнопка — изумрудная, внизу слева на первом фото */
+    .btn{
+      appearance:none; border:0; cursor:pointer; padding:14px 20px; border-radius:14px;
+      font-weight:800; letter-spacing:.3px; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+      color:#0f2a1f; background:linear-gradient(180deg,#DCEFE5,#A9D6BE);
+      box-shadow:0 10px 24px #0003,inset 0 1px 0 #ffffffaa; transition:transform .12s ease,filter .2s ease
+    }
+    .btn:hover{transform:translateY(-1px); filter:saturate(1.05)}
+    .hero-cta{position:absolute; left:14px; bottom:14px}
+
+    .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center;color:var(--accent-3)}
     .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
 
-    /* Анимации отключены */
-    .reveal{opacity:1;transform:none;filter:none}
-    .reveal.show{opacity:1;transform:none;filter:none}
+    /* Перечни и футер */
+    ul.clean{padding:0; list-style:none; margin:10px auto; max-width:620px; text-align:left}
+    ul.clean li{
+      margin:10px 0; padding-left:26px; position:relative; color:var(--text);
+    }
+    ul.clean li::before{
+      content:""; position:absolute; left:8px; top:0.9em; transform:translateY(-50%);
+      width:10px; height:10px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 0 3px #e5efe9;
+    }
 
-    /* Футер */
-    footer{padding:24px 0 40px;text-align:center;color:#fff;font-size:14px;text-shadow:0 1px 0 #0004}
-    a{color:var(--accent);text-underline-offset:3px}
+    footer{padding:24px 0 40px; text-align:center; color:var(--muted); font-size:14px}
+    a{color:var(--accent-2); text-underline-offset:3px}
   </style>
 </head>
 <body>
@@ -141,11 +118,14 @@
       <div class="title-sub">Жіночий ретрит</div>
     </header>
 
-    <!-- HERO фото -->
-    <section class="imgBlock imgFull reveal">
+    <!-- HERO фото (верхняя половина картинки с ibb.co) + кнопка слева внизу -->
+    <section class="imgBlock hero imgFull reveal">
       <figure>
-        <img src="https://i0.wp.com/i.ibb.co/0y24kyQb/1200px-Lake-Synevyr.jpg" alt="Озеро Синевир" referrerpolicy="no-referrer" loading="eager" decoding="async" fetchpriority="high">
+        <img id="heroImg" src="" alt="Карпатські краєвиди" loading="eager" decoding="async" fetchpriority="high">
       </figure>
+      <div class="hero-cta">
+        <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram">Забронювати</a>
+      </div>
     </section>
 
     <!-- ======= ПРО РЕТРИТ ======= -->
@@ -153,30 +133,26 @@
       <h2>Про ретрит</h2>
       <p>Ці дні — про <b>тишу всередині</b>, м’яке сповільнення та повернення до себе. Ми разом створимо безпечний простір, де можна нарешті видихнути, відчути тіло, помітити справжні потреби й дбайливо дати їм місце.</p>
       <p>Практики підібрані так, щоб зняти напругу, відновити енергію й повернути <b>ясність</b>. Ви зможете прожити емоції, які потребують уваги, і побачити нові рішення — без тиску, з повагою до власного темпу.</p>
-      <div style="text-align:center;margin-top:10px">
-        <span class="pill">Медитації</span>
-        <span class="pill">Ранкова йога</span>
-        <span class="pill">Стояння на цвяхах (садху)</span>
-        <span class="pill">МАК-сесії</span>
-        <span class="pill">Трансформаційна гра «Ліла»</span>
-      </div>
+      <!-- Убрали «плашки»-пилюли -->
     </section>
 
-    <!-- Фото між блоками -->
+    <!-- Фото між блоками (перший ряд) -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/sp6FMcWB/yoga-1.jpg" alt="Практики йоги" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
-      <figure><img src="https://i0.wp.com/i.ibb.co/F4CjCNZL/1620817067-12-pibig-info-p-yoga-v-lesu-priroda-krasivo-foto-13.jpg" alt="Йога серед лісу" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
+      <!-- ЗАМЕНА «третьей» картинки на вашу -->
+      <figure><img src="https://i.ibb.co/7xDbwDkY/IMG-5627.jpg" alt="Йога серед лісу" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
-    <!-- ======= ЩО НА ТЕБЕ ЧЕКАЄ ======= -->
+    <!-- ======= Список практик (в столбик) ======= -->
     <section class="card reveal">
-      <h2>Що на тебе чекає</h2>
+      <h2>Практики ретриту</h2>
       <ul class="clean">
-        <li><b>Медитації</b> — заспокоєння нервової системи, відчуття опори й тепла в тілі.</li>
-        <li><b>Гра «Ліла»</b> — м’який спосіб побачити себе збоку, отримати підказки й інсайти для рішень.</li>
-        <li><b>Стояння на цвяхах</b> — зустріч зі страхом і вихід у силу через усвідомлене дихання.</li>
-        <li><b>Ранкова йога</b> — легкість, баланс, м’яка сила й контакт із собою.</li>
-        <li><b>МАК-сесії</b> — відповіді з підсвідомого, ясність наступних кроків.</li>
+        <li><b>Медитації</b></li>
+        <li><b>Йога</b></li>
+        <li><b>МАК-сесії</b></li>
+        <li><b>Арт-терапія</b></li>
+        <li><b>Стояння на цвяхах</b></li>
+        <li><b>Трансформаційна гра «ЛІЛА»</b></li>
       </ul>
     </section>
 
@@ -186,19 +162,18 @@
       <figure><img src="https://i0.wp.com/i.ibb.co/pjWBjpdp/synevyr-pereval-2.jpg" alt="Карпатський перевал" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
-    <!-- ======= Як минає день ======= -->
+    <!-- ======= Як минає день (без змін) ======= -->
     <section class="card reveal">
       <h2>Як минає день</h2>
       <p>Ранок — тиша, дихання й йога. День — природа, SPA або подорож Карпатами. Вечір — м’які інтеграційні практики, тепле коло, час для себе.</p>
     </section>
 
-    <!-- Фото між блоками -->
+    <!-- Дальше всё без изменений -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp" alt="Гойдалка в Карпатах" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/zhjMwfyx/248887204-4555383451208509-5727271300579284772-n-1024x685.jpg" alt="Пейзажі Карпат" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
-    <!-- ======= ЩО ВХОДИТЬ ======= -->
     <section class="card reveal">
       <h2>Що входить у вартість</h2>
       <ul class="clean">
@@ -212,30 +187,27 @@
       </ul>
     </section>
 
-    <!-- Фото між блоками -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/8LFJrW1V/photo-2025-08-23-23-23-21.jpg" alt="Командні моменти" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/gMJyPx6R/photo-2025-08-23-23-23-22.jpg" alt="Гори і небо" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
-    <!-- ======= ПІСЛЯ РЕТРИТУ ======= -->
     <section class="card reveal">
       <h2>Що відчуєш після</h2>
       <p>Більше легкості й внутрішнього спокою. Ближчий контакт із тілом і почуттями. Розуміння, куди рухатися далі — без зайвого шуму, з опорою на себе.</p>
     </section>
 
-    <!-- Фото між блоками -->
     <section class="imgBlock imgRow reveal">
       <figure><img src="https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg" alt="Синевир — вид 2" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.src='https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg'"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/kgB6kyhV/1508689396-1508686392-ozero-sinevir-3.jpg" alt="Синевир — вид 3" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
-    <!-- ======= CTA ======= -->
+    <!-- Нижний CTA оставил (как было) -->
     <section class="card reveal" id="buy">
       <h2>Бронювання</h2>
       <p class="price">Ціна: <b>15 000 гривень</b> — усе перелічене вище входить у вартість</p>
       <div class="cta">
-        <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram"> Забронювати</a>
+        <a class="btn" href="https://t.me/irinazerkalo_dushi" target="_blank" rel="noopener" aria-label="Придбати участь у Telegram">Забронювати</a>
       </div>
     </section>
 
@@ -243,18 +215,22 @@
   </div>
 
   <script>
-    /* ICON + MANIFEST */
+    /* ====== ICON + MANIFEST + HERO (ibb.co -> прямой) ====== */
     const ibbIconPage = "https://ibb.co/WNkz2hXP";
+    const heroPage = "https://ibb.co/20B5L4td";   // ВАША новая первая картинка (берём верхнюю половину)
+
     async function resolveIbbDirect(ibbPageUrl){
       const naked = ibbPageUrl.replace(/^https?:\/\//,'');
       const probe = `https://r.jina.ai/https://${naked}`;
       try{
         const txt = await fetch(probe).then(r=>r.ok?r.text():Promise.reject());
-        const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp)/i);
+        const m = txt.match(/https?:\/\/i\.ibb\.co\/[^\s"'<>]+\.(?:jpg|jpeg|png|webp|png)/i);
         return m ? m[0] : ibbPageUrl;
       }catch{ return ibbPageUrl; }
     }
+
     (async ()=>{
+      // иконка/манифест
       const bestIcon = await resolveIbbDirect(ibbIconPage);
       document.getElementById("favicon").href = bestIcon;
       document.getElementById("appleicon").href = bestIcon;
@@ -272,6 +248,12 @@
       };
       const blob=new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"});
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
+
+      // hero: получить прямую ссылку и показать верхнюю половину
+      const heroDirect = await resolveIbbDirect(heroPage);
+      const heroImg = document.getElementById('heroImg');
+      heroImg.src = heroDirect;
+      heroImg.alt = "Гори Карпат — панорама";
     })();
   </script>
 </body>
