@@ -5,55 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <title>Лендинг • Повноекранні зображення</title>
 
-  <!-- Предзагрузка первого экрана -->
-  <link rel="preload" as="image" href="https://i.ibb.co/XkSZfSwP/2.png" fetchpriority="high" />
+  <!-- Предзагружаем 1-й (теперь это image.png) -->
+  <link rel="preload" as="image" href="https://i.ibb.co/gLJ64jjL/image.png" fetchpriority="high" />
 
   <style>
     *{box-sizing:border-box}
     html,body{height:100%}
     html{scroll-behavior:smooth}
-    body{margin:0; background:#000; overflow-x:hidden; -webkit-text-size-adjust:100%}
+    body{margin:0; background:#0b0f0d; overflow-x:hidden; -webkit-text-size-adjust:100%}
 
-    /* Каждый слайд — на весь экран */
-    .screen{
+    /* Каждый экран */
+    .panel{
       position:relative;
       width:100%;
-      height:100svh;      /* устойчиво на мобилках */
+      height:100svh;                /* стабильно на мобилках */
       min-height:100vh;
-      overflow:hidden;
+      display:grid; place-items:center;
+      isolation:isolate; overflow:hidden;
     }
     @supports (height:100dvh){
-      .screen{height:100dvh}  /* ещё точнее, где поддерживается */
+      .panel{height:100dvh}
     }
 
-    /* Картинка заполняет экран без полос */
-    .screen > img{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit:cover; object-position:center;
-      display:block; image-rendering:auto;
+    /* Размытый фон: закрывает поля вокруг уменьшенного изображения */
+    .panel::before{
+      content:"";
+      position:absolute; inset:0; z-index:0;
+      background:var(--bg) center/cover no-repeat;
+      filter:blur(24px) brightness(.95);
+      transform:scale(1.08);
+    }
+
+    /* Фото: всегда целиком, без апскейла, немного меньше для чёткости */
+    .land{
+      position:relative; z-index:1; display:block;
+      object-fit:contain; image-rendering:auto;
+      image-rendering:-webkit-optimize-contrast; /* Safari/iOS слегка лучше ресемплит */
+      border-radius:14px; box-shadow:0 18px 40px rgba(0,0,0,.28);
+      max-width:86vw; max-height:78vh;           /* «чуть меньше» окна */
+      width:auto; height:auto;
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;
     }
   </style>
 </head>
 <body>
 
-  <!-- Экран 1 -->
-  <section class="screen">
-    <img src="https://i.ibb.co/XkSZfSwP/2.png" alt="Екран 1" loading="eager" decoding="async" fetchpriority="high">
+  <!-- ПОРЯДОК: 3 -> 2 -> 1 -->
+
+  <!-- 1-й экран: image.png -->
+  <section class="panel" style="--bg:url('https://i.ibb.co/gLJ64jjL/image.png')">
+    <img class="land" src="https://i.ibb.co/gLJ64jjL/image.png" alt="Екран 1" loading="eager" decoding="async" fetchpriority="high">
   </section>
 
-  <!-- Экран 2 -->
-  <section class="screen">
-    <img src="https://i.ibb.co/gb2Ljhkw/1.png" alt="Екран 2" loading="lazy" decoding="async">
+  <!-- 2-й экран: 2.png -->
+  <section class="panel" style="--bg:url('https://i.ibb.co/XkSZfSwP/2.png')">
+    <img class="land" src="https://i.ibb.co/XkSZfSwP/2.png" alt="Екран 2" loading="lazy" decoding="async">
   </section>
 
-  <!-- Экран 3 -->
-  <section class="screen">
-    <img src="https://i.ibb.co/gLJ64jjL/image.png" alt="Екран 3" loading="lazy" decoding="async">
+  <!-- 3-й экран: 1.png -->
+  <section class="panel" style="--bg:url('https://i.ibb.co/gb2Ljhkw/1.png')">
+    <img class="land" src="https://i.ibb.co/gb2Ljhkw/1.png" alt="Екран 3" loading="lazy" decoding="async">
   </section>
 
   <script>
-    // Блокируем жест увеличения (по желанию можно удалить):
+    // Подгоняем: не больше оригинала с учётом DPR, и не больше окна
+    function fit(img){
+      if(!img.naturalWidth || !img.naturalHeight) return;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 3)); // кап до x3
+
+      // максимально допустимые CSS-размеры без апскейла
+      const maxCssW = img.naturalWidth  / dpr;
+      const maxCssH = img.naturalHeight / dpr;
+
+      // желаемые рамки (ещё чуть меньше окна для резкости)
+      const wantW = vw * 0.86;
+      const wantH = vh * 0.78;
+
+      // берём минимум по окну, пропорции и «без апскейла»
+      const ratio = img.naturalWidth / img.naturalHeight;
+      let w = Math.min(wantW, maxCssW), h = w / ratio;
+      if (h > Math.min(wantH, maxCssH)) {
+        h = Math.min(wantH, maxCssH); w = h * ratio;
+      }
+      img.style.width  = Math.floor(w) + 'px';
+      img.style.height = Math.floor(h) + 'px';
+    }
+
+    const imgs = document.querySelectorAll('.land');
+    imgs.forEach(i => {
+      if (i.complete) fit(i);
+      i.addEventListener('load', () => fit(i));
+    });
+    addEventListener('resize', () => imgs.forEach(fit), {passive:true});
+
+    // Блокируем pinch-zoom (чтобы экран не увеличивался)
     document.addEventListener('gesturestart', e => e.preventDefault(), { passive:false });
   </script>
 </body>
