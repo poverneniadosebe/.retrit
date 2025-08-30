@@ -20,7 +20,7 @@
 
   <style>
     :root{
-      --glass: rgba(255,255,255,.78); /* немного прозрачные карточки */
+      --glass: rgba(255,255,255,.78);
       --border:#00000018;
       --text:#121212;
       --muted:#595959;
@@ -34,16 +34,16 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6;
-      /* HD-фон: Карпати (Синевир), по всему экрану. Небольшое затемнение для контраста текста. */
+      /* ФОН: ваша картинка от верха до низа, скроллится вместе со страницей */
       background:
         linear-gradient(0deg, rgba(0,0,0,.20), rgba(0,0,0,.20)),
-        url("https://i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg") center center / cover no-repeat;
+        url("https://i.ibb.co/gMDK1hr8/34.png") center top / cover no-repeat;
+      background-attachment:scroll;
       overflow-x:hidden;
-      background-attachment:scroll; /* избегаем размытия на iOS */
     }
 
-    /* шире контент и меньше боковых отступов */
-    .wrap{max-width:1200px;margin:0 auto;padding:14px}
+    /* делаем окно контента немного уже */
+    .wrap{max-width:980px;margin:0 auto;padding:16px}
     @media (max-width: 768px){ .wrap{padding:12px} }
 
     /* Заголовок: две строки, белые с лёгкой тенью */
@@ -57,7 +57,7 @@
       text-shadow:0 2px 14px rgba(0,0,0,.35);
       letter-spacing:.3px;
       text-wrap:balance;
-      max-width:1000px;
+      max-width:900px;
     }
     .title-sub{
       margin:0 auto 12px;
@@ -66,7 +66,7 @@
       color:var(--white);
       text-shadow:0 2px 12px rgba(0,0,0,.35);
       text-wrap:balance;
-      max-width:1000px;
+      max-width:900px;
     }
 
     /* Карточки (скляные) */
@@ -204,7 +204,7 @@
         <li><b>SPA-день</b> для відновлення (сауна/басейн/релакс-зона).</li>
         <li><b>Джипінг</b> Карпатами та <b>подорож до озера Синевир</b>.</li>
         <li><b>Підйом на гору Гемба</b></li>
-        <li><b>Щоденні практики</b>: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, «Ліла».</li>
+        <li><b>Щоденні практики</б>: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, «Ліла».</li>
       </ul>
     </section>
 
@@ -222,7 +222,7 @@
 
     <!-- Фото між блоками -->
     <section class="imgBlock imgRow reveal">
-      <figure><img src="https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-озеро-sinevir-2.jpg" alt="Синевир — вид 2" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.src='https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg'"></figure>
+      <figure><img src="https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg" alt="Синевир — вид 2" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.src='https://i0.wp.com/i.ibb.co/VYSGV12h/1508689491-1508686401-ozero-sinevir-2.jpg'"></figure>
       <figure><img src="https://i0.wp.com/i.ibb.co/kgB6kyhV/1508689396-1508686392-ozero-sinevir-3.jpg" alt="Синевир — вид 3" referrerpolicy="no-referrer" loading="lazy" decoding="async"></figure>
     </section>
 
@@ -239,7 +239,7 @@
   </div>
 
   <script>
-    /* ====== ICON + MANIFEST (как было) ====== */
+    /* ICON + MANIFEST */
     const ibbIconPage = "https://ibb.co/WNkz2hXP";
     async function resolveIbbDirect(ibbPageUrl){
       const naked = ibbPageUrl.replace(/^https?:\/\//,'');
