@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Жіночий ретрит «Повернення до себе» • Карпати 11.09–15.09.2025</title>
+  <title>Жіночий ретрит «Повернення до себе»</title>
   <meta name="theme-color" content="#ffffff" />
   <meta name="description" content="Жіночий ретрит у Карпатах про м’яке повернення до себе: медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла», SPA, джипінг до Синевиру, підйом на гору Гемба. Дбайлива атмосфера, сповільнення, безпека й підтримка. Квитки, трансфер, проживання — у вартості." />
 
@@ -20,8 +20,8 @@
 
   <style>
     :root{
-      --glass: rgba(0,0,0,.04);
-      --border:#0000001a;
+      --glass: rgba(255,255,255,.86);
+      --border:#00000012;
       --text:#121212;
       --muted:#595959;
       --shadow:0 18px 40px rgba(0,0,0,.08);
@@ -33,47 +33,38 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6;
-      background:#fff;overflow-x:hidden;
-    }
-    /* м’який ореол під анімованим полотном */
-    body::before{
-      content:"";position:fixed;inset:-20%;
+      /* Фон: Карпати на всю сторінку, без анімацій */
       background:
-        radial-gradient(56% 36% at 72% 22%, #8879ff12 0%, transparent 60%),
-        radial-gradient(50% 34% at 22% 82%, #ff9bba12 0%, transparent 60%);
-      filter:blur(42px);z-index:-2;animation:float 60s linear infinite alternate;opacity:.95;
+        linear-gradient(0deg, rgba(255,255,255,.92), rgba(255,255,255,.92)),  /* світла вуаль для читабельності */
+        url("https://i0.wp.com/i.ibb.co/23vpqcYH/verkhovynalife-benjola-hoidalka-2-1.webp") center/cover no-repeat fixed;
+      overflow-x:hidden;
     }
-    @keyframes float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-3%,2%,0) scale(1.06)}}
-
-    /* полотно для медитативної переливної анімації */
-    #sparkles{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
     .wrap{max-width:980px;margin:0 auto;padding:22px}
     header{text-align:center;padding:28px 0 16px}
     h1{margin:14px auto 8px;font-size:clamp(28px,4.5vw,44px);line-height:1.18;font-weight:800;letter-spacing:.3px;text-align:center;text-wrap:balance;max-width:900px}
     .sub{margin:0 auto 18px;font-size:clamp(14px,2.6vw,18px);color:var(--muted);max-width:900px;text-align:center;text-wrap:pretty}
 
-    /* Карточки тексту (світла скляна тема) */
+    /* Карточки (скляні, світлі) */
     .card{
-      background:linear-gradient(180deg,#fffffffa,#f7f7fffa);
+      background:var(--glass);
       border:1px solid var(--border);
       border-radius:var(--radius);
       padding:22px clamp(16px,5vw,28px);
       margin:20px auto;
-      backdrop-filter:blur(6px);
+      backdrop-filter:saturate(120%) blur(6px);
       box-shadow:var(--shadow);
       text-align:center;
-      transition:transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s cubic-bezier(.2,.8,.2,1);
+      transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s cubic-bezier(.2,.8,.2,1);
     }
     .card:hover{transform:translateY(-4px);box-shadow:0 24px 50px rgba(0,0,0,.10)}
     .card h2{margin:0 0 12px;font-size:clamp(22px,3.6vw,30px);font-weight:800;letter-spacing:.2px;text-wrap:balance}
-    /* рівний текст без розривів */
     .card p, ul.clean{max-width:880px;margin:10px auto;text-align:left;text-wrap:pretty;hyphens:none}
     ul.clean{padding:0;list-style:disc inside}
     ul.clean li{margin:10px 0}
-    .pill{display:inline-block;margin:6px 6px 0 0;padding:6px 10px;font-size:14px;border-radius:999px;border:1px solid var(--border);color:#2b2b2b;background:#0000000f}
+    .pill{display:inline-block;margin:6px 6px 0 0;padding:6px 10px;font-size:14px;border-radius:999px;border:1px solid var(--border);color:#2b2b2b;background:#ffffffb3}
 
-    /* Блоки з фото */
+    /* Фото-блоки */
     .imgBlock{margin:20px auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#f5f6fb}
     .imgFull img{display:block;width:100%;height:auto}
     .imgRow{display:grid;gap:10px}
@@ -92,28 +83,23 @@
     .price{font-size:clamp(22px,4.4vw,34px);margin:0 0 12px;font-weight:800;text-align:center;color:#151515}
     .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
 
-    /* плавні красиві появи */
-    .reveal{opacity:0;transform:translateY(16px) scale(.98);filter:blur(2px)}
+    /* Плавні появи при скролі (без різких стрибків) */
+    .reveal{opacity:0;transform:translateY(22px) scale(.98);filter:blur(2px);will-change:opacity,transform,filter}
     .reveal.show{opacity:1;transform:none;filter:none;transition:
       opacity .9s cubic-bezier(.2,.8,.2,1),
       transform .9s cubic-bezier(.2,.8,.2,1),
       filter .9s cubic-bezier(.2,.8,.2,1)}
 
-    footer{padding:24px 0 40px;text-align:center;color:#666;font-size:14px}
+    footer{padding:24px 0 40px;text-align:center;color:#444;font-size:14px;text-shadow:0 1px 0 #fff}
     a{color:var(--accent);text-underline-offset:3px}
     @media (prefers-reduced-motion: reduce){
-      body::before{animation:none}
-      #sparkles{display:none}
       .reveal,.reveal.show{transition:none;opacity:1;transform:none;filter:none}
     }
   </style>
 </head>
 <body>
-  <canvas id="sparkles"></canvas>
-
   <div class="wrap">
     <header class="reveal">
-      <!-- Плашка з датою зверху видалена -->
       <h1>Жіночий ретрит «Повернення до себе»</h1>
       <p class="sub">медитації, ранкова йога, стояння на цвяхах, МАК-сесії, трансформаційна гра «Ліла»</p>
     </header>
@@ -220,7 +206,7 @@
   </div>
 
   <script>
-    /* ====== ICON + MANIFEST (safe) ====== */
+    /* ====== ICON + MANIFEST ====== */
     const ibbIconPage = "https://ibb.co/WNkz2hXP";
     async function resolveIbbDirect(ibbPageUrl){
       const naked = ibbPageUrl.replace(/^https?:\/\//,'');
@@ -251,78 +237,18 @@
       document.getElementById("manifestLink").href = URL.createObjectURL(blob);
     })();
 
-    /* ====== КРАСИВІ ПОЯВИ З НЕВЕЛИКОЮ ЗАТРИМКОЮ ====== */
-    const items=[...document.querySelectorAll('.reveal')];
+    /* ====== ПЛАВНІ ПОЯВИ ПРИ СКРОЛІ ====== */
+    const elements=[...document.querySelectorAll('.reveal')];
     const io=new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
-        if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+        if(e.isIntersecting){
+          e.target.classList.add('show');
+          e.target.style.transitionDelay = e.target.dataset.delay || '0ms';
+          io.unobserve(e.target);
+        }
       });
-    },{threshold:0.12});
-    items.forEach((el,i)=>{ el.style.transitionDelay = (80*i)+'ms'; io.observe(el); });
-
-    /* ====== ЯСКРАВІША МЕДИТАТИВНА ПЕРЕЛИВНА АНІМАЦІЯ ====== */
-    (function(){
-      const canvas = document.getElementById('sparkles');
-      const ctx = canvas.getContext('2d');
-      let W=0,H=0,dpr=1, blobs=[], start=performance.now();
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      function resize(){
-        dpr = Math.min(window.devicePixelRatio||1,2);
-        W = canvas.width = Math.floor(innerWidth*dpr);
-        H = canvas.height = Math.floor(innerHeight*dpr);
-        canvas.style.width = innerWidth+'px';
-        canvas.style.height = innerHeight+'px';
-        ctx.setTransform(1,0,0,1,0,0);
-      }
-
-      function makeBlobs(){
-        const n = 7;
-        blobs = [];
-        for(let i=0;i<n;i++){
-          blobs.push({
-            x: Math.random()*W,
-            y: Math.random()*H,
-            r: (Math.min(W,H)*(.22+Math.random()*0.26)),
-            hue: [258, 210, 165, 190, 280, 120, 330][i%7], // ліловий, персик, теплий пісок, небесний, фіолет, м'ята, рожеве золото
-            a: 0.22 + Math.random()*0.14,   // СВІТЛІШЕ
-            sp: 0.10 + Math.random()*0.10,
-            off: Math.random()*Math.PI*2
-          });
-        }
-      }
-
-      function draw(t){
-        if(reduce){ return; }
-        ctx.clearRect(0,0,W,H);
-
-        // м’яка біла вуаль для «світіння»
-        const veil = ctx.createLinearGradient(0,0,W,H);
-        veil.addColorStop(0,'rgba(255,255,255,0.20)');
-        veil.addColorStop(1,'rgba(255,255,255,0.08)');
-        ctx.fillStyle = veil;
-        ctx.fillRect(0,0,W,H);
-
-        ctx.globalCompositeOperation = 'lighter';
-        for(const b of blobs){
-          const k = ( (t-start)/1000 ) * b.sp;
-          const x = b.x + Math.sin(k + b.off)* (W*0.06);
-          const y = b.y + Math.cos(k*0.9 + b.off)* (H*0.05);
-          const g = ctx.createRadialGradient(x,y,0,x,y,b.r);
-          g.addColorStop(0, `hsla(${b.hue}, 90%, 70%, ${b.a})`);
-          g.addColorStop(1, `hsla(${b.hue}, 90%, 70%, 0)`);
-          ctx.fillStyle = g;
-          ctx.beginPath(); ctx.arc(x,y,b.r,0,Math.PI*2); ctx.fill();
-        }
-        ctx.globalCompositeOperation = 'source-over';
-
-        requestAnimationFrame(draw);
-      }
-
-      resize(); makeBlobs();
-      if(!reduce){ requestAnimationFrame(draw); }
-      addEventListener('resize', ()=>{ resize(); makeBlobs(); });
-    })();
+    },{threshold:0.12, rootMargin:"0px 0px -10% 0px"});
+    elements.forEach((el,i)=>{ el.dataset.delay = (i%5)*80 + 'ms'; io.observe(el); });
   </script>
 </body>
 </html>
